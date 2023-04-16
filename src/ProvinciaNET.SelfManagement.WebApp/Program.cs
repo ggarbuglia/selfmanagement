@@ -5,6 +5,9 @@ using NLog.Web;
 using NLog;
 using Radzen;
 using System.Runtime.InteropServices;
+using System.DirectoryServices.Protocols;
+using System.Net;
+using Microsoft.Extensions.DependencyInjection;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -12,7 +15,9 @@ logger.Debug("init main");
 try
 {
     var builder = WebApplication.CreateBuilder(args);
-    var config = builder.Configuration;
+
+    var env = builder.Environment;
+    var cfg = builder.Configuration;
 
     StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 
@@ -26,12 +31,23 @@ try
     {
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
-            options.EnableLdap(settings =>
+            var srv = cfg["ldap:server"];
+            var dom = cfg["ldap:domain"];
+            var usr = cfg["ldap:username"];
+            var pwd = cfg["ldap:password"];
+
+            if (srv != null)
             {
-                settings.Domain = config.GetValue<string>("ldap:domain");
-                settings.MachineAccountName = config.GetValue<string>("ldap:username");
-                settings.MachineAccountPassword = config.GetValue<string>("ldap:password");
-            });
+                logger.Debug(@"LDAP Connection Data: {srv}:389 {dom}\{usr} {pwd}", srv, dom, usr, pwd);
+
+                var srvr = new LdapDirectoryIdentifier(srv, 389);
+                var cred = new NetworkCredential(usr, pwd, dom);
+
+                options.EnableLdap(settings =>
+                {
+                    settings.LdapConnection = new LdapConnection(srvr, cred);
+                });
+            }
         }
     });
 

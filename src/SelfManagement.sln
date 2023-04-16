@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProvinciaNET.SelfManagement
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProvinciaNET.SelfManagement.WebApi", "ProvinciaNET.SelfManagement.WebApi\ProvinciaNET.SelfManagement.WebApi.csproj", "{692AB939-D57D-4F86-B5CA-DDFD9F410FCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProvinciaNET.SelfManagement.WebApp", "ProvinciaNET.SelfManagement.WebApp\ProvinciaNET.SelfManagement.WebApp.csproj", "{3A959E03-B2AA-4A71-9299-E8ECF5CC6BFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProvinciaNET.SelfManagement.WebApp", "ProvinciaNET.SelfManagement.WebApp\ProvinciaNET.SelfManagement.WebApp.csproj", "{3A959E03-B2AA-4A71-9299-E8ECF5CC6BFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

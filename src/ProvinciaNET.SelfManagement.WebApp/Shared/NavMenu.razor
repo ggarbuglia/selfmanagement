@@ -1,19 +1,12 @@
-﻿<RadzenPanelMenu Click="OnParentClicked" Style="width:300px" Multiple="@multiple">
-    <RadzenPanelMenuItem Text="General">
-        <RadzenPanelMenuItem Text="Home" Path="" Icon="home"></RadzenPanelMenuItem>
-        <RadzenPanelMenuItem Text="Counter" Path="counter" Icon="save"></RadzenPanelMenuItem>
-        <RadzenPanelMenuItem Text="Fetch data" Path="fetchdata" Icon="grid_on"></RadzenPanelMenuItem>
+﻿<RadzenPanelMenu Style="width:100%">
+    <RadzenPanelMenuItem Icon="home" Text="Home" Path=""></RadzenPanelMenuItem>
+    <RadzenPanelMenuItem Icon="grid_on" Text="Master Tables" Expanded="true">
+        <RadzenPanelMenuItem Icon="grid_on" Text="Cost Centers" Path="/orgcostcenters"></RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Icon="grid_on" Text="Locations" Path="/orglocations"></RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Icon="grid_on" Text="Mail Database Groups" Path="/orgmaildatabasegroups"></RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Icon="grid_on" Text="Directions" Path="/orgdirections"></RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Icon="grid_on" Text="Sections" Path="/orgsections"></RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Icon="grid_on" Text="Memberships" Path="/orgmemberships"></RadzenPanelMenuItem>
     </RadzenPanelMenuItem>
+    <RadzenPanelMenuItem Icon="grid_on" Text="AD User Provision" Path="/aduserprovisions"></RadzenPanelMenuItem>
 </RadzenPanelMenu>
-
-@code {
-    bool multiple = true;
-
-    void OnParentClicked(MenuItemEventArgs args)
-    {
-    }
-
-    void OnChildClicked(MenuItemEventArgs args)
-    {
-    }
-}

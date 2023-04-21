@@ -1,6 +1,6 @@
 ﻿using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
-using ProvinciaNET.SelfManagement.Common.Entities;
+using ProvinciaNET.SelfManagement.Core.Entities;
 
 namespace ProvinciaNET.SelfManagement.WebApi.Helpers
 {

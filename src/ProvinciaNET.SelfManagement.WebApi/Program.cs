@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLog.Web;
-using ProvinciaNET.SelfManagement.Common.Context;
+using ProvinciaNET.SelfManagement.Infraestructure.Data;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
@@ -21,7 +21,7 @@ try
     builder.Services.AddControllers().AddOData(options =>
     {
         options.AddRouteComponents("odata", ODataHelper.GetModel());
-        options.EnableQueryFeatures(maxTopValue: 100);
+        options.EnableQueryFeatures(maxTopValue: 1000);
     });
 
     // Add Swagger
@@ -33,6 +33,9 @@ try
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("SelfManagement"));
     });
+
+    // Add Scoped classes
+    builder.Services.AddScoped<DbContext, SelfManagementContext>();
 
     // Add Transient classes
     builder.Services.AddTransient(typeof(WebApiActionsBaseController<>));
@@ -50,7 +53,6 @@ try
 
     app.UseHttpsRedirection();
     app.UseRouting();
-    app.UseAuthorization();
     app.UseAuthorization();
     app.MapControllers();
 

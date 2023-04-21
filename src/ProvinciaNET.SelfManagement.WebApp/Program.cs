@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
-using ProvinciaNET.SelfManagement.WebApp.Data;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using NLog.Web;
 using NLog;
@@ -8,6 +7,8 @@ using System.Runtime.InteropServices;
 using System.DirectoryServices.Protocols;
 using System.Net;
 using Microsoft.Extensions.DependencyInjection;
+using ProvinciaNET.SelfManagement.WebApp.Data;
+using Microsoft.Net.Http.Headers;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -19,7 +20,7 @@ try
     var env = builder.Environment;
     var cfg = builder.Configuration;
 
-    StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
+    StaticWebAssetsLoader.UseStaticWebAssets(env, cfg);
 
     // Add NLog to DI
     builder.Logging.ClearProviders();
@@ -61,8 +62,19 @@ try
     builder.Services.AddRazorPages();
     builder.Services.AddServerSideBlazor();
 
+    // Add HttpClientFactory Named Client
+    builder.Services.AddHttpClient("SelfManagementWebApi", httpClient =>
+    {
+        var baseUri = cfg["Services:SelfManagementWebApiBaseUri"];
+        if (baseUri != null) 
+        {
+            httpClient.BaseAddress = new Uri(baseUri);
+            httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+        }
+    });
+
     // Add Transient
-    builder.Services.AddSingleton<WeatherForecastService>();
+    builder.Services.AddSingleton<OrgCostCentersService>();
     builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
     builder.Services.AddScoped<DialogService>();

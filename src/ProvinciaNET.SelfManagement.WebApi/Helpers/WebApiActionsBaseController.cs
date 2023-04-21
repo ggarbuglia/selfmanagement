@@ -1,26 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProvinciaNET.SelfManagement.Common.Context;
-using ProvinciaNET.SelfManagement.Common.Entities;
+using ProvinciaNET.SelfManagement.Core.Entities;
 
 namespace ProvinciaNET.SelfManagement.WebApi.Helpers
 {
     public class WebApiActionsBaseController<T> : ControllerBase where T : BaseEntity
     {
-        private readonly SelfManagementContext _context;
+        private readonly DbContext _context;
         private readonly ILogger _logger;
 
         private readonly DbSet<T> _dbSet;
         private readonly string _dbSetTypeName;
         private readonly string _entityTypeName;
 
-        public WebApiActionsBaseController(SelfManagementContext context, ILogger<WebApiActionsBaseController<T>> logger)
+        public WebApiActionsBaseController(DbContext context, ILogger<WebApiActionsBaseController<T>> logger)
         {
             _context = context;
-            _logger = logger;
+            _logger  = logger;
 
-            _dbSet = _context.Set<T>();
-            _dbSetTypeName = _dbSet.GetType().Name;
+            _dbSet          = _context.Set<T>();
+            _dbSetTypeName  = _dbSet.GetType().Name;
             _entityTypeName = typeof(T).Name;
         }
 
@@ -33,7 +32,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Helpers
                 return NotFound();
             }
 
-            var result = await _dbSet.ToListAsync();
+            var result = await _dbSet.AsNoTracking().ToListAsync();
 
             _logger.LogInformation("Query Count: {type} {count}", _entityTypeName, result.Count);
             return result;
@@ -49,6 +48,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Helpers
             }
 
             var entity = await _dbSet.FindAsync(id);
+
             if (entity == null)
             {
                 _logger.LogWarning("Entity '{type}' with Id {id} not found.", _entityTypeName, id);

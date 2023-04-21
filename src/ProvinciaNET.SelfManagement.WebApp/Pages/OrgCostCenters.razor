@@ -1,0 +1,178 @@
+﻿@page "/orgcostcenters"
+
+@using ProvinciaNET.SelfManagement.Core.Entities
+@inject ProvinciaNET.SelfManagement.WebApp.Data.OrgCostCentersService service
+
+<PageTitle>Cost Centers</PageTitle>
+<h3>Cost Centers</h3>
+
+<RadzenButton Text="Add Cost Center"
+              ButtonStyle="ButtonStyle.Success"
+              Icon="add_circle_outline"
+              class="mt-2 mb-4" 
+              Click="@InsertRow"
+              Disabled=@(entityToInsert != null || entityToUpdate != null) />
+
+<RadzenDataGrid @ref="grid"
+                TItem="OrgCostCenter"
+                Data="@entities"
+                Count="@count"
+                IsLoading="@isLoading"
+                LoadData="@LoadData"
+                KeyProperty="Id"
+                FilterMode="FilterMode.Advanced"
+                FilterPopupRenderMode="PopupRenderMode.OnDemand"
+                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                AllowSorting="true"
+                AllowFiltering="true"
+                AllowPaging="true"
+                PageSize="@pageSize"
+                PagerHorizontalAlign="HorizontalAlign.Right" 
+                PagerPosition="PagerPosition.TopAndBottom"
+                ColumnWidth="200px">
+    <Columns>
+        <RadzenDataGridColumn TItem="OrgCostCenter" Property="Id" Title="ID" Filterable="false" Frozen="true" Width="30px" TextAlign="TextAlign.Right" />
+        <RadzenDataGridColumn TItem="OrgCostCenter" Property="Name" Title="Name" Filterable="true" Frozen="true">
+            <EditTemplate Context="entity">
+                <RadzenTextBox @bind-Value="entity.Name" Style="width:100%; display: block" Name="Name" />
+                <RadzenRequiredValidator Text="Name is required" Component="Name" Popup="true" />
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+        <RadzenDataGridColumn TItem="OrgCostCenter" Property="Active" Title="Active" Filterable="true" Frozen="true" Width="40px">
+            <EditTemplate Context="entity">
+                <RadzenCheckBox @bind-Value="entity.Active" Name="Active" />
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+        <RadzenDataGridColumn TItem="OrgCostCenter" Property="CreatedBy" Title="Created By" Filterable="false" Frozen="true" Width="80px" />
+
+        <RadzenDataGridColumn TItem="OrgCostCenter" Property="CreatedOn" Title="Created On" Filterable="false" Frozen="true" Width="80px" FormatString="{0:yyyy-MM-dd hh:mm}" />
+        
+        <RadzenDataGridColumn TItem="OrgCostCenter" Property="ModifiedBy" Title="Modified By" Filterable="false" Frozen="true" Width="80px">
+            <EditTemplate Context="entity">
+                <RadzenTextBox @bind-Value="entity.ModifiedBy" Style="width:100%; display: block" Name="ModifiedBy" />
+                <RadzenRequiredValidator Text="ModifiedBy is required" Component="ModifiedBy" Popup="true" />
+            </EditTemplate>
+        </RadzenDataGridColumn>
+        
+        <RadzenDataGridColumn TItem="OrgCostCenter" Property="ModifiedOn" Title="Modified On" Filterable="false" Frozen="true" Width="80px" FormatString="{0:yyyy-MM-dd hh:mm}" />
+        
+        <RadzenDataGridColumn TItem="OrgCostCenter" Context="entity" Filterable="false" Sortable="false" Width="90px" TextAlign="TextAlign.Right">
+            <Template Context="entity">
+                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@(args => EditRow(entity))" @onclick:stopPropagation="true" />
+                <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@(args => DeleteRow(entity))" @onclick:stopPropagation="true" />
+            </Template>
+            <EditTemplate Context="entity">
+                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@((args) => SaveRow(entity))" />
+                <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" class="my-1 ms-1" Click="@((args) => CancelEdit(entity))" />
+                <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Size="ButtonSize.Medium" class="my-1 ms-1" Click="@(args => DeleteRow(entity))" />
+            </EditTemplate>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+    RadzenDataGrid<OrgCostCenter>? grid;
+    IEnumerable<OrgCostCenter>? entities;
+    OrgCostCenter? entityToInsert;
+    OrgCostCenter? entityToUpdate;
+
+    bool isLoading;
+    int count;
+    int pageSize;
+
+    void Reset()
+    {
+        pageSize       = 20;
+        entityToInsert = null;
+        entityToUpdate = null;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Reset();
+        await base.OnInitializedAsync();
+        await GetData();
+    }
+
+    async Task GetData()
+    {
+        isLoading = true;
+
+        var result = await service.GetOrgCostCenters(top: pageSize, skip: 0, count: true);
+        entities = result.Value.AsODataEnumerable();
+        count = result.Count;
+
+        isLoading = false;
+    }
+
+    async Task LoadData(LoadDataArgs args)
+    {
+        isLoading = true;
+
+        var result = await service.GetOrgCostCenters(filter: args.Filter, top: args.Top, skip: args.Skip, orderby: args.OrderBy, count: true);
+        entities = result.Value.AsODataEnumerable();
+        count = result.Count;
+
+        isLoading = false;
+    }
+
+    async Task EditRow(OrgCostCenter entity)
+    {
+        entityToUpdate = entity;
+        if (grid != null) await grid.EditRow(entity);
+    }
+
+    void OnUpdateRow(OrgCostCenter entity)
+    {
+        if (entity == entityToInsert) entityToInsert = null;
+        entityToUpdate = null;
+        // TODO Update API
+    }
+
+    async Task SaveRow(OrgCostCenter entity)
+    {
+        if (grid != null) { await grid.Reload(); }
+    }
+
+    void CancelEdit(OrgCostCenter entity)
+    {
+        if (entity == entityToInsert) entityToInsert = null;
+        entityToUpdate = null;
+
+        if (grid != null) grid.CancelEditRow(entity);
+    }
+
+    async Task DeleteRow(OrgCostCenter entity)
+    {
+        if (entity == entityToInsert) entityToInsert = null;
+        if (entity == entityToUpdate) entityToUpdate = null;
+
+        if (entities != null && entities.Contains(entity))
+        {
+            // TODO Delete API
+            if (grid != null) await grid.Reload();
+        }
+        else
+        {
+            if (grid != null)
+            {
+                grid.CancelEditRow(entity);
+                await grid.Reload();
+            }
+        }
+    }
+
+    async Task InsertRow()
+    {
+        entityToInsert = new OrgCostCenter();
+        if (grid != null) await grid.InsertRow(entityToInsert);
+    }
+
+    void OnCreateRow(OrgCostCenter entity)
+    {
+        // TODO Insert API
+        entityToInsert = null;
+    }
+}

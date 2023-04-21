@@ -18,4 +18,8 @@
     </Content>
   </ItemGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\ProvinciaNET.SelfManagement.Core\ProvinciaNET.SelfManagement.Core.csproj" />
+	</ItemGroup>
+	
 </Project>

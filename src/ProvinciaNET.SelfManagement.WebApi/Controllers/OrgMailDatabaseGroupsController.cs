@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProvinciaNET.SelfManagement.Common.Context;
-using ProvinciaNET.SelfManagement.Common.Entities;
+using ProvinciaNET.SelfManagement.Core.Entities;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProvinciaNET.SelfManagement.WebApi.Controllers
 {
@@ -9,12 +10,12 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
     [ApiController]
     public class OrgMailDatabaseGroupsController : WebApiActionsBaseController<OrgMailDatabaseGroup>
     {
-        public OrgMailDatabaseGroupsController(SelfManagementContext context, ILogger<OrgMailDatabaseGroupsController> logger)
+        public OrgMailDatabaseGroupsController(DbContext context, ILogger<OrgMailDatabaseGroupsController> logger)
             : base(context, logger)
         {
         }
 
-        [HttpGet]
+        [HttpGet, EnableQuery(PageSize = 1000)]
         public async Task<ActionResult<IEnumerable<OrgMailDatabaseGroup>>> GetOrgMailDatabaseGroups()
         {
             return await Get();

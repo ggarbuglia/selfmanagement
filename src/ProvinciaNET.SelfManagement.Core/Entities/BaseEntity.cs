@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ProvinciaNET.SelfManagement.Core.Entities
 {
@@ -7,21 +8,23 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
     {
         #region Properties
 
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), JsonPropertyOrder(-10)]
         public int Id { get; set; }
 
+        [ConcurrencyCheck, JsonPropertyOrder(100)]
         public bool Active { get; set; } = true;
 
-        [Required, Column(TypeName = "varchar(100)")]
+        [ConcurrencyCheck, Column(TypeName = "varchar(100)"), Required, JsonPropertyOrder(101)]
         public string CreatedBy { get; set; } = string.Empty;
 
-        [Required]
+        [ConcurrencyCheck, Column(TypeName = "datetime2"), Required, JsonPropertyOrder(102)]
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 
-        [Column(TypeName = "varchar(100)")]
-        public string? ModifiedBy { get; set; }
+        [ConcurrencyCheck, Column(TypeName = "varchar(100)"), JsonPropertyOrder(103)]
+        public string? ModifiedBy { get; set; } = null;
 
-        public DateTime? ModifiedOn { get; set; }
+        [ConcurrencyCheck, Column(TypeName = "datetime2"), JsonPropertyOrder(104)]
+        public DateTime? ModifiedOn { get; set; } = null;
 
         #endregion
     }

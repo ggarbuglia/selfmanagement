@@ -1,19 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ProvinciaNET.SelfManagement.Core.Entities
 {
-    public class OrgMembership : BaseEntity
+    [Table("OrgMemberships", Schema = "dbo")]
+    public partial class OrgMembership : BaseEntity
     {
         #region Properties
 
-        [Required, Column(TypeName = "varchar(100)"), MaxLength(100)]
+        [ConcurrencyCheck, Column(TypeName = "varchar(100)"), MaxLength(100), Required, JsonPropertyOrder(1)]
         public string AdGroupDisplayName { get; set; } = string.Empty;
 
-        [Required, Column(TypeName = "varchar(100)"), MaxLength(100)]
+        [ConcurrencyCheck, Column(TypeName = "varchar(100)"), MaxLength(100), Required, JsonPropertyOrder(2)]
         public string AdGroupAccountName { get; set; } = string.Empty;
 
-        [Required]
+        [ConcurrencyCheck, JsonPropertyOrder(3)]
         public bool Show { get; set; } = true;
 
         #endregion
@@ -27,6 +29,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
 
         #region Child Properties
 
+        [JsonPropertyOrder(110)]
         public ICollection<AdUserAccount>? AdUserAccounts { get; set; }
 
         #endregion

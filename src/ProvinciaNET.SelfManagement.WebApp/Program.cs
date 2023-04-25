@@ -1,14 +1,14 @@
-using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.Authentication.Negotiate;
-using NLog.Web;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting.StaticWebAssets;
+using Microsoft.Net.Http.Headers;
 using NLog;
+using NLog.Web;
+using ProvinciaNET.SelfManagement.WebApp.Services;
 using Radzen;
-using System.Runtime.InteropServices;
 using System.DirectoryServices.Protocols;
 using System.Net;
-using Microsoft.Extensions.DependencyInjection;
-using ProvinciaNET.SelfManagement.WebApp.Data;
-using Microsoft.Net.Http.Headers;
+using System.Runtime.InteropServices;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -28,7 +28,7 @@ try
     builder.Host.UseNLog();
 
     // Add Authentication;
-    builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme).AddNegotiate(options =>
+    builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme).AddNegotiate(o =>
     {
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
@@ -44,7 +44,7 @@ try
                 var srvr = new LdapDirectoryIdentifier(srv, 389);
                 var cred = new NetworkCredential(usr, pwd, dom);
 
-                options.EnableLdap(settings =>
+                o.EnableLdap(settings =>
                 {
                     settings.LdapConnection = new LdapConnection(srvr, cred);
                 });
@@ -53,9 +53,9 @@ try
     });
 
     // Add Authorization
-    builder.Services.AddAuthorization(options =>
+    builder.Services.AddAuthorization(o =>
     {
-        options.FallbackPolicy = options.DefaultPolicy;
+        o.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
     });
 
     // Add Razor and Blazor Server.
@@ -71,16 +71,23 @@ try
             httpClient.BaseAddress = new Uri(baseUri);
             httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
         }
-    });
+    })
+        .AddHeaderPropagation(o => o.Headers.Add("Cookie"))
+        .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { UseDefaultCredentials = true });
 
-    // Add Transient
-    builder.Services.AddSingleton<OrgCostCentersService>();
-    builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+    builder.Services.AddHeaderPropagation(o => o.Headers.Add("Cookie"));
+
+    // Add Localization
+    builder.Services.AddLocalization();
+
+    // Add HttpContext Accessor
+    builder.Services.AddHttpContextAccessor();
 
     builder.Services.AddScoped<DialogService>();
     builder.Services.AddScoped<NotificationService>();
     builder.Services.AddScoped<TooltipService>();
     builder.Services.AddScoped<ContextMenuService>();
+    builder.Services.AddScoped<OrgCostCenterService>();
 
     var app = builder.Build();
 
@@ -94,6 +101,8 @@ try
 
     app.UseHttpsRedirection();
     app.UseStaticFiles();
+    app.UseHeaderPropagation();
+    app.UseRequestLocalization(o => o.AddSupportedCultures("en", "es").AddSupportedUICultures("en", "es").SetDefaultCulture("es"));
     app.UseRouting();
     app.UseAuthentication();
     app.UseAuthorization();

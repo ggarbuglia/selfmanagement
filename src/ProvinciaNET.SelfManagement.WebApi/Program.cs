@@ -4,6 +4,8 @@ using NLog;
 using NLog.Web;
 using ProvinciaNET.SelfManagement.Infraestructure.Data;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
+using ProvinciaNET.SelfManagement.WebApi.Interfaces;
+using ProvinciaNET.SelfManagement.WebApi.Services;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -31,14 +33,19 @@ try
     // Add Entity Framework
     builder.Services.AddDbContext<SelfManagementContext>(options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("SelfManagement"));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
 
-    // Add Scoped classes
-    builder.Services.AddScoped<DbContext, SelfManagementContext>();
-
-    // Add Transient classes
-    builder.Services.AddTransient(typeof(WebApiActionsBaseController<>));
+    // Add Scoped Services
+    builder.Services.AddScoped<IAdUserAccountProvisionsService, AdUserAccountProvisionsService>();
+    builder.Services.AddScoped<IAdUserAccountsService, AdUserAccountsService>();
+    builder.Services.AddScoped<IOrgCostCentersService, OrgCostCentersService>();
+    builder.Services.AddScoped<IOrgDirectionsService, OrgDirectionsService>();
+    builder.Services.AddScoped<IOrgLocationsService, OrgLocationsService>();
+    builder.Services.AddScoped<IOrgMailDatabaseGroupsService, OrgMailDatabaseGroupsService>();
+    builder.Services.AddScoped<IOrgMembershipsService, OrgMembershipsService>();
+    builder.Services.AddScoped<IOrgSectionsService, OrgSectionsService>();
+    builder.Services.AddScoped<IOrgStructuresService, OrgStructuresService>();
 
     var app = builder.Build();
 

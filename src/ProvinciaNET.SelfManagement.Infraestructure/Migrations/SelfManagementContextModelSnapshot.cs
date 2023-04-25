@@ -22,7 +22,7 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.AdUserAccount", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.AdUserAccount", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,21 +31,26 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
+                        .IsConcurrencyToken()
                         .HasColumnType("bit");
 
                     b.Property<string>("CreatedBy")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("CreatedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
+                        .IsConcurrencyToken()
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
 
                     b.Property<string>("GivenName")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
@@ -57,22 +62,27 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ModifiedBy")
+                        .IsConcurrencyToken()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("ModifiedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SamAccountName")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("SurName")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("UserPrincipalName")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
@@ -83,10 +93,10 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
                     b.HasIndex("MembershipId");
 
-                    b.ToTable("AdUserAccounts");
+                    b.ToTable("AdUserAccounts", "dbo");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.AdUserAccountProvision", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.AdUserAccountProvision", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,44 +105,53 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
+                        .IsConcurrencyToken()
                         .HasColumnType("bit");
 
                     b.Property<int?>("AdUserAccountId")
+                        .IsConcurrencyToken()
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("CreatedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Error")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasColumnType("varchar(max)");
 
                     b.Property<bool>("HasError")
+                        .IsConcurrencyToken()
                         .HasColumnType("bit");
 
                     b.Property<string>("ModifiedBy")
+                        .IsConcurrencyToken()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("ModifiedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Status")
+                        .IsConcurrencyToken()
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AdUserAccountId");
 
-                    b.ToTable("AdUserAccountProvisions");
+                    b.ToTable("AdUserAccountProvisions", "dbo");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgCostCenter", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgCostCenter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -141,32 +160,38 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
+                        .IsConcurrencyToken()
                         .HasColumnType("bit");
 
                     b.Property<string>("CreatedBy")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("CreatedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsConcurrencyToken()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("ModifiedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrgCostCenters");
+                    b.ToTable("OrgCostCenters", "dbo");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgDirection", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgDirection", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -175,32 +200,38 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
+                        .IsConcurrencyToken()
                         .HasColumnType("bit");
 
                     b.Property<string>("CreatedBy")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("CreatedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsConcurrencyToken()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("ModifiedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrgDirections");
+                    b.ToTable("OrgDirections", "dbo");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgLocation", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgLocation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -209,57 +240,68 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
+                        .IsConcurrencyToken()
                         .HasColumnType("bit");
 
                     b.Property<string>("AdGroupAccountName")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("AdGroupDisplayName")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("Address")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("City")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("CreatedBy")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("CreatedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsConcurrencyToken()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("ModifiedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("PostalCode")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrgLocations");
+                    b.ToTable("OrgLocations", "dbo");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgMailDatabaseGroup", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgMailDatabaseGroup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -268,32 +310,38 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
+                        .IsConcurrencyToken()
                         .HasColumnType("bit");
 
                     b.Property<string>("CreatedBy")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("CreatedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsConcurrencyToken()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("ModifiedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrgMailDatabaseGroups");
+                    b.ToTable("OrgMailDatabaseGroups", "dbo");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgMembership", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgMembership", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -302,32 +350,40 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
+                        .IsConcurrencyToken()
                         .HasColumnType("bit");
 
                     b.Property<string>("AdGroupAccountName")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("AdGroupDisplayName")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("CreatedBy")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("CreatedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsConcurrencyToken()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("ModifiedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Show")
+                        .IsConcurrencyToken()
                         .HasColumnType("bit");
 
                     b.Property<int>("StructureId")
@@ -337,10 +393,10 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
                     b.HasIndex("StructureId");
 
-                    b.ToTable("OrgMemberships");
+                    b.ToTable("OrgMemberships", "dbo");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgSection", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgSection", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -349,28 +405,34 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
+                        .IsConcurrencyToken()
                         .HasColumnType("bit");
 
                     b.Property<int>("CostCenterId")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("CreatedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DirectionId")
                         .HasColumnType("int");
 
                     b.Property<string>("ModifiedBy")
+                        .IsConcurrencyToken()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("ModifiedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
@@ -381,10 +443,10 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
                     b.HasIndex("DirectionId");
 
-                    b.ToTable("OrgSections");
+                    b.ToTable("OrgSections", "dbo");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgStructure", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgStructure", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -393,16 +455,20 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
+                        .IsConcurrencyToken()
                         .HasColumnType("bit");
 
                     b.Property<string>("CreatedBy")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("CreatedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Group")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
@@ -411,12 +477,15 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ModifiedBy")
+                        .IsConcurrencyToken()
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("ModifiedOn")
+                        .IsConcurrencyToken()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OrgUnit")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(800)
                         .HasColumnType("varchar(800)");
@@ -430,18 +499,18 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("OrgStructures");
+                    b.ToTable("OrgStructures", "dbo");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.AdUserAccount", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.AdUserAccount", b =>
                 {
-                    b.HasOne("ProvinciaNET.SelfManagement.Common.Entities.OrgLocation", "Location")
+                    b.HasOne("ProvinciaNET.SelfManagement.Core.Entities.OrgLocation", "Location")
                         .WithMany("AdUserAccounts")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProvinciaNET.SelfManagement.Common.Entities.OrgMembership", "Membership")
+                    b.HasOne("ProvinciaNET.SelfManagement.Core.Entities.OrgMembership", "Membership")
                         .WithMany("AdUserAccounts")
                         .HasForeignKey("MembershipId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -452,18 +521,20 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     b.Navigation("Membership");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.AdUserAccountProvision", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.AdUserAccountProvision", b =>
                 {
-                    b.HasOne("ProvinciaNET.SelfManagement.Common.Entities.AdUserAccount", "AdUserAccount")
+                    b.HasOne("ProvinciaNET.SelfManagement.Core.Entities.AdUserAccount", "AdUserAccount")
                         .WithMany("AdUserAccountProvisions")
-                        .HasForeignKey("AdUserAccountId");
+                        .HasForeignKey("AdUserAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AdUserAccount");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgMembership", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgMembership", b =>
                 {
-                    b.HasOne("ProvinciaNET.SelfManagement.Common.Entities.OrgStructure", "Structure")
+                    b.HasOne("ProvinciaNET.SelfManagement.Core.Entities.OrgStructure", "Structure")
                         .WithMany("Memberships")
                         .HasForeignKey("StructureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -472,15 +543,15 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     b.Navigation("Structure");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgSection", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgSection", b =>
                 {
-                    b.HasOne("ProvinciaNET.SelfManagement.Common.Entities.OrgCostCenter", "CostCenter")
+                    b.HasOne("ProvinciaNET.SelfManagement.Core.Entities.OrgCostCenter", "CostCenter")
                         .WithMany("Sections")
                         .HasForeignKey("CostCenterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProvinciaNET.SelfManagement.Common.Entities.OrgDirection", "Direction")
+                    b.HasOne("ProvinciaNET.SelfManagement.Core.Entities.OrgDirection", "Direction")
                         .WithMany("Sections")
                         .HasForeignKey("DirectionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -491,15 +562,15 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     b.Navigation("Direction");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgStructure", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgStructure", b =>
                 {
-                    b.HasOne("ProvinciaNET.SelfManagement.Common.Entities.OrgMailDatabaseGroup", "MailDatabaseGroup")
+                    b.HasOne("ProvinciaNET.SelfManagement.Core.Entities.OrgMailDatabaseGroup", "MailDatabaseGroup")
                         .WithMany("Structures")
                         .HasForeignKey("MailDatabaseGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProvinciaNET.SelfManagement.Common.Entities.OrgSection", "Section")
+                    b.HasOne("ProvinciaNET.SelfManagement.Core.Entities.OrgSection", "Section")
                         .WithMany("Structures")
                         .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -510,42 +581,42 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     b.Navigation("Section");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.AdUserAccount", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.AdUserAccount", b =>
                 {
                     b.Navigation("AdUserAccountProvisions");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgCostCenter", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgCostCenter", b =>
                 {
                     b.Navigation("Sections");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgDirection", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgDirection", b =>
                 {
                     b.Navigation("Sections");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgLocation", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgLocation", b =>
                 {
                     b.Navigation("AdUserAccounts");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgMailDatabaseGroup", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgMailDatabaseGroup", b =>
                 {
                     b.Navigation("Structures");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgMembership", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgMembership", b =>
                 {
                     b.Navigation("AdUserAccounts");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgSection", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgSection", b =>
                 {
                     b.Navigation("Structures");
                 });
 
-            modelBuilder.Entity("ProvinciaNET.SelfManagement.Common.Entities.OrgStructure", b =>
+            modelBuilder.Entity("ProvinciaNET.SelfManagement.Core.Entities.OrgStructure", b =>
                 {
                     b.Navigation("Memberships");
                 });

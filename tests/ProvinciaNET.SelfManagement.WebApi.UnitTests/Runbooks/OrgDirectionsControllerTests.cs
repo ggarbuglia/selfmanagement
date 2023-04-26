@@ -1,17 +1,17 @@
-﻿namespace ProvinciaNET.SelfManagement.WebApi.UnitTests
+﻿namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Runbooks
 {
-    public class OrgCostCentersControllerTests
+    public class OrgDirectionsControllerTests
     {
-        private readonly IOrgCostCentersService _service;
-        private readonly OrgCostCentersController _controller;
+        private readonly IOrgDirectionsService _service;
+        private readonly OrgDirectionsController _controller;
 
-        public OrgCostCentersControllerTests()
+        public OrgDirectionsControllerTests()
         {
-            var mock = new Mock<ILogger<OrgCostCentersController>>();
-            ILogger<OrgCostCentersController> logger = mock.Object;
+            var mock = new Mock<ILogger<OrgDirectionsController>>();
+            ILogger<OrgDirectionsController> logger = mock.Object;
 
-            _service = new FakeOrgCostCentersService();
-            _controller = new OrgCostCentersController(logger, _service);
+            _service = new FakeOrgDirectionsService();
+            _controller = new OrgDirectionsController(logger, _service);
         }
 
         [Fact]
@@ -20,8 +20,8 @@
             // Arrange
 
             // Act
-            var result = await _controller.GetOrgCostCenters();
-            var items = (result.Result as ObjectResult)?.Value as IEnumerable<Core.Entities.OrgCostCenter>;
+            var result = await _controller.GetOrgDirections();
+            var items = (result.Result as ObjectResult)?.Value as IEnumerable<OrgDirection>;
             var count = items?.Count();
 
             // Assert
@@ -35,11 +35,11 @@
         {
             // Arrange
             var id = 1;
-            var name = "Cost Center 1";
+            var name = "Direction 1";
 
             // Act
-            var result = await _controller.GetOrgCostCenter(id);
-            var item = (result.Result as ObjectResult)?.Value as Core.Entities.OrgCostCenter;
+            var result = await _controller.GetOrgDirection(id);
+            var item = (result.Result as ObjectResult)?.Value as OrgDirection;
 
             // Assert
             Assert.NotNull(result);
@@ -48,14 +48,13 @@
             Assert.Equal(name, item?.Name);
         }
 
-
         [Fact]
         public async Task GetById_Returns404NotFoundAsync()
         {
             // Arrange
 
             // Act
-            var result = await _controller.GetOrgCostCenter(500);
+            var result = await _controller.GetOrgDirection(500);
 
             // Assert
             Assert.NotNull(result);
@@ -66,9 +65,9 @@
         public async Task Post_Return201CreatedAtActionAsync()
         {
             // Arrange
-            var name = "Cost Center X";
+            var name = "Direction X";
 
-            var entity = new Core.Entities.OrgCostCenter()
+            var entity = new OrgDirection()
             {
                 Name = name,
                 Active = true,
@@ -77,13 +76,13 @@
             };
 
             // Act
-            var result = await _controller.PostOrgCostCenter(entity);
-            var item = (result.Result as CreatedAtActionResult)?.Value as Core.Entities.OrgCostCenter;
+            var result = await _controller.PostOrgDirection(entity);
+            var item = (result.Result as CreatedAtActionResult)?.Value as OrgDirection;
 
             // Assert
             Assert.NotNull(result);
             Assert.IsType<CreatedAtActionResult>(result.Result);
-            Assert.IsType<Core.Entities.OrgCostCenter>(item);
+            Assert.IsType<OrgDirection>(item);
             Assert.Equal(name, item.Name);
         }
 
@@ -91,17 +90,17 @@
         public async Task Post_Return400BadRequestAsync()
         {
             // Arrange
-            var entity = new Core.Entities.OrgCostCenter()
+            var entity = new OrgDirection()
             {
                 Id = 1,
-                Name = "Cost Center 1",
+                Name = "Direction 1",
                 Active = true,
                 CreatedBy = "System",
                 CreatedOn = DateTime.Now
             };
 
             // Act
-            var result = await _controller.PostOrgCostCenter(entity);
+            var result = await _controller.PostOrgDirection(entity);
 
             // Assert
             Assert.NotNull(result);
@@ -113,20 +112,20 @@
         {
             // Arrange
             var id = 2;
-            var name = "Cost Center 2 Edited";
-            var entity = new Core.Entities.OrgCostCenter()
+            var name = "Direction 2 Edited";
+            var entity = new OrgDirection()
             {
-                Id        = id,
-                Name      = name,
-                Active    = true,
+                Id = id,
+                Name = name,
+                Active = true,
                 CreatedBy = "System",
                 CreatedOn = DateTime.Now
             };
 
             // Act
-            var result1 = await _controller.PutOrgCostCenter(id, entity);
-            var result2 = await _controller.GetOrgCostCenter(id);
-            var item = (result2.Result as ObjectResult)?.Value as Core.Entities.OrgCostCenter;
+            var result1 = await _controller.PutOrgDirection(id, entity);
+            var result2 = await _controller.GetOrgDirection(id);
+            var item = (result2.Result as ObjectResult)?.Value as OrgDirection;
 
             // Assert
             Assert.NotNull(result1);
@@ -143,17 +142,17 @@
         {
             // Arrange
             var id = 1;
-            var entity = new Core.Entities.OrgCostCenter()
+            var entity = new OrgDirection()
             {
-                Id        = 2,
-                Name      = "Cost Center 2",
-                Active    = true,
+                Id = 2,
+                Name = "Direction 2",
+                Active = true,
                 CreatedBy = "System",
                 CreatedOn = DateTime.Now
             };
 
             // Act
-            var result = await _controller.PutOrgCostCenter(id, entity);
+            var result = await _controller.PutOrgDirection(id, entity);
 
             // Assert
             Assert.NotNull(result);
@@ -164,26 +163,23 @@
         public async Task Put_Return404NotFoundAsync()
         {
             // Arrange
-            var id     = 500;
-            var name   = "Cost Center 2 Edited";
-            var entity = new Core.Entities.OrgCostCenter()
+            var id = 500;
+            var entity = new OrgDirection()
             {
-                Id        = id,
-                Name      = name,
-                Active    = true,
+                Id = id,
+                Name = "Direction 1",
+                Active = true,
                 CreatedBy = "System",
                 CreatedOn = DateTime.Now
             };
 
             // Act
-            var result = await _controller.PutOrgCostCenter(id, entity);
+            var result = await _controller.PutOrgDirection(id, entity);
 
             // Assert
             Assert.NotNull(result);
             Assert.IsType<NotFoundResult>(result);
         }
-
-
 
         [Fact]
         public async Task Delete_Return204NoContentAsync()
@@ -192,7 +188,7 @@
             var id = 2;
 
             // Act
-            var result = await _controller.DeleteOrgCostCenter(id);
+            var result = await _controller.DeleteOrgDirection(id);
 
             // Assert
             Assert.NotNull(result);
@@ -206,7 +202,7 @@
             var id = 500;
 
             // Act
-            var result = await _controller.DeleteOrgCostCenter(id);
+            var result = await _controller.DeleteOrgDirection(id);
 
             // Assert
             Assert.NotNull(result);

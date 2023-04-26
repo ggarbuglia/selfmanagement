@@ -9,9 +9,6 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
     {
         #region Properties
 
-        [ConcurrencyCheck, JsonPropertyOrder(1)]
-        public int? AdUserAccountId { get; set; }
-
         [ConcurrencyCheck, Column(TypeName = "varchar(100)"), Required, JsonPropertyOrder(2)]
         public string Status { get; set; } = string.Empty;
 

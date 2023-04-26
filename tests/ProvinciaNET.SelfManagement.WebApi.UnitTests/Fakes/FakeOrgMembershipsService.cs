@@ -1,52 +1,58 @@
 ﻿namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Fakes
 {
-    internal class FakeOrgCostCentersService : IOrgCostCentersService
+    internal class FakeOrgMembershipsService : IOrgMembershipsService
     {
-        private readonly List<OrgCostCenter> _items;
+        private readonly List<OrgMembership> _items;
 
-        public FakeOrgCostCentersService()
+        public FakeOrgMembershipsService()
         {
-            _items = new List<OrgCostCenter>
+            _items = new List<OrgMembership>
             {
-                new OrgCostCenter()
+                new OrgMembership()
                 {
                     Id = 1,
-                    Name = "CostCenter 1",
+                    AdGroupDisplayName = "AdGroupDisplayName 1",
+                    AdGroupAccountName = "AdGroupAccountName 1",
+                    Show = true,
                     Active = true,
                     CreatedBy = "System",
-                    CreatedOn = DateTime.Now
+                    CreatedOn = DateTime.Now,
+                    Structure = new OrgStructure()
                 },
 
-                new OrgCostCenter()
+                new OrgMembership()
                 {
                     Id = 2,
-                    Name = "CostCenter 2",
+                    AdGroupDisplayName = "AdGroupDisplayName 2",
+                    AdGroupAccountName = "AdGroupAccountName 2",
+                    Show = true,
                     Active = true,
                     CreatedBy = "System",
-                    CreatedOn = DateTime.Now
+                    CreatedOn = DateTime.Now,
+                    Structure = new OrgStructure()
                 }
             };
         }
 
-        public async Task<IEnumerable<OrgCostCenter>> Get()
+        public async Task<IEnumerable<OrgMembership>> Get()
         {
             return await Task.FromResult(_items);
         }
 
-        public async Task<OrgCostCenter?> Get(int id)
+        public async Task<OrgMembership?> Get(int id)
         {
             var entity = _items.FirstOrDefault(o => o.Id == id);
             return await Task.FromResult(entity);
         }
 
-        public async Task<OrgCostCenter> Post(OrgCostCenter entity)
+        public async Task<OrgMembership> Post(OrgMembership entity)
         {
             entity.Id = _items.Count + 1;
             _items.Add(entity);
             return await Task.FromResult(entity);
         }
 
-        public Task Put(int id, OrgCostCenter entity)
+        public Task Put(int id, OrgMembership entity)
         {
             var idx = _items.IndexOf(_items.First(o => o.Id == id));
             _items[idx] = entity;

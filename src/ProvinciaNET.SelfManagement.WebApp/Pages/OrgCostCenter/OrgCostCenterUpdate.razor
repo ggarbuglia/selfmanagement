@@ -2,12 +2,7 @@
 
 @attribute [Authorize]
 @inject IHttpContextAccessor HttpContextAccessor
-@inject IJSRuntime JSRuntime
-@inject NavigationManager NavigationManager
 @inject DialogService DialogService
-@inject TooltipService TooltipService
-@inject ContextMenuService ContextMenuService
-@inject NotificationService NotificationService
 @inject OrgCostCenterService OrgCostCenterService
 @inject Microsoft.Extensions.Localization.IStringLocalizer<OrgCostCenterUpdate> L
 
@@ -30,13 +25,13 @@
 </RadzenRow>
 <RadzenColumn SizeMD=12>
     <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">Cannot save OrgCostCenter</RadzenAlert>
-    <RadzenTemplateForm TItem="OrgCostCenter" Data="@orgCostCenter" Visible="@(orgCostCenter != null && canEdit)" Submit="@FormSubmit">
+    <RadzenTemplateForm TItem="OrgCostCenter" Data="@resource" Visible="@(resource != null && canEdit)" Submit="@FormSubmit">
         <RadzenRow style="margin-bottom: 1rem">
             <RadzenColumn SizeMD="3">
                 <RadzenLabel Text="Name" Component="Name" style="width: 100%" />
             </RadzenColumn>
             <RadzenColumn SizeMD="9">
-                <RadzenTextBox style="display: block; width: 100%" @bind-Value="@orgCostCenter.Name" Name="Name" />
+                <RadzenTextBox Name="Name" @bind-Value="@resource!.Name" style="display: block; width: 100%" />
                 <RadzenRequiredValidator Component="Name" Text="Name is required" />
             </RadzenColumn>
         </RadzenRow>
@@ -45,12 +40,12 @@
                 <RadzenLabel Text="Active" Component="Active" style="width: 100%" />
             </RadzenColumn>
             <RadzenColumn SizeMD="9">
-                <RadzenCheckBox @bind-Value="@orgCostCenter.Active" Name="Active" />
+                <RadzenCheckBox Name="Active" @bind-Value="@resource!.Active" />
             </RadzenColumn>
         </RadzenRow>
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.5rem">
-            <RadzenButton ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Submit" Icon="save" Text="Save" Variant="Variant.Flat" />
-            <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Variant="Variant.Flat" Click="@CancelButtonClick"  />
+            <RadzenButton ButtonStyle="ButtonStyle.Primary" Text="Save" Variant="Variant.Flat" ButtonType="ButtonType.Submit" Icon="save" />
+            <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Variant="Variant.Flat" Click="@CancelButtonClick" />
         </RadzenStack>
     </RadzenTemplateForm>
 </RadzenColumn>
@@ -59,29 +54,31 @@
     [Parameter]
     public int Id { get; set; }
 
-    bool hasChanges   = false;
-    bool canEdit      = true;
+    bool hasChanges = false;
+    bool canEdit = true;
     bool errorVisible = false;
-    OrgCostCenter orgCostCenter = new OrgCostCenter();
+    OrgCostCenter? resource;
 
     protected override async Task OnInitializedAsync()
     {
-        orgCostCenter = await OrgCostCenterService.GetOrgCostCenter(Id);
+        resource = await OrgCostCenterService.GetAsync(Id);
         await base.OnInitializedAsync();
     }
 
     async Task FormSubmit()
     {
+        if (resource == null) return;
+
         try
         {
-            orgCostCenter.ModifiedBy = $"{HttpContextAccessor.HttpContext?.User.Identity?.Name?.Split("\\")[1]}";
-            await OrgCostCenterService.UpdateOrgCostCenter(Id, orgCostCenter);
-            DialogService.Close(orgCostCenter);
+            resource.ModifiedBy = $"{HttpContextAccessor.HttpContext?.User.Identity?.Name?.Split("\\").Last()}";
+            await OrgCostCenterService.UpdateAsync(Id, resource);
+            DialogService.Close(resource);
         }
         catch (Exception)
         {
-            //hasChanges = ex is Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException;
-            //canEdit    = !(ex is Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException);
+            hasChanges = false;
+            canEdit = true;
             errorVisible = true;
         }
     }
@@ -93,10 +90,8 @@
 
     async Task ReloadButtonClick(MouseEventArgs args)
     {
-        // TODO: OrgCostCenterService.Reset();
         hasChanges = false;
-        canEdit    = true;
-
-        orgCostCenter = await OrgCostCenterService.GetOrgCostCenter(Id);
+        canEdit = true;
+        resource = await OrgCostCenterService.GetAsync(Id);
     }
 }

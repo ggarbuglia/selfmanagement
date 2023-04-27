@@ -1,15 +1,10 @@
 ﻿@page "/orgcostcenters"
 
 @attribute [Authorize]
-@inject IJSRuntime JSRuntime
-@inject NavigationManager NavigationManager
-@inject DialogService DialogService
-@inject TooltipService TooltipService
-@inject ContextMenuService ContextMenuService
 @inject NotificationService NotificationService
+@inject DialogService DialogService
 @inject OrgCostCenterService OrgCostCenterService
-
-@inject Microsoft.Extensions.Localization.IStringLocalizer<OrgCostCenters> L
+@inject Microsoft.Extensions.Localization.IStringLocalizer<OrgCostCenterUpdate> L
 
 <PageTitle>OrgCostCenters</PageTitle>
 <RadzenStack>
@@ -30,9 +25,9 @@
     <RadzenTextBox Placeholder="Search ..." style="display: block; width: 100%" @oninput="@Search" />
     <RadzenRow>
         <RadzenColumn SizeMD=12>
-            <RadzenDataGrid @ref="grid0" Data="@orgCostCenters" LoadData="@LoadData" TItem="OrgCostCenter" 
-                IsLoading="@isLoading" Count="@count" AllowFiltering="true" FilterMode="FilterMode.Advanced" RowDoubleClick="@EditRow"
-                AllowPaging="true" AllowSorting="true" ShowPagingSummary="true" PageSize=@pagesize PageSizeOptions=@(new int[]{5, 10, 20, 30})>
+            <RadzenDataGrid @ref="grid0" Data="@resources" LoadData="@LoadData" TItem="OrgCostCenter"
+                            IsLoading="@isLoading" Count="@count" AllowFiltering="true" FilterMode="FilterMode.Advanced" RowDoubleClick="@EditRow"
+                            AllowPaging="true" AllowSorting="true" ShowPagingSummary="true" PageSize=@pagesize PageSizeOptions=@(new int[]{5, 10, 20, 30})>
                 <Columns>
                     <RadzenDataGridColumn TItem="OrgCostCenter" Property="Id" Title="Id" Width="70px" />
                     <RadzenDataGridColumn TItem="OrgCostCenter" Property="Name" Title="Name" />
@@ -42,9 +37,14 @@
                     <RadzenDataGridColumn TItem="OrgCostCenter" Property="ModifiedBy" Title="Modified By" Width="200px" />
                     <RadzenDataGridColumn TItem="OrgCostCenter" Property="ModifiedOn" Title="Modified On" Width="130px" FormatString="{0:dd/MM/yyy}" />
                     <RadzenDataGridColumn TItem="OrgCostCenter" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
-                        <Template Context="orgCostCenter">
-                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium" Shade="Shade.Lighter" Variant="Variant.Flat"
-                                          Click=@(args => GridDeleteButtonClick(args, orgCostCenter)) @onclick:stopPropagation="true" />
+                        <Template Context="resource">
+                            <RadzenButton ButtonStyle="ButtonStyle.Danger"
+                                          Icon="delete"
+                                          Size="ButtonSize.Medium"
+                                          Shade="Shade.Lighter"
+                                          Variant="Variant.Flat"
+                                          Click=@(args => GridDeleteButtonClick(args, resource))
+                                          @onclick:stopPropagation="true" />
                         </Template>
                     </RadzenDataGridColumn>
                 </Columns>
@@ -55,17 +55,17 @@
 
 @code {
     bool isLoading = false;
-    int count      = 0;
-    int pagesize   = 10;
+    int count = 0;
+    int pagesize = 10;
     RadzenDataGrid<OrgCostCenter>? grid0;
-    IEnumerable<OrgCostCenter> orgCostCenters = new List<OrgCostCenter>();
-    OrgCostCenter orgCostCenter = new OrgCostCenter();
+    IEnumerable<OrgCostCenter>? resources;
+    OrgCostCenter? resource;
 
     protected override async Task OnInitializedAsync()
     {
-        var result     = await OrgCostCenterService.GetOrgCostCenters(top: pagesize, skip: 0, count: true);
-        orgCostCenters = result.Value.AsODataEnumerable();
-        count          = result.Count;
+        var result = await OrgCostCenterService.GetOdataAsync(top: pagesize, skip: 0, count: true);
+        resources = result.Value.AsODataEnumerable();
+        count = result.Count;
 
         await base.OnInitializedAsync();
     }
@@ -74,41 +74,41 @@
     {
         isLoading = true;
 
-        var result     = await OrgCostCenterService.GetOrgCostCenters(filter: args.Filter, top: args.Top, skip: args.Skip, orderby: args.OrderBy, count: true);
-        orgCostCenters = result.Value.AsODataEnumerable();
-        count          = result.Count;
+        var result = await OrgCostCenterService.GetOdataAsync(filter: args.Filter, top: args.Top, skip: args.Skip, orderby: args.OrderBy, count: true);
+        resources = result.Value.AsODataEnumerable();
+        count = result.Count;
 
         isLoading = false;
     }
 
     async Task Search(ChangeEventArgs args)
     {
-        await grid0.GoToPage(0);
-        var result     = await OrgCostCenterService.GetOrgCostCenters(filter: $"contains(Name,'{args.Value}')", count: true);
-        orgCostCenters = result.Value.AsODataEnumerable();
-        count          = result.Count;
+        if (grid0 != null) await grid0.GoToPage(0);
+        var result = await OrgCostCenterService.GetOdataAsync(filter: $"contains(Name,'{args.Value}')", count: true);
+        resources = result.Value.AsODataEnumerable();
+        count = result.Count;
     }
 
     async Task AddButtonClick(MouseEventArgs args)
     {
         await DialogService.OpenAsync<OrgCostCenterCreate>("Add OrgCostCenter", null);
-        await grid0.Reload();
+        if (grid0 != null) await grid0.Reload();
     }
 
     async Task EditRow(DataGridRowMouseEventArgs<OrgCostCenter> args)
     {
         await DialogService.OpenAsync<OrgCostCenterUpdate>("Edit OrgCostCenter", new Dictionary<string, object> { { "Id", args.Data.Id } });
-        await grid0.Reload();
+        if (grid0 != null) await grid0.Reload();
     }
 
-    async Task GridDeleteButtonClick(MouseEventArgs args, OrgCostCenter orgCostCenter)
+    async Task GridDeleteButtonClick(MouseEventArgs args, OrgCostCenter resource)
     {
         try
         {
             if (await DialogService.Confirm("Are you sure you want to delete this record?") == true)
             {
-                var deleteResult = await OrgCostCenterService.DeleteOrgCostCenter(orgCostCenter.Id);
-                if (deleteResult != null) await grid0.Reload();
+                await OrgCostCenterService.DeleteAsync(resource.Id);
+                if (grid0 != null) await grid0.Reload();
             }
         }
         catch (Exception ex)
@@ -117,33 +117,13 @@
                 {
                     Severity = NotificationSeverity.Error,
                     Summary = $"Error",
-                    Detail = $"Unable to delete OrgCostCenter"
+                    Detail = $"Unable to delete OrgCostCenter. {ex.Message}"
                 });
         }
     }
 
     void ExportClick(RadzenSplitButtonItem args)
     {
-        if (args?.Value == "csv")
-        {
-            OrgCostCenterService.ExportOrgCostCentersToCSV(new Query
-                {
-                    Filter = $@"{(string.IsNullOrEmpty(grid0.Query.Filter) ? "true" : grid0.Query.Filter)}",
-                    OrderBy = $"{grid0.Query.OrderBy}",
-                    Expand = "",
-                    Select = string.Join(",", grid0.ColumnsCollection.Where(c => c.GetVisible() && !string.IsNullOrEmpty(c.Property)).Select(c => c.Property))
-                }, "OrgCostCenters");
-        }
-
-        if (args == null || args.Value == "xlsx")
-        {
-            OrgCostCenterService.ExportOrgCostCentersToExcel(new Query
-                {
-                    Filter = $@"{(string.IsNullOrEmpty(grid0.Query.Filter) ? "true" : grid0.Query.Filter)}",
-                    OrderBy = $"{grid0.Query.OrderBy}",
-                    Expand = "",
-                    Select = string.Join(",", grid0.ColumnsCollection.Where(c => c.GetVisible() && !string.IsNullOrEmpty(c.Property)).Select(c => c.Property))
-                }, "OrgCostCenters");
-        }
+        OrgCostCenterService.ExportToFile(args.Value, "OrgCostCenters");
     }
 }

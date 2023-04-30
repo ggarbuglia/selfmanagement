@@ -1,10 +1,10 @@
 ﻿@using System.Globalization;
 
 @inject NavigationManager NavigationManager
-@inject Microsoft.Extensions.Localization.IStringLocalizer<CulturePicker> L
+@inject IStringLocalizer<LocalizationResource> L
 
 <RadzenDropDown @bind-Value="@culture" Change="@ChangeCulture" TValue="string" TextProperty="Text" ValueProperty="Value"
-                Data="@(new [] { new { Text = "English", Value = "en" }, new { Text = "Español", Value = "es" } })" />
+                Data="@(new [] { new { Text = @L["English"], Value = "en" }, new { Text = @L["Spanish"], Value = "es" } })" />
 
 @code {
     protected string? culture;

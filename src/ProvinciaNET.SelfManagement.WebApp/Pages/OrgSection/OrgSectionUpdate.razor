@@ -1,12 +1,14 @@
-﻿@page "/orgcostcenter/update"
+﻿@page "/orgsection/update"
 
 @attribute [Authorize]
 @inject IHttpContextAccessor HttpContextAccessor
 @inject DialogService DialogService
+@inject IOrgSectionService OrgSectionService
+@inject IOrgDirectionService OrgDirectionService
 @inject IOrgCostCenterService OrgCostCenterService
 @inject IStringLocalizer<LocalizationResource> L
 
-<PageTitle>@L["Edit"] @L["Cest Center"]</PageTitle>
+<PageTitle>@L["Edit"] @L["Section"]</PageTitle>
 <RadzenRow>
     <RadzenColumn SizeMD="9">
         <RadzenLabel style="font-weight: bold" Text="@L["Item not available"]" Visible="@(!canEdit)" />
@@ -24,8 +26,8 @@
     </RadzenColumn>
 </RadzenRow>
 <RadzenColumn SizeMD=12>
-    <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@L["Cannot save"] OrgCostCenter</RadzenAlert>
-    <RadzenTemplateForm TItem="OrgCostCenter" Data="@resource" Visible="@(resource != null && canEdit)" Submit="@FormSubmit">
+    <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@L["Cannot save"] OrgSection</RadzenAlert>
+    <RadzenTemplateForm TItem="OrgSection" Data="@resource" Visible="@(resource != null && canEdit)" Submit="@FormSubmit">
         <RadzenRow style="margin-bottom: 1rem">
             <RadzenColumn SizeMD="3">
                 <RadzenLabel Text="@L["Name"]" Component="Name" style="width: 100%" />
@@ -43,6 +45,26 @@
                 <RadzenCheckBox Name="Active" @bind-Value="@resource!.Active" />
             </RadzenColumn>
         </RadzenRow>
+        <RadzenRow style="margin-bottom: 1rem">
+            <RadzenColumn SizeMD="3">
+                <RadzenLabel Text="@L["CostCenter"]" Component="OrgCostCenter" style="width: 100%" />
+            </RadzenColumn>
+            <RadzenColumn SizeMD="9">
+                <RadzenDropDownDataGrid Data="@orgCostCenters" TextProperty="Name" ValueProperty="Id"
+                                        Placeholder="@($"{L["Choose"]} {L["CostCenter"]}")" style="display: block; width: 100%"
+                                        @bind-Value="@resource!.CostCenterId" Name="CostCenterId" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow style="margin-bottom: 1rem">
+            <RadzenColumn SizeMD="3">
+                <RadzenLabel Text="@L["Direction"]" Component="OrgDirection" style="width: 100%" />
+            </RadzenColumn>
+            <RadzenColumn SizeMD="9">
+                <RadzenDropDownDataGrid Data="@orgDirections" TextProperty="Name" ValueProperty="Id"
+                                        Placeholder="@($"{L["ChooseA"]} {L["Direction"]}")" style="display: block; width: 100%"
+                                        @bind-Value="@resource!.DirectionId" Name="DirectionId" />
+            </RadzenColumn>
+        </RadzenRow>
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.5rem">
             <RadzenButton ButtonStyle="ButtonStyle.Primary" Text="@L["Save"]" Variant="Variant.Flat" ButtonType="ButtonType.Submit" Icon="save" />
             <RadzenButton ButtonStyle="ButtonStyle.Light" Text="@L["Cancel"]" Variant="Variant.Flat" Click="@CancelButtonClick" />
@@ -57,11 +79,15 @@
     bool hasChanges = false;
     bool canEdit = true;
     bool errorVisible = false;
-    OrgCostCenter? resource;
+    OrgSection? resource;
+    IEnumerable<OrgCostCenter>? orgCostCenters;
+    IEnumerable<OrgDirection>? orgDirections;
 
     protected override async Task OnInitializedAsync()
     {
-        resource = await OrgCostCenterService.GetAsync(Id);
+        resource = await OrgSectionService.GetAsync(Id);
+        orgCostCenters = await OrgCostCenterService.GetAsync();
+        orgDirections = await OrgDirectionService.GetAsync();
         await base.OnInitializedAsync();
     }
 
@@ -72,7 +98,7 @@
         try
         {
             resource.ModifiedBy = $"{HttpContextAccessor.HttpContext?.User.Identity?.Name?.Split("\\").Last()}";
-            await OrgCostCenterService.UpdateAsync(Id, resource);
+            await OrgSectionService.UpdateAsync(Id, resource);
             DialogService.Close(resource);
         }
         catch (Exception)
@@ -92,6 +118,6 @@
     {
         hasChanges = false;
         canEdit = true;
-        resource = await OrgCostCenterService.GetAsync(Id);
+        resource = await OrgSectionService.GetAsync(Id);
     }
 }

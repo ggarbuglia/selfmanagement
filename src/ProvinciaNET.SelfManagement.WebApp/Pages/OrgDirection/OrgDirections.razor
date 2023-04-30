@@ -1,16 +1,16 @@
-﻿@page "/orgcostcenters"
+﻿@page "/orgdirections"
 
 @attribute [Authorize]
 @inject NotificationService NotificationService
 @inject DialogService DialogService
-@inject IOrgCostCenterService OrgCostCenterService
+@inject IOrgDirectionService OrgDirectionService
 @inject IStringLocalizer<LocalizationResource> L
 
-<PageTitle>@L["CostCenters"]</PageTitle>
+<PageTitle>@L["Directions"]</PageTitle>
 <RadzenStack>
     <RadzenRow AlignItems="AlignItems.Center">
         <RadzenColumn Size="12" SizeMD="6">
-            <RadzenText Text="OrgCostCenters" TextStyle="TextStyle.H4" TagName="TagName.H1" style="margin: 0" />
+            <RadzenText Text="OrgDirections" TextStyle="TextStyle.H4" TagName="TagName.H1" style="margin: 0" />
         </RadzenColumn>
         <RadzenColumn Size="12" SizeMD="6">
             <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.5rem">
@@ -25,18 +25,18 @@
     <RadzenTextBox Placeholder="@L["Search"]" style="display: block; width: 100%" @oninput="@Search" />
     <RadzenRow>
         <RadzenColumn SizeMD=12>
-            <RadzenDataGrid @ref="grid0" Data="@resources" LoadData="@LoadData" TItem="OrgCostCenter"
+            <RadzenDataGrid @ref="grid0" Data="@resources" LoadData="@LoadData" TItem="OrgDirection"
                             IsLoading="@isLoading" Count="@count" AllowFiltering="true" FilterMode="FilterMode.Advanced" RowDoubleClick="@EditRow"
                             AllowPaging="true" AllowSorting="true" ShowPagingSummary="true" PageSize=@pagesize PageSizeOptions=@(new int[]{5, 10, 20, 30})>
                 <Columns>
-                    <RadzenDataGridColumn TItem="OrgCostCenter" Property="Id" Title="Id" Width="70px" />
-                    <RadzenDataGridColumn TItem="OrgCostCenter" Property="Name" Title="@L["Name"]" />
-                    <RadzenDataGridColumn TItem="OrgCostCenter" Property="Active" Title="@L["Active"]" Width="90px" />
-                    <RadzenDataGridColumn TItem="OrgCostCenter" Property="CreatedBy" Title="@L["Created By"]" Width="200px" />
-                    <RadzenDataGridColumn TItem="OrgCostCenter" Property="CreatedOn" Title="@L["Created On"]" Width="130px" FormatString="{0:dd/MM/yyy}" />
-                    <RadzenDataGridColumn TItem="OrgCostCenter" Property="ModifiedBy" Title="@L["Modified By"]" Width="200px" />
-                    <RadzenDataGridColumn TItem="OrgCostCenter" Property="ModifiedOn" Title="@L["Modified On"]" Width="130px" FormatString="{0:dd/MM/yyy}" />
-                    <RadzenDataGridColumn TItem="OrgCostCenter" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+                    <RadzenDataGridColumn TItem="OrgDirection" Property="Id" Title="Id" Width="70px" />
+                    <RadzenDataGridColumn TItem="OrgDirection" Property="Name" Title="@L["Name"]" />
+                    <RadzenDataGridColumn TItem="OrgDirection" Property="Active" Title="@L["Active"]" Width="90px" />
+                    <RadzenDataGridColumn TItem="OrgDirection" Property="CreatedBy" Title="@L["Created By"]" Width="200px" />
+                    <RadzenDataGridColumn TItem="OrgDirection" Property="CreatedOn" Title="@L["Created On"]" Width="130px" FormatString="{0:dd/MM/yyy}" />
+                    <RadzenDataGridColumn TItem="OrgDirection" Property="ModifiedBy" Title="@L["Modified By"]" Width="200px" />
+                    <RadzenDataGridColumn TItem="OrgDirection" Property="ModifiedOn" Title="@L["Modified On"]" Width="130px" FormatString="{0:dd/MM/yyy}" />
+                    <RadzenDataGridColumn TItem="OrgDirection" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
                         <Template Context="resource">
                             <RadzenButton ButtonStyle="ButtonStyle.Danger"
                                           Icon="delete"
@@ -57,13 +57,13 @@
     bool isLoading = false;
     int count = 0;
     int pagesize = 10;
-    RadzenDataGrid<OrgCostCenter>? grid0;
-    IEnumerable<OrgCostCenter>? resources;
-    OrgCostCenter? resource;
+    RadzenDataGrid<OrgDirection>? grid0;
+    IEnumerable<OrgDirection>? resources;
+    OrgDirection? resource;
 
     async Task LoadData(string? filter = null, int? top = null, int? skip = null, string? orderby = null)
     {
-        var result = await OrgCostCenterService.GetOdataAsync(filter: filter, top: top, skip: skip, orderby: orderby, count: true);
+        var result = await OrgDirectionService.GetOdataAsync(filter: filter, top: top, skip: skip, orderby: orderby, count: true);
         resources = result.Value.AsODataEnumerable();
         count = result.Count;
     }
@@ -94,23 +94,23 @@
 
     async Task AddButtonClick(MouseEventArgs args)
     {
-        await DialogService.OpenAsync<OrgCostCenterCreate>($"{L["Add"]} {L["CostCenter"]}", null);
+        await DialogService.OpenAsync<OrgDirectionCreate>($"{L["Add"]} {L["Direction"]}", null);
         if (grid0 != null) await grid0.Reload();
     }
 
-    async Task EditRow(DataGridRowMouseEventArgs<OrgCostCenter> args)
+    async Task EditRow(DataGridRowMouseEventArgs<OrgDirection> args)
     {
-        await DialogService.OpenAsync<OrgCostCenterUpdate>($"{L["Edit"]} {L["CostCenter"]}", new Dictionary<string, object> { { "Id", args.Data.Id } });
+        await DialogService.OpenAsync<OrgDirectionUpdate>($"{L["Edit"]} {L["Direction"]}", new Dictionary<string, object> { { "Id", args.Data.Id } });
         if (grid0 != null) await grid0.Reload();
     }
 
-    async Task GridDeleteButtonClick(MouseEventArgs args, OrgCostCenter resource)
+    async Task GridDeleteButtonClick(MouseEventArgs args, OrgDirection resource)
     {
         try
         {
             if (await DialogService.Confirm(L["Delete Confirmation"]) == true)
             {
-                await OrgCostCenterService.DeleteAsync(resource.Id);
+                await OrgDirectionService.DeleteAsync(resource.Id);
                 if (grid0 != null) await grid0.Reload();
             }
         }
@@ -120,13 +120,13 @@
                 {
                     Severity = NotificationSeverity.Error,
                     Summary = $"Error",
-                    Detail = $"{L["Unable to delete"]} OrgCostCenter. {ex.Message}"
+                    Detail = $"{L["Unable to delete"]} OrgDirection. {ex.Message}"
                 });
         }
     }
 
     void ExportClick(RadzenSplitButtonItem args)
     {
-        OrgCostCenterService.ExportToFile(args.Value, "OrgCostCenters");
+        OrgDirectionService.ExportToFile(args.Value, "OrgDirections");
     }
 }

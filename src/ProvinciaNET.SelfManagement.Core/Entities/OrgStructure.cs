@@ -19,18 +19,18 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
 
         #region Parent Properties
 
-        [Required]
+        public int MailDatabaseGroupId { get; set; }
         public virtual OrgMailDatabaseGroup? MailDatabaseGroup { get; set; }
 
-        [Required]
+        public int SectionId { get; set; }
         public virtual OrgSection? Section { get; set; }
 
         #endregion
 
         #region Child Properties
 
-        [JsonPropertyOrder(110)]
-        public ICollection<OrgMembership>? Memberships { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<OrgMembership>? Memberships { get; set; }
 
         #endregion
     }

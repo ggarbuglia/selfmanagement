@@ -28,18 +28,18 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
 
         #region Parent Properties
 
-        [Required]
-        public OrgLocation? Location { get; set; }
+        public int LocationId { get; set; }
+        public virtual OrgLocation? Location { get; set; }
 
-        [Required]
-        public OrgMembership? Membership { get; set; }
+        public int MembershipId { get; set; }
+        public virtual OrgMembership? Membership { get; set; }
 
         #endregion
 
         #region Child Properties
 
-        [JsonPropertyOrder(110)]
-        public ICollection<AdUserAccountProvision>? AdUserAccountProvisions { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<AdUserAccountProvision>? AdUserAccountProvisions { get; set; }
 
         #endregion
     }

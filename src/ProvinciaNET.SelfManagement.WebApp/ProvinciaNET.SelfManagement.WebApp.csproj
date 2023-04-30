@@ -7,9 +7,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
 		<PackageReference Include="DocumentFormat.OpenXml" Version="2.16.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="7.0.5" />
 		<PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.5" />
 		<PackageReference Include="NLog.Web.AspNetCore" Version="5.2.3" />
 		<PackageReference Include="Radzen.Blazor" Version="4.9.1" />
 	</ItemGroup>

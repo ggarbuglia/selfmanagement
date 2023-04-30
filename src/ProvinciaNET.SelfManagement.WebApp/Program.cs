@@ -1,6 +1,9 @@
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Net.Http.Headers;
 using NLog;
 using NLog.Web;
@@ -66,7 +69,7 @@ try
     builder.Services.AddHttpClient("SelfManagementWebApi", httpClient =>
     {
         var baseUri = cfg["Services:SelfManagementWebApiBaseUri"];
-        if (baseUri != null) 
+        if (baseUri != null)
         {
             httpClient.BaseAddress = new Uri(baseUri);
             httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
@@ -80,14 +83,23 @@ try
     // Add Localization
     builder.Services.AddLocalization();
 
+    // Add Healthchecks
+    builder.Services.AddHealthChecks()
+        .AddCheck<WebApiHealthCheck>("webapi", HealthStatus.Unhealthy);
+
     // Add HttpContext Accessor
     builder.Services.AddHttpContextAccessor();
 
+    // Add Radzen Scoped Services
     builder.Services.AddScoped<DialogService>();
     builder.Services.AddScoped<NotificationService>();
     builder.Services.AddScoped<TooltipService>();
     builder.Services.AddScoped<ContextMenuService>();
-    builder.Services.AddScoped<OrgCostCenterService>();
+
+    // Add SelfManagement Scoped Services
+    builder.Services.AddScoped<IOrgCostCenterService, OrgCostCenterService>();
+    builder.Services.AddScoped<IOrgDirectionService, OrgDirectionService>();
+    builder.Services.AddScoped<IOrgSectionService, OrgSectionService>();
 
     var app = builder.Build();
 
@@ -95,20 +107,29 @@ try
     if (!app.Environment.IsDevelopment())
     {
         app.UseExceptionHandler("/Error");
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
     }
 
     app.UseHttpsRedirection();
     app.UseStaticFiles();
     app.UseHeaderPropagation();
-    app.UseRequestLocalization(o => o.AddSupportedCultures("en", "es").AddSupportedUICultures("en", "es").SetDefaultCulture("es"));
+    app.UseRequestLocalization(options =>
+    {
+        options.AddSupportedCultures("en", "es");
+        options.AddSupportedUICultures("en", "es");
+        options.SetDefaultCulture("es");
+    });
     app.UseRouting();
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
     app.MapBlazorHub();
     app.MapFallbackToPage("/_Host");
+    app.MapHealthChecks("/health",
+        new HealthCheckOptions
+        {
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
 
     app.Run();
 }

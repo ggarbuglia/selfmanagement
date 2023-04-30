@@ -1,15 +1,17 @@
-﻿@page "/orgcostcenter/create"
+﻿@page "/orgsection/create"
 
 @attribute [Authorize]
 @inject IHttpContextAccessor HttpContextAccessor
 @inject DialogService DialogService
+@inject IOrgSectionService OrgSectionService
+@inject IOrgDirectionService OrgDirectionService
 @inject IOrgCostCenterService OrgCostCenterService
 @inject IStringLocalizer<LocalizationResource> L
 
-<PageTitle>@L["Add"] @L["Cest Center"]</PageTitle>
+<PageTitle>@L["Add"] @L["Section"]</PageTitle>
 <RadzenColumn SizeMD=12>
-    <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@L["Cannot save"] OrgCostCenter</RadzenAlert>
-    <RadzenTemplateForm TItem="OrgCostCenter" Data="@resource" Visible="@(resource != null && canEdit)" Submit="@FormSubmit">
+    <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@L["Cannot save"] OrgSection</RadzenAlert>
+    <RadzenTemplateForm TItem="OrgSection" Data="@resource" Visible="@(resource != null && canEdit)" Submit="@FormSubmit">
         <RadzenRow style="margin-bottom: 1rem">
             <RadzenColumn SizeMD="3">
                 <RadzenLabel Text="@L["Name"]" Component="Name" style="width: 100%" />
@@ -27,6 +29,26 @@
                 <RadzenCheckBox Name="Active" @bind-Value="@resource!.Active" />
             </RadzenColumn>
         </RadzenRow>
+        <RadzenRow style="margin-bottom: 1rem">
+            <RadzenColumn SizeMD="3">
+                <RadzenLabel Text="@L["CostCenter"]" Component="OrgCostCenter" style="width: 100%" />
+            </RadzenColumn>
+            <RadzenColumn SizeMD="9">
+                <RadzenDropDownDataGrid Data="@orgCostCenters" TextProperty="Name" ValueProperty="Id"
+                                        Placeholder="@($"{L["Choose"]} {L["CostCenter"]}")" style="display: block; width: 100%"
+                                        @bind-Value="@resource!.CostCenterId" Name="CostCenterId" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow style="margin-bottom: 1rem">
+            <RadzenColumn SizeMD="3">
+                <RadzenLabel Text="@L["Direction"]" Component="OrgDirection" style="width: 100%" />
+            </RadzenColumn>
+            <RadzenColumn SizeMD="9">
+                <RadzenDropDownDataGrid Data="@orgDirections" TextProperty="Name" ValueProperty="Id"
+                                        Placeholder="@($"{L["ChooseA"]} {L["Direction"]}")" style="display: block; width: 100%"
+                                        @bind-Value="@resource!.DirectionId" Name="DirectionId" />
+            </RadzenColumn>
+        </RadzenRow>
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.5rem">
             <RadzenButton ButtonStyle="ButtonStyle.Primary" Text="@L["Save"]" Variant="Variant.Flat" ButtonType="ButtonType.Submit" Icon="save" />
             <RadzenButton ButtonStyle="ButtonStyle.Light" Text="@L["Cancel"]" Variant="Variant.Flat" Click="@CancelButtonClick" />
@@ -37,11 +59,15 @@
 @code {
     bool canEdit = true;
     bool errorVisible = false;
-    OrgCostCenter? resource;
+    OrgSection? resource;
+    IEnumerable<OrgCostCenter>? orgCostCenters;
+    IEnumerable<OrgDirection>? orgDirections;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        resource = new OrgCostCenter();
+        resource = new OrgSection();
+        orgCostCenters = await OrgCostCenterService.GetAsync();
+        orgDirections = await OrgDirectionService.GetAsync();
         base.OnInitialized();
     }
 
@@ -52,7 +78,7 @@
         try
         {
             resource.CreatedBy = $"{HttpContextAccessor.HttpContext?.User.Identity?.Name?.Split("\\").Last()}";
-            await OrgCostCenterService.CreateAsync(resource);
+            await OrgSectionService.CreateAsync(resource);
             DialogService.Close(resource);
         }
         catch (Exception)

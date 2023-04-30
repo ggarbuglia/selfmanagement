@@ -16,8 +16,8 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
 
         #region Child Properties
 
-        [JsonPropertyOrder(110)]
-        public ICollection<OrgStructure>? Structures { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<OrgStructure>? Structures { get; set; }
 
         #endregion
     }

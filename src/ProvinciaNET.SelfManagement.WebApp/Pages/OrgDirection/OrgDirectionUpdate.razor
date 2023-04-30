@@ -1,15 +1,31 @@
-﻿@page "/orgcostcenter/create"
+﻿@page "/orgdirection/update"
 
 @attribute [Authorize]
 @inject IHttpContextAccessor HttpContextAccessor
 @inject DialogService DialogService
-@inject IOrgCostCenterService OrgCostCenterService
+@inject IOrgDirectionService OrgDirectionService
 @inject IStringLocalizer<LocalizationResource> L
 
-<PageTitle>@L["Add"] @L["Cest Center"]</PageTitle>
+<PageTitle>@L["Edit"] @L["Direction"]</PageTitle>
+<RadzenRow>
+    <RadzenColumn SizeMD="9">
+        <RadzenLabel style="font-weight: bold" Text="@L["Item not available"]" Visible="@(!canEdit)" />
+    </RadzenColumn>
+    <RadzenColumn SizeMD="3">
+        <RadzenButton ButtonStyle="ButtonStyle.Secondary" style="margin-bottom: 20px" Text="@L["Close"]" Visible="@(!canEdit)" Click="@CancelButtonClick" />
+    </RadzenColumn>
+</RadzenRow>
+<RadzenRow>
+    <RadzenColumn SizeMD="9">
+        <RadzenLabel style="font-weight: bold" Text="@L["Concurrency Conflict"]" Visible="@hasChanges" />
+    </RadzenColumn>
+    <RadzenColumn SizeMD="3">
+        <RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="autorenew" style="margin-bottom: 20px" Text="@L["Reload"]" Visible="@hasChanges" Click="@ReloadButtonClick" />
+    </RadzenColumn>
+</RadzenRow>
 <RadzenColumn SizeMD=12>
-    <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@L["Cannot save"] OrgCostCenter</RadzenAlert>
-    <RadzenTemplateForm TItem="OrgCostCenter" Data="@resource" Visible="@(resource != null && canEdit)" Submit="@FormSubmit">
+    <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@L["Cannot save"] OrgDirection</RadzenAlert>
+    <RadzenTemplateForm TItem="OrgDirection" Data="@resource" Visible="@(resource != null && canEdit)" Submit="@FormSubmit">
         <RadzenRow style="margin-bottom: 1rem">
             <RadzenColumn SizeMD="3">
                 <RadzenLabel Text="@L["Name"]" Component="Name" style="width: 100%" />
@@ -35,14 +51,18 @@
 </RadzenColumn>
 
 @code {
+    [Parameter]
+    public int Id { get; set; }
+
+    bool hasChanges = false;
     bool canEdit = true;
     bool errorVisible = false;
-    OrgCostCenter? resource;
+    OrgDirection? resource;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        resource = new OrgCostCenter();
-        base.OnInitialized();
+        resource = await OrgDirectionService.GetAsync(Id);
+        await base.OnInitializedAsync();
     }
 
     async Task FormSubmit()
@@ -51,12 +71,13 @@
 
         try
         {
-            resource.CreatedBy = $"{HttpContextAccessor.HttpContext?.User.Identity?.Name?.Split("\\").Last()}";
-            await OrgCostCenterService.CreateAsync(resource);
+            resource.ModifiedBy = $"{HttpContextAccessor.HttpContext?.User.Identity?.Name?.Split("\\").Last()}";
+            await OrgDirectionService.UpdateAsync(Id, resource);
             DialogService.Close(resource);
         }
         catch (Exception)
         {
+            hasChanges = false;
             canEdit = true;
             errorVisible = true;
         }
@@ -65,5 +86,12 @@
     void CancelButtonClick(MouseEventArgs args)
     {
         DialogService.Close(null);
+    }
+
+    async Task ReloadButtonClick(MouseEventArgs args)
+    {
+        hasChanges = false;
+        canEdit = true;
+        resource = await OrgDirectionService.GetAsync(Id);
     }
 }

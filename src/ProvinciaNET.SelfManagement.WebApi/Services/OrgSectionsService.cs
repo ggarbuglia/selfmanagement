@@ -31,7 +31,12 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
         /// <returns></returns>
         public async Task<IEnumerable<OrgSection>> Get()
         {
-            var result = await _context.OrgSections.Include(i => i.Structures).AsNoTracking().ToListAsync();
+            var result = await _context.OrgSections
+                .Include(i => i.CostCenter)
+                .Include(i => i.Direction)
+                .AsNoTracking()
+                .ToListAsync();
+
             _logger.LogInformation("Query Count: {count}", result.Count);
             return result;
         }
@@ -43,7 +48,10 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
         /// <returns></returns>
         public async Task<OrgSection?> Get(int id)
         {
-            return await _context.OrgSections.Include(i => i.Structures).FirstOrDefaultAsync(o => o.Id == id);
+            return await _context.OrgSections
+                .Include(i => i.CostCenter)
+                .Include(i => i.Direction)
+                .FirstOrDefaultAsync(o => o.Id == id);
         }
 
         /// <summary>

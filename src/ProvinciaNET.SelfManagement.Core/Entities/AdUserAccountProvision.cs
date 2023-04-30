@@ -22,8 +22,8 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
 
         #region Parent Properties
 
-        [Required]
-        public AdUserAccount? AdUserAccount { get; set; }
+        public int AdUserAccountId { get; set; }
+        public virtual AdUserAccount? AdUserAccount { get; set; }
 
         #endregion
     }

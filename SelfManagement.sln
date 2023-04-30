@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{772C3D68
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProvinciaNET.SelfManagement.WebApp.FunctionalTests", "tests\ProvinciaNET.SelfManagement.WebApp.FunctionalTests\ProvinciaNET.SelfManagement.WebApp.FunctionalTests.csproj", "{4C7AC381-857E-47F1-B7ED-56186483E105}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProvinciaNET.SelfManagement.WebApi.UnitTests", "tests\ProvinciaNET.SelfManagement.WebApi.UnitTests\ProvinciaNET.SelfManagement.WebApi.UnitTests.csproj", "{A028BF43-4C8F-446A-BE4D-3B9332749DFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProvinciaNET.SelfManagement.WebApi.UnitTests", "tests\ProvinciaNET.SelfManagement.WebApi.UnitTests\ProvinciaNET.SelfManagement.WebApi.UnitTests.csproj", "{A028BF43-4C8F-446A-BE4D-3B9332749DFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +71,7 @@ Global
 		{A028BF43-4C8F-446A-BE4D-3B9332749DFB} = {772C3D68-C275-4C0A-A4F5-8CC785408043}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		RESX_SortFileContentOnSave = False
 		SolutionGuid = {A6B8ECC3-7599-42BA-B7E6-ACA387D460DB}
 	EndGlobalSection
 EndGlobal

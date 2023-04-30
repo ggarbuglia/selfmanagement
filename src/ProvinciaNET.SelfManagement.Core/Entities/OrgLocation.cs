@@ -31,8 +31,8 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
 
         #region Child Properties
 
-        [JsonPropertyOrder(110)]
-        public ICollection<AdUserAccount>? AdUserAccounts { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<AdUserAccount>? AdUserAccounts { get; set; }
 
         #endregion
     }

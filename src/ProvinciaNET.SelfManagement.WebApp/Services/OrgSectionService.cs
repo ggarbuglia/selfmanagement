@@ -3,31 +3,32 @@ using ProvinciaNET.SelfManagement.Core.Entities;
 using Radzen;
 using System.Text;
 using System.Text.Encodings.Web;
+using System.Text.Json;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace ProvinciaNET.SelfManagement.WebApp.Services
 {
     /// <summary>
-    /// OrgCostCenter Service
+    /// OrgSection Service
     /// </summary>
-    public partial class OrgCostCenterService : IOrgCostCenterService
+    public partial class OrgSectionService : IOrgSectionService
     {
         private readonly HttpClient _httpClient;
         private readonly NavigationManager _navigationManager;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrgCostCenterService"/> class.
+        /// Initializes a new instance of the <see cref="OrgSectionService"/> class.
         /// </summary>
         /// <param name="httpClientFactory">The HTTP client factory.</param>
         /// <param name="navigationManager">The navigation manager.</param>
-        public OrgCostCenterService(IHttpClientFactory httpClientFactory, NavigationManager navigationManager)
+        public OrgSectionService(IHttpClientFactory httpClientFactory, NavigationManager navigationManager)
         {
             _httpClient = httpClientFactory.CreateClient("SelfManagementWebApi");
             _navigationManager = navigationManager;
         }
 
         /// <summary>
-        /// Gets all OrgCostCenters with the specified filter.
+        /// Gets all OrgSections with the specified filter.
         /// </summary>
         /// <param name="filter">The filter.</param>
         /// <param name="top">The top.</param>
@@ -36,74 +37,74 @@ namespace ProvinciaNET.SelfManagement.WebApp.Services
         /// <param name="expand">The expand.</param>
         /// <param name="select">The select.</param>
         /// <param name="count">The count.</param>
-        /// <returns>A collection of <see cref="OrgCostCenter"/></returns>
-        public async Task<ODataServiceResult<OrgCostCenter>> GetOdataAsync(string? filter = default, int? top = default, int? skip = default, string? orderby = default, string? expand = default, string? select = default, bool? count = default)
+        /// <returns>A collection of <see cref="OrgSection"/></returns>
+        public async Task<ODataServiceResult<OrgSection>> GetOdataAsync(string? filter = default, int? top = default, int? skip = default, string? orderby = default, string? expand = default, string? select = default, bool? count = default)
         {
-            var uri = new Uri($"{_httpClient.BaseAddress}odata/OrgCostCenters");
+            var uri = new Uri($"{_httpClient.BaseAddress}odata/OrgSections");
             uri = uri.GetODataUri(filter: filter, top: top, skip: skip, orderby: orderby, expand: expand, select: select, count: count);
 
             var response = await _httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, uri));
             response.EnsureSuccessStatusCode();
-            return await response.ReadAsync<ODataServiceResult<OrgCostCenter>>();
+            return await response.ReadAsync<ODataServiceResult<OrgSection>>();
         }
 
         /// <summary>
-        /// Gets all OrgCostCenters.
+        /// Gets all OrgSections.
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<OrgCostCenter>> GetAsync()
+        public async Task<IEnumerable<OrgSection>> GetAsync()
         {
-            var response = await _httpClient.GetAsync($"/api/OrgCostCenters");
+            var response = await _httpClient.GetAsync($"/api/OrgSections");
             response.EnsureSuccessStatusCode();
-            return await response.ReadAsync<IEnumerable<OrgCostCenter>>();
+            return await response.ReadAsync<IEnumerable<OrgSection>>();
         }
 
         /// <summary>
-        /// Gets a OrgCostCenter with the specified identifier.
+        /// Gets a OrgSection with the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>An instance of <see cref="OrgCostCenter"/></returns>
-        public async Task<OrgCostCenter> GetAsync(int id)
+        /// <returns>An instance of <see cref="OrgSection"/></returns>
+        public async Task<OrgSection> GetAsync(int id)
         {
-            var response = await _httpClient.GetAsync($"/api/OrgCostCenters/{id}");
+            var response = await _httpClient.GetAsync($"/api/OrgSections/{id}");
             response.EnsureSuccessStatusCode();
-            return await response.ReadAsync<OrgCostCenter>();
+            return await response.ReadAsync<OrgSection>();
         }
 
         /// <summary>
-        /// Creates a OrgCostCenter resource.
+        /// Creates a OrgSection resource.
         /// </summary>
         /// <param name="resource">The resource.</param>
-        /// <returns>An instance of <see cref="OrgCostCenter"/></returns>
-        public async Task<OrgCostCenter> CreateAsync(OrgCostCenter resource)
+        /// <returns>An instance of <see cref="OrgSection"/></returns>
+        public async Task<OrgSection> CreateAsync(OrgSection resource)
         {
-            var payload = new StringContent(ODataJsonSerializer.Serialize(resource), Encoding.UTF8, Application.Json);
-            var response = await _httpClient.PostAsync("/api/OrgCostCenters", payload);
+            var payload = new StringContent(JsonSerializer.Serialize(resource), Encoding.UTF8, Application.Json);
+            var response = _httpClient.PostAsync("/api/OrgSections", payload).Result;
             response.EnsureSuccessStatusCode();
-            return await response.ReadAsync<OrgCostCenter>();
+            return await response.ReadAsync<OrgSection>();
         }
 
         /// <summary>
-        /// Updates a OrgCostCenter resource.
+        /// Updates a OrgSection resource.
         /// </summary>
         /// <param name="id">The resource identifier.</param>
         /// <param name="resource">The resource.</param>
         /// <returns></returns>
-        public async Task UpdateAsync(int id, OrgCostCenter resource)
+        public async Task UpdateAsync(int id, OrgSection resource)
         {
-            var payload = new StringContent(ODataJsonSerializer.Serialize(resource), Encoding.UTF8, Application.Json);
-            var response = await _httpClient.PutAsync($"/api/OrgCostCenters/{id}", payload);
+            var payload = new StringContent(JsonSerializer.Serialize(resource), Encoding.UTF8, Application.Json);
+            var response = await _httpClient.PutAsync($"/api/OrgSections/{id}", payload);
             response.EnsureSuccessStatusCode();
         }
 
         /// <summary>
-        /// Deletes a OrgCostCenter resource.
+        /// Deletes a OrgSection resource.
         /// </summary>
         /// <param name="id">The resource identifier.</param>
         /// <returns></returns>
         public async Task DeleteAsync(int id)
         {
-            var response = await _httpClient.DeleteAsync($"/api/OrgCostCenters/{id}");
+            var response = await _httpClient.DeleteAsync($"/api/OrgSections/{id}");
             response.EnsureSuccessStatusCode();
         }
 
@@ -115,7 +116,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Services
         public void ExportToFile(string fileType, string filename)
         {
             filename = (!string.IsNullOrEmpty(filename) ? UrlEncoder.Default.Encode(filename) : "Export");
-            _navigationManager.NavigateTo($"/export/OrgCostCenters/{fileType}(fileName='{filename}')", true);
+            _navigationManager.NavigateTo($"/export/OrgSections/{fileType}(fileName='{filename}')", true);
         }
     }
 }

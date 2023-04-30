@@ -16,18 +16,18 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
 
         #region Parent Properties
 
-        [Required]
+        public int CostCenterId { get; set; }
         public virtual OrgCostCenter? CostCenter { get; set; }
 
-        [Required]
+        public int DirectionId { get; set; }
         public virtual OrgDirection? Direction { get; set; }
 
         #endregion
 
         #region Child Properties
 
-        [JsonPropertyOrder(110)]
-        public ICollection<OrgStructure>? Structures { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<OrgStructure>? Structures { get; set; }
 
         #endregion
     }

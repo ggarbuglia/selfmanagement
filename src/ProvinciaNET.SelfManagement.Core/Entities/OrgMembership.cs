@@ -22,15 +22,15 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
 
         #region Parent Properties
 
-        [Required]
-        public OrgStructure? Structure { get; set; }
+        public int StructureId { get; set; }
+        public virtual OrgStructure? Structure { get; set; }
 
         #endregion
 
         #region Child Properties
 
-        [JsonPropertyOrder(110)]
-        public ICollection<AdUserAccount>? AdUserAccounts { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<AdUserAccount>? AdUserAccounts { get; set; }
 
         #endregion
     }

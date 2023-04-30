@@ -131,7 +131,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
 
             if (ms?.Length > 0) ms.Seek(0, SeekOrigin.Begin);
 
-            return new FileStreamResult(ms, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            return new FileStreamResult(ms!, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
             {
                 FileDownloadName = (!string.IsNullOrEmpty(filename) ? filename : "Export") + ".xlsx"
             };

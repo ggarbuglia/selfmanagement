@@ -1,12 +1,13 @@
-﻿<RadzenPanelMenu>
+﻿@inject IStringLocalizer<LocalizationResource> L
+
+<RadzenPanelMenu>
     <RadzenPanelMenuItem Text="Home" Path="" />
-    <RadzenPanelMenuItem Text="AdUserAccountProvisions" Path="ad-user-account-provisions" />
-    <RadzenPanelMenuItem Text="AdUserAccounts" Path="ad-user-accounts" />
-    <RadzenPanelMenuItem Text="OrgCostCenters" Path="orgcostcenters" />
-    <RadzenPanelMenuItem Text="OrgDirections" Path="org-directions" />
-    <RadzenPanelMenuItem Text="OrgLocations" Path="org-locations" />
-    <RadzenPanelMenuItem Text="OrgMailDatabaseGroups" Path="org-mail-database-groups" />
-    <RadzenPanelMenuItem Text="OrgMemberships" Path="org-memberships" />
-    <RadzenPanelMenuItem Text="OrgSections" Path="org-sections" />
-    <RadzenPanelMenuItem Text="OrgStructures" Path="org-structures" />
+    <RadzenPanelMenuItem Text="@L["CostCenters"]" Path="orgcostcenters" />
+    <RadzenPanelMenuItem Text="@L["Locations"]" Path="orglocations" />
+    <RadzenPanelMenuItem Text="@L["MailDatabaseGroups"]" Path="orgmaildatabasegroups" />
+    <RadzenPanelMenuItem Text="@L["AdUserAccountProvisions"]" Path="aduseraccountprovisions" />
+    <RadzenPanelMenuItem Text="@L["Directions"]" Path="orgdirections" />
+    <RadzenPanelMenuItem Text="@L["Sections"]" Path="orgsections" />
+    <RadzenPanelMenuItem Text="@L["Structures"]" Path="orgstructures" />
+    <RadzenPanelMenuItem Text="@L["Memberships"]" Path="orgmemberships" />
 </RadzenPanelMenu>

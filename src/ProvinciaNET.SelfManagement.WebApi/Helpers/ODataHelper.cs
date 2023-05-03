@@ -4,8 +4,15 @@ using ProvinciaNET.SelfManagement.Core.Entities;
 
 namespace ProvinciaNET.SelfManagement.WebApi.Helpers
 {
+    /// <summary>
+    /// OData Helper class
+    /// </summary>
     public class ODataHelper
     {
+        /// <summary>
+        /// Gets the EDM model.
+        /// </summary>
+        /// <returns></returns>
         public static IEdmModel GetModel() 
         {
             var builder = new ODataConventionModelBuilder();

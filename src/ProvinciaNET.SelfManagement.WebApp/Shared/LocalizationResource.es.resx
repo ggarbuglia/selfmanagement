@@ -220,4 +220,7 @@
   <data name="MailDatabaseGroups" xml:space="preserve">
     <value>Grupos MailboxDB</value>
   </data>
+  <data name="SelfManagement" xml:space="preserve">
+    <value>Auto Gestión</value>
+  </data>
 </root>

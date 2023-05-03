@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
 using ProvinciaNET.SelfManagement.Infraestructure.Data;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
 using ProvinciaNET.SelfManagement.WebApi.Interfaces;
 using ProvinciaNET.SelfManagement.WebApi.Services;
+using System.Reflection;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -35,8 +37,11 @@ try
     builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
     builder.Host.UseNLog();
 
-    // Add OData.
-    builder.Services.AddControllers()
+    // Add ApiKey and OData.
+    builder.Services.AddControllers(options =>
+    {
+        options.Filters.Add<ApiKeyAttribute>();
+    })
         .AddOData(options =>
         {
             options.AddRouteComponents("odata", ODataHelper.GetModel());
@@ -45,14 +50,58 @@ try
 
     // Add Swagger
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.AddServer(new OpenApiServer()
+        {
+            Url = builder.Configuration.GetValue<string>("OpenApi:Server")
+        });
+        options.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Title = "Provincia NET SelfManagement API",
+            Version = "v1",
+            Contact = new OpenApiContact
+            {
+                Name = "Germán Pablo Garbuglia",
+                Email = "german.garbuglia@gmail.com",
+                Url = new Uri("https://twitter.com/ggarbuglia")
+            }
+        });
+
+        options.AddSecurityDefinition(name: "ApiKey", securityScheme: new OpenApiSecurityScheme { 
+            Name = "x-api-key",
+            Description = "Enter the API Authorizacion Key",
+            Type = SecuritySchemeType.ApiKey,
+            In = ParameterLocation.Header,
+            Scheme = "ApiKeyScheme"
+        });
+
+        options.AddSecurityRequirement(new OpenApiSecurityRequirement {
+            { 
+                new OpenApiSecurityScheme 
+                {
+                    In = ParameterLocation.Header,
+                    Reference = new OpenApiReference { 
+                        Id = "ApiKey",
+                        Type = ReferenceType.SecurityScheme
+                    }
+                }, new List<string>()
+            }
+        });
+
+        var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+
+        var modelAssembly = typeof(SelfManagementContext).Assembly;
+        var modelFilename = $"{modelAssembly.GetName().Name}.xml";
+        options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, modelFilename));
+
+        options.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["action"]}");
+    });
 
     // Add Entity Framework Context
     var cnn = builder.Configuration.GetConnectionString("DefaultConnection");
-    builder.Services.AddDbContext<SelfManagementContext>(options =>
-    {
-        options.UseSqlServer(cnn);
-    });
+    builder.Services.AddDbContext<SelfManagementContext>(options => { options.UseSqlServer(cnn); });
 
     // Add Healthchecks
     builder.Services.AddHealthChecks()
@@ -86,11 +135,10 @@ try
     app.UseCors();
     app.UseAuthorization();
     app.MapControllers();
-    app.MapHealthChecks("/health",
-        new HealthCheckOptions
-        {
-            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-        });
+    app.MapHealthChecks("/health", new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 
     app.Run();
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Net.Http.Headers;
 using NLog;
@@ -69,10 +70,12 @@ try
     builder.Services.AddHttpClient("SelfManagementWebApi", httpClient =>
     {
         var baseUri = cfg["Services:SelfManagementWebApiBaseUri"];
-        if (baseUri != null)
+        var baseKey = cfg["Services:SelfManagementWebApiKey"];
+        if (!string.IsNullOrEmpty(baseUri) && !string.IsNullOrEmpty(baseKey))
         {
             httpClient.BaseAddress = new Uri(baseUri);
             httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+            httpClient.DefaultRequestHeaders.Add("x-api-key", $"{baseKey}{DateTime.Now:yyyyMMdd}");
         }
     })
         .AddHeaderPropagation(o => o.Headers.Add("Cookie"))

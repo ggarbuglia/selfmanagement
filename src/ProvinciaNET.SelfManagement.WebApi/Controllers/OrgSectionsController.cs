@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using ProvinciaNET.SelfManagement.Core.Entities;
+using ProvinciaNET.SelfManagement.WebApi.Helpers;
 using ProvinciaNET.SelfManagement.WebApi.Interfaces;
 using System.Net.Mime;
 
@@ -11,7 +12,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
     /// </summary>
     /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, ApiKey]
     public class OrgSectionsController : ControllerBase
     {
         private readonly ILogger<OrgSectionsController> _logger;

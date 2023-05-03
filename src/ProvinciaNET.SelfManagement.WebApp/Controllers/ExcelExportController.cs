@@ -8,6 +8,10 @@ using System.Text;
 
 namespace ProvinciaNET.SelfManagement.WebApp.Controllers
 {
+    /// <summary>
+    /// Excel Export Controller
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.Controller" />
     public class ExcelExportController : Controller
     {
         /// <summary>

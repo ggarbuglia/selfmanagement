@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Attributes;
 using ProvinciaNET.SelfManagement.Core.Entities;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
 using ProvinciaNET.SelfManagement.WebApi.Interfaces;
@@ -46,7 +47,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), ODataIgnored]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AdUserAccount))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AdUserAccount?>> GetAdUserAccount(int id)
@@ -66,7 +67,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost, ODataIgnored]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(AdUserAccount), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -96,7 +97,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
         /// <param name="id">The identifier.</param>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), ODataIgnored]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -133,7 +134,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), ODataIgnored]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteAdUserAccount(int id)

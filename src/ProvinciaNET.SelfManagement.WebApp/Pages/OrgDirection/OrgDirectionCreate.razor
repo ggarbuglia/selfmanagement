@@ -8,10 +8,10 @@
 
 <PageTitle>@L["Add"] @L["Direction"]</PageTitle>
 <RadzenColumn SizeMD=12>
-    <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@L["Cannot save"] OrgDirection</RadzenAlert>
+    <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@L["Cannot save"] @L["Direction"]</RadzenAlert>
     <RadzenTemplateForm TItem="OrgDirection" Data="@resource" Visible="@(resource != null && canEdit)" Submit="@FormSubmit">
         <RadzenRow style="margin-bottom: 1rem">
-            <RadzenColumn SizeMD="3">
+            <RadzenColumn SizeMD="4">
                 <RadzenLabel Text="@L["Name"]" Component="Name" style="width: 100%" />
             </RadzenColumn>
             <RadzenColumn SizeMD="9">
@@ -20,7 +20,7 @@
             </RadzenColumn>
         </RadzenRow>
         <RadzenRow style="margin-bottom: 1rem">
-            <RadzenColumn SizeMD="3">
+            <RadzenColumn SizeMD="4">
                 <RadzenLabel Text="@L["Active"]" Component="Active" style="width: 100%" />
             </RadzenColumn>
             <RadzenColumn SizeMD="9">

@@ -215,12 +215,66 @@
     <value>Locación</value>
   </data>
   <data name="MailDatabaseGroup" xml:space="preserve">
-    <value>Grupo MailboxDB</value>
+    <value>Grupo Mailbox DB</value>
   </data>
   <data name="MailDatabaseGroups" xml:space="preserve">
-    <value>Grupos MailboxDB</value>
+    <value>Grupos Mailbox DB</value>
   </data>
   <data name="SelfManagement" xml:space="preserve">
     <value>Auto Gestión</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Dirección</value>
+  </data>
+  <data name="Address is required" xml:space="preserve">
+    <value>Dirección es requerida</value>
+  </data>
+  <data name="PostalCode" xml:space="preserve">
+    <value>Código Postal</value>
+  </data>
+  <data name="PostalCode is required" xml:space="preserve">
+    <value>Código Postal es requerido</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Ciudad</value>
+  </data>
+  <data name="City is required" xml:space="preserve">
+    <value>Ciudad es requerido</value>
+  </data>
+  <data name="AdGroupDisplayName" xml:space="preserve">
+    <value>Grupo AD Nombre</value>
+  </data>
+  <data name="AdGroupDisplayName is required" xml:space="preserve">
+    <value>Grupo AD Nombre es requerido</value>
+  </data>
+  <data name="AdGroupAccountName" xml:space="preserve">
+    <value>Grupo AD Cuenta</value>
+  </data>
+  <data name="AdGroupAccountName is required" xml:space="preserve">
+    <value>Grupo AD Cuenta es requerido</value>
+  </data>
+  <data name="MasterTables" xml:space="preserve">
+    <value>Tablas Maestras</value>
+  </data>
+  <data name="AdUserAccountProvision" xml:space="preserve">
+    <value>Provisión Cuenta AD</value>
+  </data>
+  <data name="AdUserAccountProvisions" xml:space="preserve">
+    <value>Provisiones Cuentas AD</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Visible</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Grupo</value>
+  </data>
+  <data name="OrgUnit" xml:space="preserve">
+    <value>Unidad Org</value>
+  </data>
+  <data name="Group is required" xml:space="preserve">
+    <value>Grupo es requerido</value>
+  </data>
+  <data name="OrgUnit is required" xml:space="preserve">
+    <value>Unidad Org es requerido</value>
   </data>
 </root>

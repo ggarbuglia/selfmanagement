@@ -11,7 +11,7 @@
     <RadzenColumn SizeMD="9">
         <RadzenLabel style="font-weight: bold" Text="@L["Item not available"]" Visible="@(!canEdit)" />
     </RadzenColumn>
-    <RadzenColumn SizeMD="3">
+    <RadzenColumn SizeMD="4">
         <RadzenButton ButtonStyle="ButtonStyle.Secondary" style="margin-bottom: 20px" Text="@L["Close"]" Visible="@(!canEdit)" Click="@CancelButtonClick" />
     </RadzenColumn>
 </RadzenRow>
@@ -19,15 +19,15 @@
     <RadzenColumn SizeMD="9">
         <RadzenLabel style="font-weight: bold" Text="@L["Concurrency Conflict"]" Visible="@hasChanges" />
     </RadzenColumn>
-    <RadzenColumn SizeMD="3">
+    <RadzenColumn SizeMD="4">
         <RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="autorenew" style="margin-bottom: 20px" Text="@L["Reload"]" Visible="@hasChanges" Click="@ReloadButtonClick" />
     </RadzenColumn>
 </RadzenRow>
 <RadzenColumn SizeMD=12>
-    <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@L["Cannot save"] OrgDirection</RadzenAlert>
+    <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@L["Cannot save"] @L["Direction"]</RadzenAlert>
     <RadzenTemplateForm TItem="OrgDirection" Data="@resource" Visible="@(resource != null && canEdit)" Submit="@FormSubmit">
         <RadzenRow style="margin-bottom: 1rem">
-            <RadzenColumn SizeMD="3">
+            <RadzenColumn SizeMD="4">
                 <RadzenLabel Text="@L["Name"]" Component="Name" style="width: 100%" />
             </RadzenColumn>
             <RadzenColumn SizeMD="9">
@@ -36,7 +36,7 @@
             </RadzenColumn>
         </RadzenRow>
         <RadzenRow style="margin-bottom: 1rem">
-            <RadzenColumn SizeMD="3">
+            <RadzenColumn SizeMD="4">
                 <RadzenLabel Text="@L["Active"]" Component="Active" style="width: 100%" />
             </RadzenColumn>
             <RadzenColumn SizeMD="9">

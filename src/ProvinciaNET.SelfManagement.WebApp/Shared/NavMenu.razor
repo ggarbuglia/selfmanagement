@@ -1,13 +1,15 @@
 ﻿@inject IStringLocalizer<LocalizationResource> L
 
 <RadzenPanelMenu>
-    <RadzenPanelMenuItem Text="Home" Path="" />
-    <RadzenPanelMenuItem Text="@L["CostCenters"]" Path="orgcostcenters" />
-    <RadzenPanelMenuItem Text="@L["Locations"]" Path="orglocations" />
-    <RadzenPanelMenuItem Text="@L["MailDatabaseGroups"]" Path="orgmaildatabasegroups" />
-    <RadzenPanelMenuItem Text="@L["AdUserAccountProvisions"]" Path="aduseraccountprovisions" />
-    <RadzenPanelMenuItem Text="@L["Directions"]" Path="orgdirections" />
-    <RadzenPanelMenuItem Text="@L["Sections"]" Path="orgsections" />
-    <RadzenPanelMenuItem Text="@L["Structures"]" Path="orgstructures" />
-    <RadzenPanelMenuItem Text="@L["Memberships"]" Path="orgmemberships" />
+    <RadzenPanelMenuItem Text="Home" Icon="home" Path="" />
+    <RadzenPanelMenuItem Text="@L["MasterTables"]" Icon="save">
+        <RadzenPanelMenuItem Text="@L["CostCenters"]" Icon="grid_on" Path="orgcostcenters" />
+        <RadzenPanelMenuItem Text="@L["Locations"]" Icon="grid_on" Path="orglocations" />
+        <RadzenPanelMenuItem Text="@L["MailDatabaseGroups"]" Icon="grid_on" Path="orgmaildatabasegroups" />
+        <RadzenPanelMenuItem Text="@L["Directions"]" Icon="grid_on" Path="orgdirections" />
+        <RadzenPanelMenuItem Text="@L["Sections"]" Icon="grid_on" Path="orgsections" />
+        <RadzenPanelMenuItem Text="@L["Structures"]" Icon="grid_on" Path="orgstructures" />
+        <RadzenPanelMenuItem Text="@L["Memberships"]" Icon="grid_on" Path="orgmemberships" />
+    </RadzenPanelMenuItem>
+    <RadzenPanelMenuItem Text="@L["AdUserAccountProvisions"]" Icon="account_box" Path="aduseraccountprovisions" />
 </RadzenPanelMenu>

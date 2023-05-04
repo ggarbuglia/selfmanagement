@@ -25,15 +25,15 @@
     <RadzenTextBox Placeholder="@L["Search"]" style="display: block; width: 100%" @oninput="@Search" />
     <RadzenRow>
         <RadzenColumn SizeMD=12>
-            <RadzenDataGrid @ref="grid0" Data="@resources" LoadData="@LoadData" TItem="OrgSection"
+            <RadzenDataGrid @ref="grid0" Data="@resources" LoadData="@LoadData" TItem="OrgSection" Density="Density.Compact"
                             IsLoading="@isLoading" Count="@count" AllowFiltering="true" FilterMode="FilterMode.Advanced" RowDoubleClick="@EditRow"
                             AllowPaging="true" AllowSorting="true" ShowPagingSummary="true" PageSize=@pagesize PageSizeOptions=@(new int[]{5, 10, 20, 30})>
                 <Columns>
                     <RadzenDataGridColumn TItem="OrgSection" Property="Id" Title="Id" Width="70px" />
-                    <RadzenDataGridColumn TItem="OrgSection" Property="Name" Title="@L["Name"]" />
-                    <RadzenDataGridColumn TItem="OrgSection" Property="Active" Title="@L["Active"]" Width="90px" />
-                    <RadzenDataGridColumn TItem="OrgSection" Property="Direction.Name" Title="@L["Direction"]" />
-                    <RadzenDataGridColumn TItem="OrgSection" Property="CostCenter.Name" Title="@L["CostCenter"]" />
+                    <RadzenDataGridColumn TItem="OrgSection" Property="Direction.Name" Title="@L["Direction"]" Width="250px" />
+                    <RadzenDataGridColumn TItem="OrgSection" Property="CostCenter.Name" Title="@L["CostCenter"]" Width="250px" />
+                    <RadzenDataGridColumn TItem="OrgSection" Property="Name" Title="@L["Name"]" Width="250px" />
+                    <RadzenDataGridColumn TItem="OrgSection" Property="Active" Title="@L["Active"]" Width="100px" />
                     <RadzenDataGridColumn TItem="OrgSection" Property="CreatedBy" Title="@L["Created By"]" Width="200px" />
                     <RadzenDataGridColumn TItem="OrgSection" Property="CreatedOn" Title="@L["Created On"]" Width="130px" FormatString="{0:dd/MM/yyy}" />
                     <RadzenDataGridColumn TItem="OrgSection" Property="ModifiedBy" Title="@L["Modified By"]" Width="200px" />
@@ -123,7 +123,7 @@
                 {
                     Severity = NotificationSeverity.Error,
                     Summary = $"Error",
-                    Detail = $"{L["Unable to delete"]} OrgSection. {ex.Message}"
+                    Detail = $"{L["Unable to delete"]} {@L["Section"]}. {ex.Message}"
                 });
         }
     }

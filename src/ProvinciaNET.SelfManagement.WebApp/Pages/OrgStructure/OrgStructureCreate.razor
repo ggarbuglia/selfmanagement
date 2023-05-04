@@ -1,0 +1,104 @@
+﻿@page "/orgstructure/create"
+
+@attribute [Authorize]
+@inject IHttpContextAccessor HttpContextAccessor
+@inject DialogService DialogService
+@inject IOrgStructureService OrgStructureService
+@inject IOrgSectionService OrgSectionService
+@inject IOrgMailDatabaseGroupService OrgMailDatabaseGroupService
+@inject IStringLocalizer<LocalizationResource> L
+
+<PageTitle>@L["Add"] @L["Structure"]</PageTitle>
+<RadzenColumn SizeMD=12>
+    <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@L["Cannot save"] @L["Structure"]</RadzenAlert>
+    <RadzenTemplateForm TItem="OrgStructure" Data="@resource" Visible="@(resource != null && canEdit)" Submit="@FormSubmit">
+        <RadzenRow style="margin-bottom: 1rem">
+            <RadzenColumn SizeMD="4">
+                <RadzenLabel Text="@L["Section"]" Component="Section" style="width: 100%" />
+            </RadzenColumn>
+            <RadzenColumn SizeMD="8">
+                <RadzenDropDownDataGrid Data="@orgSections" TextProperty="Name" ValueProperty="Id"
+                                        Placeholder="@($"{L["ChooseA"]} {L["Section"]}")" style="display: block; width: 100%"
+                                        @bind-Value="@resource!.SectionId" Name="Section" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow style="margin-bottom: 1rem">
+            <RadzenColumn SizeMD="4">
+                <RadzenLabel Text="@L["Group"]" Component="Group" style="width: 100%" />
+            </RadzenColumn>
+            <RadzenColumn SizeMD="8">
+                <RadzenTextBox Name="Group" @bind-Value="@resource!.Group" style="display: block; width: 100%" />
+                <RadzenRequiredValidator Component="Group" Text="@L["Group is required"]" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow style="margin-bottom: 1rem">
+            <RadzenColumn SizeMD="4">
+                <RadzenLabel Text="@L["OrgUnit"]" Component="OrgUnit" style="width: 100%" />
+            </RadzenColumn>
+            <RadzenColumn SizeMD="8">
+                <RadzenTextBox Name="OrgUnit" @bind-Value="@resource!.OrgUnit" style="display: block; width: 100%" />
+                <RadzenRequiredValidator Component="OrgUnit" Text="@L["OrgUnit is required"]" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow style="margin-bottom: 1rem">
+            <RadzenColumn SizeMD="4">
+                <RadzenLabel Text="@L["MailDatabaseGroup"]" Component="MailDatabaseGroup" style="width: 100%" />
+            </RadzenColumn>
+            <RadzenColumn SizeMD="8">
+                <RadzenDropDownDataGrid Data="@orgMailDatabaseGroups" TextProperty="Name" ValueProperty="Id"
+                                        Placeholder="@($"{L["Choose"]} {L["MailDatabaseGroup"]}")" style="display: block; width: 100%"
+                                        @bind-Value="@resource!.MailDatabaseGroupId" Name="MailDatabaseGroup" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow style="margin-bottom: 1rem">
+            <RadzenColumn SizeMD="4">
+                <RadzenLabel Text="@L["Active"]" Component="Active" style="width: 100%" />
+            </RadzenColumn>
+            <RadzenColumn SizeMD="8">
+                <RadzenCheckBox Name="Active" @bind-Value="@resource!.Active" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.5rem">
+            <RadzenButton ButtonStyle="ButtonStyle.Primary" Text="@L["Save"]" Variant="Variant.Flat" ButtonType="ButtonType.Submit" Icon="save" />
+            <RadzenButton ButtonStyle="ButtonStyle.Light" Text="@L["Cancel"]" Variant="Variant.Flat" Click="@CancelButtonClick" />
+        </RadzenStack>
+    </RadzenTemplateForm>
+</RadzenColumn>
+
+@code {
+    bool canEdit = true;
+    bool errorVisible = false;
+    OrgStructure? resource;
+    IEnumerable<OrgSection>? orgSections;
+    IEnumerable<OrgMailDatabaseGroup>? orgMailDatabaseGroups;
+
+    protected override async Task OnInitializedAsync()
+    {
+        orgSections = await OrgSectionService.GetAsync();
+        orgMailDatabaseGroups = await OrgMailDatabaseGroupService.GetAsync();
+        resource = new OrgStructure();
+        await base.OnInitializedAsync();
+    }
+
+    async Task FormSubmit()
+    {
+        if (resource == null) return;
+
+        try
+        {
+            resource.CreatedBy = $"{HttpContextAccessor.HttpContext?.User.Identity?.Name?.Split("\\").Last()}";
+            await OrgStructureService.CreateAsync(resource);
+            DialogService.Close(resource);
+        }
+        catch (Exception)
+        {
+            canEdit = true;
+            errorVisible = true;
+        }
+    }
+
+    void CancelButtonClick(MouseEventArgs args)
+    {
+        DialogService.Close(null);
+    }
+}

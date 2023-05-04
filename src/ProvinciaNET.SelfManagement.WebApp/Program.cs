@@ -102,7 +102,11 @@ try
     // Add SelfManagement Scoped Services
     builder.Services.AddScoped<IOrgCostCenterService, OrgCostCenterService>();
     builder.Services.AddScoped<IOrgDirectionService, OrgDirectionService>();
+    builder.Services.AddScoped<IOrgLocationService, OrgLocationService>();
+    builder.Services.AddScoped<IOrgMailDatabaseGroupService, OrgMailDatabaseGroupService>();
+    builder.Services.AddScoped<IOrgMembershipService, OrgMembershipService>();
     builder.Services.AddScoped<IOrgSectionService, OrgSectionService>();
+    builder.Services.AddScoped<IOrgStructureService, OrgStructureService>();
 
     var app = builder.Build();
 

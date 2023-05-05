@@ -32,7 +32,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// <value>
         /// The cost center identifier.
         /// </value>
-        public int? CostCenterId { get; set; }
+        public int CostCenterId { get; set; }
 
         /// <summary>
         /// Gets or sets the cost center.
@@ -48,7 +48,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// <value>
         /// The direction identifier.
         /// </value>
-        public int? DirectionId { get; set; }
+        public int DirectionId { get; set; }
 
         /// <summary>
         /// Gets or sets the direction.

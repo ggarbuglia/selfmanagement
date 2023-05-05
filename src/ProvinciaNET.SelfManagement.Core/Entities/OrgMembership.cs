@@ -50,7 +50,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// <value>
         /// The structure identifier.
         /// </value>
-        public int? StructureId { get; set; }
+        public int StructureId { get; set; }
 
         /// <summary>
         /// Gets or sets the structure.

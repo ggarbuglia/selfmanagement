@@ -30,9 +30,10 @@
                             AllowPaging="true" AllowSorting="true" ShowPagingSummary="true" PageSize=@pagesize PageSizeOptions=@(new int[]{5, 10, 20, 30})>
                 <Columns>
                     <RadzenDataGridColumn TItem="OrgStructure" Property="Id" Title="Id" Width="70px" />
-                    <RadzenDataGridColumn TItem="OrgStructure" Property="Section.Name" Title="@L["Section"]" Width="250" />
-                    <RadzenDataGridColumn TItem="OrgStructure" Property="Name" Title="@L["Name"]" Width="250" />
-                    <RadzenDataGridColumn TItem="OrgStructure" Property="MailDatabaseGroup.Name" Title="@L["MailDatabaseGroup"]" Width="250" />
+                    <RadzenDataGridColumn TItem="OrgStructure" Property="Section.Name" Title="@L["Section"]" Width="300px" />
+                    <RadzenDataGridColumn TItem="OrgStructure" Property="Group" Title="@L["Group"]" Width="250px" />
+                    <RadzenDataGridColumn TItem="OrgStructure" Property="OrgUnit" Title="@L["OrgUnit"]" Width="250px" />
+                    <RadzenDataGridColumn TItem="OrgStructure" Property="MailDatabaseGroup.Name" Title="@L["MailDatabaseGroup"]" Width="200px" />
                     <RadzenDataGridColumn TItem="OrgStructure" Property="Active" Title="@L["Active"]" Width="100px" />
                     <RadzenDataGridColumn TItem="OrgStructure" Property="CreatedBy" Title="@L["Created By"]" Width="200px" />
                     <RadzenDataGridColumn TItem="OrgStructure" Property="CreatedOn" Title="@L["Created On"]" Width="130px" FormatString="{0:dd/MM/yyy}" />

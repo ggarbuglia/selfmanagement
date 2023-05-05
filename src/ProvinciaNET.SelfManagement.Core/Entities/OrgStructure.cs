@@ -41,7 +41,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// <value>
         /// The mail database group identifier.
         /// </value>
-        public int? MailDatabaseGroupId { get; set; }
+        public int MailDatabaseGroupId { get; set; }
 
         /// <summary>
         /// Gets or sets the mail database group.
@@ -57,7 +57,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// <value>
         /// The section identifier.
         /// </value>
-        public int? SectionId { get; set; }
+        public int SectionId { get; set; }
 
 
         /// <summary>

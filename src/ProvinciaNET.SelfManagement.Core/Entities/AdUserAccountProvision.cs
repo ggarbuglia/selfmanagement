@@ -50,7 +50,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// <value>
         /// The ad user account identifier.
         /// </value>
-        public int? AdUserAccountId { get; set; }
+        public int AdUserAccountId { get; set; }
         /// <summary>
         /// Gets or sets the ad user account.
         /// </summary>

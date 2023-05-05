@@ -36,7 +36,7 @@
                 <RadzenLabel Text="@L["OrgUnit"]" Component="OrgUnit" style="width: 100%" />
             </RadzenColumn>
             <RadzenColumn SizeMD="8">
-                <RadzenTextBox Name="OrgUnit" @bind-Value="@resource!.OrgUnit" style="display: block; width: 100%" />
+                <RadzenTextArea Name="OrgUnit" @bind-Value="@resource!.OrgUnit" style="display: block; width: 100%" Rows="4" />
                 <RadzenRequiredValidator Component="OrgUnit" Text="@L["OrgUnit is required"]" />
             </RadzenColumn>
         </RadzenRow>

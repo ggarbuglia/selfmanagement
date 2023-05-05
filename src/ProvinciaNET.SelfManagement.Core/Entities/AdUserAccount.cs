@@ -68,7 +68,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// <value>
         /// The location identifier.
         /// </value>
-        public int? LocationId { get; set; }
+        public int LocationId { get; set; }
 
         /// <summary>
         /// Gets or sets the location.
@@ -84,7 +84,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// <value>
         /// The membership identifier.
         /// </value>
-        public int? MembershipId { get; set; }
+        public int MembershipId { get; set; }
 
         /// <summary>
         /// Gets or sets the membership.

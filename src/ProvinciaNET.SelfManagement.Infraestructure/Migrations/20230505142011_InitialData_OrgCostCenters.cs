@@ -42,7 +42,12 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
             foreach (var item in data)
             {
-                migrationBuilder.InsertData(table, columns, new object[] { item, true, username, now, null, null });
+                migrationBuilder.InsertData(
+                    schema: "dbo",
+                    table: table, 
+                    columns: columns, 
+                    values: new object[] { item, true, username, now, null, null }
+                    );
             }
         }
 

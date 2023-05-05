@@ -59,7 +59,7 @@
     int pagesize = 10;
     RadzenDataGrid<OrgMailDatabaseGroup>? grid0;
     IEnumerable<OrgMailDatabaseGroup>? resources;
-    OrgMailDatabaseGroup? resource;
+    OrgMailDatabaseGroup? resource = new();
 
     async Task LoadData(string? filter = null, int? top = null, int? skip = null, string? orderby = null)
     {

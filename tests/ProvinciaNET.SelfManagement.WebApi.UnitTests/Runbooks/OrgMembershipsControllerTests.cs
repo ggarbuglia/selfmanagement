@@ -1,4 +1,6 @@
-﻿namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Runbooks
+﻿using ProvinciaNET.SelfManagement.Core.Entities;
+
+namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Runbooks
 {
     public class OrgMembershipsControllerTests
     {

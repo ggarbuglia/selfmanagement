@@ -7,7 +7,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
     /// <summary>
     /// OrgLocation Class
     /// </summary>
-    /// <seealso cref="ProvinciaNET.SelfManagement.Core.Entities.BaseEntity" />
+    /// <seealso cref="BaseEntity" />
     [Table("OrgLocations", Schema = "dbo")]
     public partial class OrgLocation : BaseEntity
     {
@@ -78,7 +78,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// The ad user accounts.
         /// </value>
         [JsonIgnore]
-        public virtual ICollection<AdUserAccount>? AdUserAccounts { get; set; }
+        public virtual ICollection<AdUserAccount>? AdUserAccounts { get; }
 
         #endregion
     }

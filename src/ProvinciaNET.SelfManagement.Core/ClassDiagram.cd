@@ -21,49 +21,49 @@
       <FileName>Entities\BaseEntity.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ProvinciaNET.SelfManagement.Core.Entities.OrgCostCenter">
+  <Class Name="ProvinciaNET.SelfManagement.Core.EntitiesCostCenter">
     <Position X="21.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>Entities\OrgCostCenter.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ProvinciaNET.SelfManagement.Core.Entities.OrgDirection">
+  <Class Name="ProvinciaNET.SelfManagement.Core.EntitiesDirection">
     <Position X="6.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>Entities\OrgDirection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ProvinciaNET.SelfManagement.Core.Entities.OrgLocation">
+  <Class Name="ProvinciaNET.SelfManagement.Core.EntitiesLocation">
     <Position X="13.5" Y="3.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAQAAIIAAAAAQAAAAAAAAKAAAAAgAAAAA=</HashCode>
       <FileName>Entities\OrgLocation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ProvinciaNET.SelfManagement.Core.Entities.OrgMailDatabaseGroup">
+  <Class Name="ProvinciaNET.SelfManagement.Core.EntitiesMailDatabaseGroup">
     <Position X="18.75" Y="3.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\OrgMailDatabaseGroup.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ProvinciaNET.SelfManagement.Core.Entities.OrgMembership">
+  <Class Name="ProvinciaNET.SelfManagement.Core.EntitiesMembership">
     <Position X="23.75" Y="3.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAQAAAAAAAAAAEAAAEAAAIAAAAAgAAAAA=</HashCode>
       <FileName>Entities\OrgMembership.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ProvinciaNET.SelfManagement.Core.Entities.OrgSection">
+  <Class Name="ProvinciaNET.SelfManagement.Core.EntitiesSection">
     <Position X="8.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAACAAACQAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Entities\OrgSection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ProvinciaNET.SelfManagement.Core.Entities.OrgStructure">
+  <Class Name="ProvinciaNET.SelfManagement.Core.EntitiesStructure">
     <Position X="16.25" Y="3.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAAAAAAAAAAgAAAAAAAAAAAAAAACEAAIAAAAA=</HashCode>

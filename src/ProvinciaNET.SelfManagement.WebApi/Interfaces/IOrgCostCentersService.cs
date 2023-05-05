@@ -6,7 +6,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Interfaces
     /// <summary>
     /// OrgCostCenters Service Interface
     /// </summary>
-    /// <seealso typeparamref="ProvinciaNET.SelfManagement.WebApi.Interfaces.ICrudBaseService&lt;ProvinciaNET.SelfManagement.Core.Entities.OrgCostCenter&gt;" />
+    /// <seealso typeparamref="ProvinciaNET.SelfManagement.WebApi.Interfaces.ICrudBaseService&lt;ProvinciaNET.SelfManagement.Core.EntitiesCostCenter&gt;" />
     public interface IOrgCostCentersService : ICrudBaseService<OrgCostCenter>
     {
 

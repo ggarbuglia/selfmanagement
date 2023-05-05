@@ -5,12 +5,12 @@
 namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialData_OrgMailDatabaseGroups : Migration
+    public partial class InitialData_OrgDirections : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            var table = "OrgMailDatabaseGroups";
+            var table = "OrgDirections";
             var username = "System";
             var now = DateTime.Now;
 
@@ -24,16 +24,21 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
             };
 
             var data = new[] {
-                "Agencias",
-                "Cajeros",
-                "Centro de Contactos",
-                "Servicios",
-                "Usuarios"
+                "Dirección Comercial y de Comunicaciones",
+                "Dirección de Administración y Finanzas",
+                "Dirección de Recaudación y Medios de Pago",
+                "Dirección de Tecnología",
+                "Presidencia"
             };
 
             foreach (var item in data)
             {
-                migrationBuilder.InsertData(table, columns, new object[] { item, true, username, now, null, null });
+                migrationBuilder.InsertData(
+                    schema: "dbo", 
+                    table: table, 
+                    columns: columns, 
+                    values: new object[] { item, true, username, now, null, null }
+                    );
             }
         }
 

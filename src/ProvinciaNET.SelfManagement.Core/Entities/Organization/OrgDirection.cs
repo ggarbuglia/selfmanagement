@@ -7,7 +7,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
     /// <summary>
     /// OrgDirection Class
     /// </summary>
-    /// <seealso cref="ProvinciaNET.SelfManagement.Core.Entities.BaseEntity" />
+    /// <seealso cref="BaseEntity" />
     [Table("OrgDirections", Schema = "dbo")]
     public partial class OrgDirection : BaseEntity
     {
@@ -33,7 +33,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// The sections.
         /// </value>
         [JsonIgnore]
-        public virtual ICollection<OrgSection>? Sections { get; set; }
+        public virtual ICollection<OrgSection>? Sections { get; }
 
         #endregion
     }

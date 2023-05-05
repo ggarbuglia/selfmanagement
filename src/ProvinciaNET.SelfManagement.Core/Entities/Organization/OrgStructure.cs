@@ -7,7 +7,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
     /// <summary>
     /// OrgStructure Class
     /// </summary>
-    /// <seealso cref="ProvinciaNET.SelfManagement.Core.Entities.BaseEntity" />
+    /// <seealso cref="BaseEntity" />
     [Table("OrgStructures", Schema = "dbo")]
     public partial class OrgStructure : BaseEntity
     {
@@ -79,7 +79,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// The memberships.
         /// </value>
         [JsonIgnore]
-        public virtual ICollection<OrgMembership>? Memberships { get; set; }
+        public virtual ICollection<OrgMembership>? Memberships { get; }
 
         #endregion
     }

@@ -7,7 +7,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
     /// <summary>
     /// OrgMailDatabaseGroup Class
     /// </summary>
-    /// <seealso cref="ProvinciaNET.SelfManagement.Core.Entities.BaseEntity" />
+    /// <seealso cref="BaseEntity" />
     [Table("OrgMailDatabaseGroups", Schema = "dbo")]
     public partial class OrgMailDatabaseGroup : BaseEntity
     {
@@ -33,7 +33,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// The structures.
         /// </value>
         [JsonIgnore]
-        public virtual ICollection<OrgStructure>? Structures { get; set; }
+        public virtual ICollection<OrgStructure>? Structures { get; }
 
         #endregion
     }

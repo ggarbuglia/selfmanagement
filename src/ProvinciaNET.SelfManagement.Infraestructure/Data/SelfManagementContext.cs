@@ -48,6 +48,8 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Data
             optionsBuilder.UseSqlServer(AppConfiguration.GetConnectionString("DefaultConnection"));
         }
 
+        #region Organization Entities
+
         /// <summary>
         /// Gets or sets the ad user account provisions.
         /// </summary>
@@ -119,5 +121,83 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Data
         /// The org structures.
         /// </value>
         public DbSet<OrgStructure> OrgStructures { get; set; }
+
+        #endregion
+
+        #region Virtualization Entities
+
+        /// <summary>
+        /// Gets or sets the vir resources.
+        /// </summary>
+        /// <value>
+        /// The vir resources.
+        /// </value>
+        public DbSet<VirResource> VirResources { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vir data centers.
+        /// </summary>
+        /// <value>
+        /// The vir data centers.
+        /// </value>
+        public DbSet<VirDataCenter> VirDataCenters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vir clusters.
+        /// </summary>
+        /// <value>
+        /// The vir clusters.
+        /// </value>
+        public DbSet<VirCluster> VirClusters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vir data stores.
+        /// </summary>
+        /// <value>
+        /// The vir data stores.
+        /// </value>
+        public DbSet<VirDataStore> VirDataStores { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vir networks.
+        /// </summary>
+        /// <value>
+        /// The vir networks.
+        /// </value>
+        public DbSet<VirNetwork> VirNetworks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vir operating system types.
+        /// </summary>
+        /// <value>
+        /// The vir operating system types.
+        /// </value>
+        public DbSet<VirOperatingSystemType> VirOperatingSystemTypes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the virtual machines.
+        /// </summary>
+        /// <value>
+        /// The virtual machines.
+        /// </value>
+        public DbSet<VirtualMachine> VirtualMachines { get; set; }
+
+        /// <summary>
+        /// Gets or sets the virtual machine disks.
+        /// </summary>
+        /// <value>
+        /// The virtual machine disks.
+        /// </value>
+        public DbSet<VirtualMachineDisk> VirtualMachineDisks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vir category tags.
+        /// </summary>
+        /// <value>
+        /// The vir category tags.
+        /// </value>
+        public DbSet<VirCategoryTag> VirCategoryTags { get; set; }
+
+        #endregion
     }
 }

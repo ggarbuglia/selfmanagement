@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProvinciaNET.SelfManagement.Infraestructure.Data;
 
@@ -11,9 +12,11 @@ using ProvinciaNET.SelfManagement.Infraestructure.Data;
 namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 {
     [DbContext(typeof(SelfManagementContext))]
-    partial class SelfManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20230505142302_VirtualizationTables")]
+    partial class VirtualizationTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

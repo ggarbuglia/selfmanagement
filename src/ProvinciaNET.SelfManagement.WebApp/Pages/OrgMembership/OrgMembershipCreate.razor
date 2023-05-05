@@ -27,7 +27,7 @@
                 <RadzenLabel Text="@L["Structure"]" Component="Structure" style="width: 100%" />
             </RadzenColumn>
             <RadzenColumn SizeMD="8">
-                <RadzenDropDownDataGrid Data="@(orgStructures!.Where(o => o.Section.Id == sectionId))" TextProperty="Group" ValueProperty="Id"
+                <RadzenDropDownDataGrid Data="@(orgStructures!.Where(o => o.Section!.Id == sectionId))" TextProperty="Group" ValueProperty="Id"
                                         Placeholder="@($"{L["ChooseA"]} {L["Structure"]}")" style="display: block; width: 100%"
                                         @bind-Value="@resource!.StructureId" Name="Structure" />
             </RadzenColumn>

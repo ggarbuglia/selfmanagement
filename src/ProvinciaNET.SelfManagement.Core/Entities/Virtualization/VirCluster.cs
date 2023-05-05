@@ -5,35 +5,38 @@ using System.Text.Json.Serialization;
 namespace ProvinciaNET.SelfManagement.Core.Entities
 {
     /// <summary>
-    /// OrgCostCenter Class
+    /// 
     /// </summary>
     /// <seealso cref="ProvinciaNET.SelfManagement.Core.Entities.BaseEntity" />
-    [Table("OrgCostCenters", Schema = "dbo")]
-    public partial class OrgCostCenter : BaseEntity
+    [Table("VirClusters", Schema = "dbo")]
+    public partial class VirCluster : BaseEntity
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
         /// <value>
         /// The name.
         /// </value>
-        [ConcurrencyCheck, Column(TypeName = "varchar(100)"), MaxLength(100), Required, JsonPropertyOrder(1)]
+        [Column(TypeName = "varchar(50)"), MaxLength(50), Required, JsonPropertyOrder(1)]
         public string Name { get; set; } = string.Empty;
 
-        #endregion
-
-        #region Child Properties
+        #region Parent Properties
 
         /// <summary>
-        /// Gets or sets the sections.
+        /// Gets or sets the data center identifier.
         /// </summary>
         /// <value>
-        /// The sections.
+        /// The data center identifier.
         /// </value>
-        [JsonIgnore]
-        public virtual ICollection<OrgSection>? Sections { get; set; }
+        public int DataCenterId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the data center.
+        /// </summary>
+        /// <value>
+        /// The data center.
+        /// </value>
+        public virtual VirDataCenter? DataCenter { get; set; } = null;
 
         #endregion
     }

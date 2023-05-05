@@ -7,7 +7,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
     /// <summary>
     /// AdUserAccountProvision Class
     /// </summary>
-    /// <seealso cref="ProvinciaNET.SelfManagement.Core.Entities.BaseEntity" />
+    /// <seealso cref="BaseEntity" />
     [Table("AdUserAccountProvisions", Schema = "dbo")]
     public partial class AdUserAccountProvision : BaseEntity
     {

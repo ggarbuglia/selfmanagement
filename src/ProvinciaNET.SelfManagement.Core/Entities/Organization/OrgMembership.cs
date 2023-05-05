@@ -7,7 +7,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
     /// <summary>
     /// OrgMembership Class
     /// </summary>
-    /// <seealso cref="ProvinciaNET.SelfManagement.Core.Entities.BaseEntity" />
+    /// <seealso cref="BaseEntity" />
     [Table("OrgMemberships", Schema = "dbo")]
     public partial class OrgMembership : BaseEntity
     {
@@ -71,7 +71,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// The ad user accounts.
         /// </value>
         [JsonIgnore]
-        public virtual ICollection<AdUserAccount>? AdUserAccounts { get; set; }
+        public virtual ICollection<AdUserAccount>? AdUserAccounts { get; }
 
         #endregion
     }

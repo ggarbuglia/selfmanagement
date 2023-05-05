@@ -64,7 +64,7 @@
     int pagesize = 10;
     RadzenDataGrid<OrgLocation>? grid0;
     IEnumerable<OrgLocation>? resources;
-    OrgLocation? resource;
+    OrgLocation? resource = new();
 
     async Task LoadData(string? filter = null, int? top = null, int? skip = null, string? orderby = null)
     {

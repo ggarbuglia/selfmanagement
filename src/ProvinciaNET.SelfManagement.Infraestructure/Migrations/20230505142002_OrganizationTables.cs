@@ -6,13 +6,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class OrganizationTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "dbo");
+
             migrationBuilder.CreateTable(
                 name: "OrgCostCenters",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -31,6 +35,7 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "OrgDirections",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -49,6 +54,7 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "OrgLocations",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -72,6 +78,7 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "OrgMailDatabaseGroups",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -90,6 +97,7 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "OrgSections",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -109,12 +117,14 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     table.ForeignKey(
                         name: "FK_OrgSections_OrgCostCenters_CostCenterId",
                         column: x => x.CostCenterId,
+                        principalSchema: "dbo",
                         principalTable: "OrgCostCenters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrgSections_OrgDirections_DirectionId",
                         column: x => x.DirectionId,
+                        principalSchema: "dbo",
                         principalTable: "OrgDirections",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -122,6 +132,7 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "OrgStructures",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -142,12 +153,14 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     table.ForeignKey(
                         name: "FK_OrgStructures_OrgMailDatabaseGroups_MailDatabaseGroupId",
                         column: x => x.MailDatabaseGroupId,
+                        principalSchema: "dbo",
                         principalTable: "OrgMailDatabaseGroups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrgStructures_OrgSections_SectionId",
                         column: x => x.SectionId,
+                        principalSchema: "dbo",
                         principalTable: "OrgSections",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -155,6 +168,7 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "OrgMemberships",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -175,6 +189,7 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     table.ForeignKey(
                         name: "FK_OrgMemberships_OrgStructures_StructureId",
                         column: x => x.StructureId,
+                        principalSchema: "dbo",
                         principalTable: "OrgStructures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -182,13 +197,14 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AdUserAccounts",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SamAccountName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     UserPrincipalName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    EmailAddress = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    EmailAddress = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
                     GivenName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     SurName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     LocationId = table.Column<int>(type: "int", nullable: false),
@@ -205,12 +221,14 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     table.ForeignKey(
                         name: "FK_AdUserAccounts_OrgLocations_LocationId",
                         column: x => x.LocationId,
+                        principalSchema: "dbo",
                         principalTable: "OrgLocations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AdUserAccounts_OrgMemberships_MembershipId",
                         column: x => x.MembershipId,
+                        principalSchema: "dbo",
                         principalTable: "OrgMemberships",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -218,14 +236,15 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AdUserAccountProvisions",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AdUserAccountId = table.Column<int>(type: "int", nullable: true),
-                    Status = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Status = table.Column<string>(type: "varchar(100)", nullable: false),
                     HasError = table.Column<bool>(type: "bit", nullable: false),
                     Error = table.Column<string>(type: "varchar(max)", nullable: false),
+                    AdUserAccountId = table.Column<int>(type: "int", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<string>(type: "varchar(100)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -238,47 +257,57 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                     table.ForeignKey(
                         name: "FK_AdUserAccountProvisions_AdUserAccounts_AdUserAccountId",
                         column: x => x.AdUserAccountId,
+                        principalSchema: "dbo",
                         principalTable: "AdUserAccounts",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AdUserAccountProvisions_AdUserAccountId",
+                schema: "dbo",
                 table: "AdUserAccountProvisions",
                 column: "AdUserAccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AdUserAccounts_LocationId",
+                schema: "dbo",
                 table: "AdUserAccounts",
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AdUserAccounts_MembershipId",
+                schema: "dbo",
                 table: "AdUserAccounts",
                 column: "MembershipId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrgMemberships_StructureId",
+                schema: "dbo",
                 table: "OrgMemberships",
                 column: "StructureId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrgSections_CostCenterId",
+                schema: "dbo",
                 table: "OrgSections",
                 column: "CostCenterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrgSections_DirectionId",
+                schema: "dbo",
                 table: "OrgSections",
                 column: "DirectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrgStructures_MailDatabaseGroupId",
+                schema: "dbo",
                 table: "OrgStructures",
                 column: "MailDatabaseGroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrgStructures_SectionId",
+                schema: "dbo",
                 table: "OrgStructures",
                 column: "SectionId");
         }
@@ -287,31 +316,40 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AdUserAccountProvisions");
+                name: "AdUserAccountProvisions",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "AdUserAccounts");
+                name: "AdUserAccounts",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "OrgLocations");
+                name: "OrgLocations",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "OrgMemberships");
+                name: "OrgMemberships",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "OrgStructures");
+                name: "OrgStructures",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "OrgMailDatabaseGroups");
+                name: "OrgMailDatabaseGroups",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "OrgSections");
+                name: "OrgSections",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "OrgCostCenters");
+                name: "OrgCostCenters",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "OrgDirections");
+                name: "OrgDirections",
+                schema: "dbo");
         }
     }
 }

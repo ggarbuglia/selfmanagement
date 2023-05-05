@@ -44,7 +44,12 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
                 var ac = item[4]; // AdGroupAccountName
                 var dn = item[5]; // AdGroupDisplayName
 
-                migrationBuilder.InsertData(table, columns, new object[] { nm, ad, pc, ct, ac, dn, true, username, now, null, null });
+                migrationBuilder.InsertData(
+                    schema: "dbo",
+                    table:table, 
+                    columns: columns, 
+                    values: new object[] { nm, ad, pc, ct, ac, dn, true, username, now, null, null }
+                    );
             }
         }
 

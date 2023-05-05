@@ -7,7 +7,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
     /// <summary>
     /// AdUserAccount Class
     /// </summary>
-    /// <seealso cref="ProvinciaNET.SelfManagement.Core.Entities.BaseEntity" />
+    /// <seealso cref="BaseEntity" />
     [Table("AdUserAccounts", Schema = "dbo")]
     public partial class AdUserAccount : BaseEntity
     {
@@ -105,7 +105,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// The ad user account provisions.
         /// </value>
         [JsonIgnore]
-        public virtual ICollection<AdUserAccountProvision>? AdUserAccountProvisions { get; set; }
+        public virtual ICollection<AdUserAccountProvision>? AdUserAccountProvisions { get; }
 
         #endregion
     }

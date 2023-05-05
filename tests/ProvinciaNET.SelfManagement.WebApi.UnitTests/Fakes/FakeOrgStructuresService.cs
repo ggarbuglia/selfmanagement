@@ -1,4 +1,6 @@
-﻿namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Fakes
+﻿using ProvinciaNET.SelfManagement.Core.Entities;
+
+namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Fakes
 {
     internal class FakeOrgStructuresService : IOrgStructuresService
     {

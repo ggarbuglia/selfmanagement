@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/src/ProvinciaNET.SelfManagement.WebApi/Services/WebApiService.cs
+/src/ProvinciaNET.SelfManagement.WebApi/Interfaces/WebApiServiceInterface.cs

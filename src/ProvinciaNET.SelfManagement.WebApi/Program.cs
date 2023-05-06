@@ -1,5 +1,6 @@
 ﻿using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -9,7 +10,9 @@ using NLog.Web;
 using ProvinciaNET.SelfManagement.Infraestructure.Data;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
 using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using ProvinciaNET.SelfManagement.WebApi.Interfaces.Virtualization;
 using ProvinciaNET.SelfManagement.WebApi.Services.Organization;
+using ProvinciaNET.SelfManagement.WebApi.Services.Virtualization;
 using System.Reflection;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
@@ -52,10 +55,13 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(options =>
     {
+        options.EnableAnnotations();
+
         options.AddServer(new OpenApiServer()
         {
             Url = builder.Configuration.GetValue<string>("OpenApi:Server")
         });
+
         options.SwaggerDoc("v1", new OpenApiInfo
         {
             Title = "Provincia NET SelfManagement API",
@@ -90,6 +96,16 @@ try
             }
         });
 
+        options.TagActionsBy(desc =>
+        {
+            if (desc.GroupName != null) return new[] { desc.GroupName };
+            var descriptor = desc.ActionDescriptor! as ControllerActionDescriptor;
+            if (descriptor != null) return new[] { descriptor.ControllerName };
+            throw new InvalidOperationException("Unable to determine tag for endpoint.");
+        });
+
+        options.DocInclusionPredicate((name, desc) => true);
+
         var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
         options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 
@@ -119,6 +135,15 @@ try
     builder.Services.AddScoped<IOrgMembershipsService, OrgMembershipsService>();
     builder.Services.AddScoped<IOrgSectionsService, OrgSectionsService>();
     builder.Services.AddScoped<IOrgStructuresService, OrgStructuresService>();
+
+    builder.Services.AddScoped<IVirCategoryTagsService, VirCategoryTagsService>();
+    builder.Services.AddScoped<IVirClustersService, VirClustersService>();
+    builder.Services.AddScoped<IVirDataCentersService, VirDataCentersService>();
+    builder.Services.AddScoped<IVirDataStoresService, VirDataStoresService>();
+    builder.Services.AddScoped<IVirNetworksService, VirNetworksService>();
+    builder.Services.AddScoped<IVirOperatingSystemTypesService, VirOperatingSystemTypesService>();
+    builder.Services.AddScoped<IVirResourcesService, VirResourcesService>();
+    builder.Services.AddScoped<IVirtualMachinesService, VirtualMachinesService>();
 
     var app = builder.Build();
 

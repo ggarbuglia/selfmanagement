@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Attributes;
 using ProvinciaNET.SelfManagement.Core.Entities.Organization;
+using ProvinciaNET.SelfManagement.WebApi.Helpers;
 using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
 namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
@@ -12,7 +14,8 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
     /// </summary>
     /// <seealso cref="ControllerBase" />
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, ApiKey]
+    [SwaggerTag("Organization")]
     public class OrgMembershipsController : ControllerBase
     {
         private readonly ILogger<OrgMembershipsController> _logger;
@@ -30,7 +33,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Gets the OrgMemberships.
+        /// Gets all 'OrgMembership' resources.
         /// </summary>
         /// <returns></returns>
         [HttpGet, EnableQuery(PageSize = 1000)]
@@ -42,7 +45,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Gets a OrgMembership by ID.
+        /// Gets a 'OrgMembership' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
@@ -62,7 +65,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Create a OrgMembership entity resource.
+        /// Creates a 'OrgMembership' resource.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
@@ -91,7 +94,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Update a OrgMembership entity resource.
+        /// Updates a 'OrgMembership' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="entity">The entity.</param>
@@ -129,7 +132,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Delete a OrgMembership entity resource.
+        /// Deletes a 'OrgMembership' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>

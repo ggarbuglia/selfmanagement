@@ -47,7 +47,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
         }
 
         /// <summary>
-        /// Creates the specified entity resource.
+        /// Creates the specified resource.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
@@ -77,7 +77,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
         }
 
         /// <summary>
-        /// Updates the entity resource specified by the identifier.
+        /// Updates the resource specified by the identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="entity">The entity.</param>
@@ -106,7 +106,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
         }
 
         /// <summary>
-        /// Deletes the entity resource specified by the identifier.
+        /// Deletes the resource specified by the identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         public async Task Delete(int id)

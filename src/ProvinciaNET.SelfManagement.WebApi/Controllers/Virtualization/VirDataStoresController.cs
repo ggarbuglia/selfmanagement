@@ -1,63 +1,63 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Attributes;
-using ProvinciaNET.SelfManagement.Core.Entities.Organization;
+using ProvinciaNET.SelfManagement.Core.Entities.Virtualization;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using ProvinciaNET.SelfManagement.WebApi.Interfaces.Virtualization;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
-namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
+namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Virtualization
 {
     /// <summary>
-    /// OrgSections Controller
+    /// VirDataStores Controller
     /// </summary>
     /// <seealso cref="ControllerBase" />
     [Route("api/[controller]")]
     [ApiController, ApiKey]
-    [SwaggerTag("Organization")]
-    public class OrgSectionsController : ControllerBase
+    [SwaggerTag("Virtualization")]
+    public class VirDataStoresController : ControllerBase
     {
-        private readonly ILogger<OrgSectionsController> _logger;
-        private readonly IOrgSectionsService _service;
+        private readonly ILogger<VirDataStoresController> _logger;
+        private readonly IVirDataStoresService _service;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrgSectionsController"/> class.
+        /// Initializes a new instance of the <see cref="VirDataStoresController"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="service">The service.</param>
-        public OrgSectionsController(ILogger<OrgSectionsController> logger, IOrgSectionsService service)
+        public VirDataStoresController(ILogger<VirDataStoresController> logger, IVirDataStoresService service)
         {
             _logger = logger;
             _service = service;
         }
 
         /// <summary>
-        /// Gets all 'OrgSection' resources.
+        /// Gets all 'VirDataStore' resources.
         /// </summary>
         /// <returns></returns>
         [HttpGet, EnableQuery(PageSize = 1000)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrgSection))]
-        public async Task<ActionResult<IEnumerable<OrgSection>>> GetOrgSections()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(VirDataStore))]
+        public async Task<ActionResult<IEnumerable<VirDataStore>>> GetVirDataStores()
         {
             var entities = await _service.Get();
             return Ok(entities);
         }
 
         /// <summary>
-        /// Gets a 'OrgSection' resurce by ID.
+        /// Gets a 'VirDataStore' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpGet("{id}"), ODataIgnored]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrgSection))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(VirDataStore))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<OrgSection?>> GetOrgSection(int id)
+        public async Task<ActionResult<VirDataStore?>> GetVirDataStore(int id)
         {
             var entity = await _service.Get(id);
             if (entity == null)
             {
-                _logger.LogWarning("Entity 'OrgSection' with Id {id} not found.", id);
+                _logger.LogWarning("Entity 'VirDataStore' with Id {id} not found.", id);
                 return NotFound();
             }
 
@@ -65,19 +65,19 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Creates a 'OrgSection' resource.
+        /// Creates a 'VirDataStore' resource.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
         [HttpPost, ODataIgnored]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(OrgSection), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(VirDataStore), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<OrgSection>> PostOrgSection(OrgSection entity)
+        public async Task<ActionResult<VirDataStore>> PostVirDataStore(VirDataStore entity)
         {
             if (_service.Get(entity.Id).Result != null)
             {
-                _logger.LogWarning("Entity 'OrgSection' with Id {id} already exists.", entity.Id);
+                _logger.LogWarning("Entity 'VirDataStore' with Id {id} already exists.", entity.Id);
                 return BadRequest();
             }
 
@@ -90,11 +90,11 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
                 return Problem($"Error while creating resource: {ex.Message}");
             }
 
-            return CreatedAtAction("GetOrgSection", new { id = entity.Id }, entity);
+            return CreatedAtAction("GetVirDataStore", new { id = entity.Id }, entity);
         }
 
         /// <summary>
-        /// Updates a 'OrgSection' resource by ID.
+        /// Updates a 'VirDataStore' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="entity">The entity.</param>
@@ -104,7 +104,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> PutOrgSection(int id, OrgSection entity)
+        public async Task<IActionResult> PutVirDataStore(int id, VirDataStore entity)
         {
             if (id != entity.Id)
             {
@@ -115,7 +115,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
             var existing = await _service.Get(id);
             if (existing == null)
             {
-                _logger.LogWarning("Entity 'OrgSection' with Id {id} not found.", id);
+                _logger.LogWarning("Entity 'VirDataStore' with Id {id} not found.", id);
                 return NotFound();
             }
 
@@ -132,19 +132,19 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Deletes a 'OrgSection' resource by ID.
+        /// Deletes a 'VirDataStore' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpDelete("{id}"), ODataIgnored]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> DeleteOrgSection(int id)
+        public async Task<IActionResult> DeleteVirDataStore(int id)
         {
             var entity = await _service.Get(id);
             if (entity == null)
             {
-                _logger.LogWarning("Entity 'OrgSection' with Id {id} not found.", id);
+                _logger.LogWarning("Entity 'VirDataStore' with Id {id} not found.", id);
                 return NotFound();
             }
 

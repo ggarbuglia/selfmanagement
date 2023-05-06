@@ -1,49 +1,49 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProvinciaNET.SelfManagement.Core.Entities.Organization;
+using ProvinciaNET.SelfManagement.Core.Entities.Virtualization;
 using ProvinciaNET.SelfManagement.Infraestructure.Data;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using ProvinciaNET.SelfManagement.WebApi.Interfaces.Virtualization;
 
-namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
+namespace ProvinciaNET.SelfManagement.WebApi.Services.Virtualization
 {
     /// <summary>
-    /// OrgDirections Service
+    /// VirClusters Service
     /// </summary>
-    /// <seealso cref="IOrgDirectionsService" />
-    public class OrgDirectionsService : IOrgDirectionsService
+    /// <seealso cref="IVirClustersService" />
+    public class VirClustersService : IVirClustersService
     {
         private readonly SelfManagementContext _context;
-        private readonly ILogger<OrgDirectionsService> _logger;
+        private readonly ILogger<VirClustersService> _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrgDirectionsService"/> class.
+        /// Initializes a new instance of the <see cref="VirClustersService"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="logger">The logger.</param>
-        public OrgDirectionsService(SelfManagementContext context, ILogger<OrgDirectionsService> logger)
+        public VirClustersService(SelfManagementContext context, ILogger<VirClustersService> logger)
         {
             _context = context;
             _logger = logger;
         }
 
         /// <summary>
-        /// Gets all OrgDirections.
+        /// Gets all VirClusters.
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<OrgDirection>> Get()
+        public async Task<IEnumerable<VirCluster>> Get()
         {
-            var result = await _context.OrgDirections.Include(i => i.Sections).AsNoTracking().ToListAsync();
+            var result = await _context.VirClusters.AsNoTracking().ToListAsync();
             _logger.LogInformation("Query Count: {count}", result.Count);
             return result;
         }
 
         /// <summary>
-        /// Gets a OrgDirection specified by the identifier.
+        /// Gets a VirCluster specified by the identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public async Task<OrgDirection?> Get(int id)
+        public async Task<VirCluster?> Get(int id)
         {
-            return await _context.OrgDirections.Include(i => i.Sections).FirstOrDefaultAsync(o => o.Id == id);
+            return await _context.VirClusters.FirstOrDefaultAsync(o => o.Id == id);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        public async Task<OrgDirection> Post(OrgDirection entity)
+        public async Task<VirCluster> Post(VirCluster entity)
         {
             entity.CreatedOn = DateTime.Now;
             entity.ModifiedOn = null;
@@ -61,7 +61,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
             {
                 _logger.LogInformation("Creating resource.");
 
-                _context.OrgDirections.Add(entity);
+                _context.VirClusters.Add(entity);
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Resource created with Id {id}.", entity.Id);
@@ -81,9 +81,9 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="entity">The entity.</param>
-        public async Task Put(int id, OrgDirection entity)
+        public async Task Put(int id, VirCluster entity)
         {
-            var existing = await _context.OrgDirections.FirstAsync(o => o.Id == id);
+            var existing = await _context.VirClusters.FirstAsync(o => o.Id == id);
 
             entity.ModifiedOn = DateTime.Now;
 
@@ -111,13 +111,13 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
         /// <param name="id">The identifier.</param>
         public async Task Delete(int id)
         {
-            var entity = await _context.OrgDirections.FirstAsync(o => o.Id == id);
+            var entity = await _context.VirClusters.FirstAsync(o => o.Id == id);
 
             try
             {
                 _logger.LogInformation("Deleting resource.");
 
-                _context.OrgDirections.Remove(entity);
+                _context.VirClusters.Remove(entity);
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Resource deleted with Id {id}.", id);

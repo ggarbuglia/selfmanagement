@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.OData.Routing.Attributes;
 using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
 using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
 namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
@@ -14,6 +15,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
     /// <seealso cref="ControllerBase" />
     [Route("api/[controller]")]
     [ApiController, ApiKey]
+    [SwaggerTag("Organization")]
     public class AdUserAccountsController : ControllerBase
     {
         private readonly ILogger<AdUserAccountsController> _logger;
@@ -31,7 +33,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Gets the AdUserAccounts.
+        /// Gets all 'AdUserAccounts' resources.
         /// </summary>
         /// <returns></returns>
         [HttpGet, EnableQuery(PageSize = 1000)]
@@ -43,7 +45,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Gets a AdUserAccount by ID.
+        /// Gets a 'AdUserAccount' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
@@ -63,7 +65,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Create a AdUserAccount entity resource.
+        /// Creates a 'AdUserAccount' resource.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
@@ -92,7 +94,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Update a AdUserAccount entity resource.
+        /// Updates a 'AdUserAccount' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="entity">The entity.</param>
@@ -130,7 +132,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Delete a AdUserAccount entity resource.
+        /// Deletes a 'AdUserAccount' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>

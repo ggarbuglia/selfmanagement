@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.OData.Routing.Attributes;
 using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
 using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
 namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
@@ -14,6 +15,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
     /// <seealso cref="ControllerBase" />
     [Route("api/[controller]")]
     [ApiController, ApiKey]
+    [SwaggerTag("Organization")]
     public class OrgMailDatabaseGroupsController : ControllerBase
     {
         private readonly ILogger<OrgMailDatabaseGroupsController> _logger;
@@ -31,7 +33,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Gets the OrgMailDatabaseGroups.
+        /// Gets all 'OrgMailDatabaseGroup' resources.
         /// </summary>
         /// <returns></returns>
         [HttpGet, EnableQuery(PageSize = 1000)]
@@ -43,7 +45,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Gets a OrgMailDatabaseGroup by ID.
+        /// Gets a 'OrgMailDatabaseGroup' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
@@ -63,7 +65,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Create a OrgMailDatabaseGroup entity resource.
+        /// Creates a 'OrgMailDatabaseGroup' resource.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
@@ -92,7 +94,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Update a OrgMailDatabaseGroup entity resource.
+        /// Updates a 'OrgMailDatabaseGroup' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="entity">The entity.</param>
@@ -130,7 +132,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Delete a OrgMailDatabaseGroup entity resource.
+        /// Deletes a 'OrgMailDatabaseGroup' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>

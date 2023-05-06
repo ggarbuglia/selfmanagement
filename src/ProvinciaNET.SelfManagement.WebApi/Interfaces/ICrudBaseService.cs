@@ -13,7 +13,7 @@
         Task<IEnumerable<T>> Get();
 
         /// <summary>
-        /// Gets the specified identifier.
+        /// Gets all 'specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>

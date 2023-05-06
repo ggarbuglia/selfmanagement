@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.OData.Routing.Attributes;
 using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
 using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
 namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
@@ -14,6 +15,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
     /// <seealso cref="ControllerBase" />
     [Route("api/[controller]")]
     [ApiController, ApiKey]
+    [SwaggerTag("Organization")]
     public class OrgStructuresController : ControllerBase
     {
         private readonly ILogger<OrgStructuresController> _logger;
@@ -31,7 +33,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Gets the OrgStructures.
+        /// Gets all 'OrgStructure' resources.
         /// </summary>
         /// <returns></returns>
         [HttpGet, EnableQuery(PageSize = 1000)]
@@ -43,7 +45,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Gets a OrgStructure by ID.
+        /// Gets a 'OrgStructure' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
@@ -63,7 +65,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Create a OrgStructure entity resource.
+        /// Creates a 'OrgStructure' resource.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
@@ -92,7 +94,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Update a OrgStructure entity resource.
+        /// Updates a 'OrgStructure' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="entity">The entity.</param>
@@ -130,7 +132,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
         }
 
         /// <summary>
-        /// Delete a OrgStructure entity resource.
+        /// Deletes a 'OrgStructure' resource by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>

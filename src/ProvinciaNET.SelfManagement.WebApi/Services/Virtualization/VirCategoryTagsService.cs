@@ -1,49 +1,49 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProvinciaNET.SelfManagement.Core.Entities.Organization;
+using ProvinciaNET.SelfManagement.Core.Entities.Virtualization;
 using ProvinciaNET.SelfManagement.Infraestructure.Data;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using ProvinciaNET.SelfManagement.WebApi.Interfaces.Virtualization;
 
-namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
+namespace ProvinciaNET.SelfManagement.WebApi.Services.Virtualization
 {
     /// <summary>
-    /// OrgDirections Service
+    /// VirCategoryTags Service
     /// </summary>
-    /// <seealso cref="IOrgDirectionsService" />
-    public class OrgDirectionsService : IOrgDirectionsService
+    /// <seealso cref="IVirCategoryTagsService" />
+    public class VirCategoryTagsService : IVirCategoryTagsService
     {
         private readonly SelfManagementContext _context;
-        private readonly ILogger<OrgDirectionsService> _logger;
+        private readonly ILogger<VirCategoryTagsService> _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrgDirectionsService"/> class.
+        /// Initializes a new instance of the <see cref="VirCategoryTagsService"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="logger">The logger.</param>
-        public OrgDirectionsService(SelfManagementContext context, ILogger<OrgDirectionsService> logger)
+        public VirCategoryTagsService(SelfManagementContext context, ILogger<VirCategoryTagsService> logger)
         {
             _context = context;
             _logger = logger;
         }
 
         /// <summary>
-        /// Gets all OrgDirections.
+        /// Gets all VirCategoryTags.
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<OrgDirection>> Get()
+        public async Task<IEnumerable<VirCategoryTag>> Get()
         {
-            var result = await _context.OrgDirections.Include(i => i.Sections).AsNoTracking().ToListAsync();
+            var result = await _context.VirCategoryTags.AsNoTracking().ToListAsync();
             _logger.LogInformation("Query Count: {count}", result.Count);
             return result;
         }
 
         /// <summary>
-        /// Gets a OrgDirection specified by the identifier.
+        /// Gets a VirCategoryTag specified by the identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public async Task<OrgDirection?> Get(int id)
+        public async Task<VirCategoryTag?> Get(int id)
         {
-            return await _context.OrgDirections.Include(i => i.Sections).FirstOrDefaultAsync(o => o.Id == id);
+            return await _context.VirCategoryTags.FirstOrDefaultAsync(o => o.Id == id);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        public async Task<OrgDirection> Post(OrgDirection entity)
+        public async Task<VirCategoryTag> Post(VirCategoryTag entity)
         {
             entity.CreatedOn = DateTime.Now;
             entity.ModifiedOn = null;
@@ -61,7 +61,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
             {
                 _logger.LogInformation("Creating resource.");
 
-                _context.OrgDirections.Add(entity);
+                _context.VirCategoryTags.Add(entity);
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Resource created with Id {id}.", entity.Id);
@@ -81,9 +81,9 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="entity">The entity.</param>
-        public async Task Put(int id, OrgDirection entity)
+        public async Task Put(int id, VirCategoryTag entity)
         {
-            var existing = await _context.OrgDirections.FirstAsync(o => o.Id == id);
+            var existing = await _context.VirCategoryTags.FirstAsync(o => o.Id == id);
 
             entity.ModifiedOn = DateTime.Now;
 
@@ -111,13 +111,13 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
         /// <param name="id">The identifier.</param>
         public async Task Delete(int id)
         {
-            var entity = await _context.OrgDirections.FirstAsync(o => o.Id == id);
+            var entity = await _context.VirCategoryTags.FirstAsync(o => o.Id == id);
 
             try
             {
                 _logger.LogInformation("Deleting resource.");
 
-                _context.OrgDirections.Remove(entity);
+                _context.VirCategoryTags.Remove(entity);
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Resource deleted with Id {id}.", id);

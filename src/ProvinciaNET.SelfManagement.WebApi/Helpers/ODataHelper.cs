@@ -1,6 +1,7 @@
 ﻿using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using ProvinciaNET.SelfManagement.Core.Entities.Organization;
+using ProvinciaNET.SelfManagement.Core.Entities.Virtualization;
 
 namespace ProvinciaNET.SelfManagement.WebApi.Helpers
 {
@@ -10,7 +11,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Helpers
     public class ODataHelper
     {
         /// <summary>
-        /// Gets the EDM model.
+        /// Gets all 'EDM model.
         /// </summary>
         /// <returns></returns>
         public static IEdmModel GetModel()
@@ -26,6 +27,15 @@ namespace ProvinciaNET.SelfManagement.WebApi.Helpers
             builder.EntitySet<OrgMembership>("OrgMemberships");
             builder.EntitySet<OrgSection>("OrgSections");
             builder.EntitySet<OrgStructure>("OrgStructures");
+
+            builder.EntitySet<VirCategoryTag>("VirCategoryTags");
+            builder.EntitySet<VirCluster>("VirClusters");
+            builder.EntitySet<VirDataCenter>("VirDataCenters");
+            builder.EntitySet<VirDataStore>("VirDataStores");
+            builder.EntitySet<VirNetwork>("VirNetworks");
+            builder.EntitySet<VirOperatingSystemType>("VirOperatingSystemTypes");
+            builder.EntitySet<VirResource>("VirResources");
+            builder.EntitySet<VirtualMachine>("VirtualMachines");
 
             return builder.GetEdmModel();
         }

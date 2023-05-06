@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProvinciaNET.SelfManagement.Core.Entities;
+using ProvinciaNET.SelfManagement.Core.Entities.Organization;
+using ProvinciaNET.SelfManagement.Core.Entities.Virtualization;
 
 namespace ProvinciaNET.SelfManagement.Infraestructure.Data
 {
@@ -16,7 +17,8 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Data
         /// See <see href="https://aka.ms/efcore-docs-dbcontext">DbContext lifetime, configuration, and initialization</see>
         /// for more information and examples.
         /// </remarks>
-        public SelfManagementContext() { }
+        public SelfManagementContext()
+        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SelfManagementContext"/> class.
@@ -122,7 +124,7 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Data
         /// </value>
         public DbSet<OrgStructure> OrgStructures { get; set; }
 
-        #endregion
+        #endregion Organization Entities
 
         #region Virtualization Entities
 
@@ -198,6 +200,6 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Data
         /// </value>
         public DbSet<VirCategoryTag> VirCategoryTags { get; set; }
 
-        #endregion
+        #endregion Virtualization Entities
     }
 }

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace ProvinciaNET.SelfManagement.Core.Entities
+namespace ProvinciaNET.SelfManagement.Core.Entities.Organization
 {
     /// <summary>
     /// OrgMailDatabaseGroup Class
@@ -22,7 +22,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         [ConcurrencyCheck, Column(TypeName = "varchar(100)"), MaxLength(100), Required, JsonPropertyOrder(1)]
         public string Name { get; set; } = string.Empty;
 
-        #endregion
+        #endregion Properties
 
         #region Child Properties
 
@@ -35,6 +35,6 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         [JsonIgnore]
         public virtual ICollection<OrgStructure>? Structures { get; }
 
-        #endregion
+        #endregion Child Properties
     }
 }

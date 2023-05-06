@@ -28,6 +28,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProvinciaNET.SelfManagement
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProvinciaNET.SelfManagement.WebApi.UnitTests", "tests\ProvinciaNET.SelfManagement.WebApi.UnitTests\ProvinciaNET.SelfManagement.WebApi.UnitTests.csproj", "{A028BF43-4C8F-446A-BE4D-3B9332749DFB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{3ED79C57-75F5-43D4-A46E-73E0EC0693F5}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -71,7 +76,7 @@ Global
 		{A028BF43-4C8F-446A-BE4D-3B9332749DFB} = {772C3D68-C275-4C0A-A4F5-8CC785408043}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_SortFileContentOnSave = False
 		SolutionGuid = {A6B8ECC3-7599-42BA-B7E6-ACA387D460DB}
+		RESX_SortFileContentOnSave = False
 	EndGlobalSection
 EndGlobal

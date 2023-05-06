@@ -65,6 +65,6 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         [ConcurrencyCheck, Column(TypeName = "datetime2"), JsonPropertyOrder(104)]
         public DateTime? ModifiedOn { get; set; } = null;
 
-        #endregion
+        #endregion Properties
     }
 }

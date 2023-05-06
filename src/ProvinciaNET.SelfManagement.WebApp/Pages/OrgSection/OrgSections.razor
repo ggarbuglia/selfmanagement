@@ -72,8 +72,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        resource = new OrgSection();
         await base.OnInitializedAsync();
+        resource = new OrgSection();
         await LoadData(top: pagesize, skip: 0);
     }
 

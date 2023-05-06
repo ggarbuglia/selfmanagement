@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace ProvinciaNET.SelfManagement.WebApi.Interfaces
+﻿namespace ProvinciaNET.SelfManagement.WebApi.Interfaces
 {
     /// <summary>
     /// CrudBase Service Interface

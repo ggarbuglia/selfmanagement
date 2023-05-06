@@ -99,15 +99,15 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
                         {
                             if (!string.IsNullOrWhiteSpace(stringValue))
                             {
-                                cell.CellValue  = new CellValue() { Text = ((DateTime)value!).ToOADate().ToString(CultureInfo.InvariantCulture) };
-                                cell.DataType   = new EnumValue<CellValues>(CellValues.Number);
+                                cell.CellValue = new CellValue() { Text = ((DateTime)value!).ToOADate().ToString(CultureInfo.InvariantCulture) };
+                                cell.DataType = new EnumValue<CellValues>(CellValues.Number);
                                 cell.StyleIndex = (UInt32Value)1U;
                             }
                         }
                         else if (typeCode == TypeCode.Boolean)
                         {
                             cell.CellValue = new CellValue(stringValue.ToLowerInvariant());
-                            cell.DataType  = new EnumValue<CellValues>(CellValues.Boolean);
+                            cell.DataType = new EnumValue<CellValues>(CellValues.Boolean);
                         }
                         else if (IsNumericType(typeCode))
                         {
@@ -116,7 +116,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
                                 stringValue = Convert.ToString(value, CultureInfo.InvariantCulture);
                             }
                             cell.CellValue = new CellValue(stringValue!);
-                            cell.DataType  = new EnumValue<CellValues>(CellValues.Number);
+                            cell.DataType = new EnumValue<CellValues>(CellValues.Number);
                         }
                         else
                         {
@@ -218,13 +218,13 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
         {
             return typeCode switch
             {
-                TypeCode.Decimal or 
-                TypeCode.Double or 
-                TypeCode.Int16 or 
-                TypeCode.Int32 or 
-                TypeCode.Int64 or 
-                TypeCode.UInt16 or 
-                TypeCode.UInt32 or 
+                TypeCode.Decimal or
+                TypeCode.Double or
+                TypeCode.Int16 or
+                TypeCode.Int32 or
+                TypeCode.Int64 or
+                TypeCode.UInt16 or
+                TypeCode.UInt32 or
                 TypeCode.UInt64 => true,
                 _ => false,
             };

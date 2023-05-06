@@ -65,10 +65,10 @@
 
     protected override async Task OnInitializedAsync()
     {
+        base.OnInitialized();
         orgCostCenters = await OrgCostCenterService.GetAsync();
         orgDirections = await OrgDirectionService.GetAsync();
         resource = new OrgSection();
-        base.OnInitialized();
     }
 
     async Task FormSubmit()

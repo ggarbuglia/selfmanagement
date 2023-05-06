@@ -61,8 +61,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        resource = await OrgMailDatabaseGroupService.GetAsync(Id);
         await base.OnInitializedAsync();
+        resource = await OrgMailDatabaseGroupService.GetAsync(Id);
     }
 
     async Task FormSubmit()

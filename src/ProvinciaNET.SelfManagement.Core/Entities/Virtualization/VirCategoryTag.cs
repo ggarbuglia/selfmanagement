@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace ProvinciaNET.SelfManagement.Core.Entities
+namespace ProvinciaNET.SelfManagement.Core.Entities.Virtualization
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <seealso cref="ProvinciaNET.SelfManagement.Core.Entities.BaseEntity" />
     [Table("VirCategoryTags", Schema = "dbo")]
@@ -39,6 +39,6 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// </value>
         public virtual VirtualMachine VirtualMachine { get; set; } = new();
 
-        #endregion
+        #endregion Parent Properties
     }
 }

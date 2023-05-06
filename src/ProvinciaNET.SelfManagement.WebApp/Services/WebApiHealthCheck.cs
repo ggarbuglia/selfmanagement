@@ -38,13 +38,14 @@ namespace ProvinciaNET.SelfManagement.WebApp.Services
 
                 var healthCheckResult = HealthCheckResult.Healthy();
 
-                if (result != null) 
+                if (result != null)
                 {
                     switch (result.Status)
                     {
                         case "degraded":
                             healthCheckResult = HealthCheckResult.Degraded();
                             break;
+
                         case "unhealthy":
                             healthCheckResult = HealthCheckResult.Unhealthy();
                             break;

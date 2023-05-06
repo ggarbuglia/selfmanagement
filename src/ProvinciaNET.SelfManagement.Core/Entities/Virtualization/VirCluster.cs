@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace ProvinciaNET.SelfManagement.Core.Entities
+namespace ProvinciaNET.SelfManagement.Core.Entities.Virtualization
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <seealso cref="ProvinciaNET.SelfManagement.Core.Entities.BaseEntity" />
     [Table("VirClusters", Schema = "dbo")]
@@ -38,6 +38,6 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// </value>
         public virtual VirDataCenter? DataCenter { get; set; } = null;
 
-        #endregion
+        #endregion Parent Properties
     }
 }

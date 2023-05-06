@@ -28,4 +28,10 @@
 		<ProjectReference Include="..\ProvinciaNET.SelfManagement.Infraestructure\ProvinciaNET.SelfManagement.Infraestructure.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Controllers\Virtualization\" />
+	  <Folder Include="Interfaces\Virtualization\" />
+	  <Folder Include="Services\Virtualization\" />
+	</ItemGroup>
+
 </Project>

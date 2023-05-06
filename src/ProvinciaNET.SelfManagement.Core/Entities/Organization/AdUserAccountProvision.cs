@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace ProvinciaNET.SelfManagement.Core.Entities
+namespace ProvinciaNET.SelfManagement.Core.Entities.Organization
 {
     /// <summary>
     /// AdUserAccountProvision Class
@@ -40,7 +40,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         [ConcurrencyCheck, Column(TypeName = "varchar(max)"), Required, JsonPropertyOrder(4)]
         public string Error { get; set; } = string.Empty;
 
-        #endregion
+        #endregion Properties
 
         #region Parent Properties
 
@@ -51,6 +51,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// The ad user account identifier.
         /// </value>
         public int AdUserAccountId { get; set; }
+
         /// <summary>
         /// Gets or sets the ad user account.
         /// </summary>
@@ -59,6 +60,6 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// </value>
         public virtual AdUserAccount? AdUserAccount { get; set; }
 
-        #endregion
+        #endregion Parent Properties
     }
 }

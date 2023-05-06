@@ -1,49 +1,49 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProvinciaNET.SelfManagement.Core.Entities;
+using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 using ProvinciaNET.SelfManagement.Infraestructure.Data;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces;
+using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
 
-namespace ProvinciaNET.SelfManagement.WebApi.Services
+namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
 {
     /// <summary>
-    /// OrgLocations Service
+    /// AdUserAccounts Service
     /// </summary>
-    /// <seealso cref="ProvinciaNET.SelfManagement.WebApi.Interfaces.IOrgLocationsService" />
-    public class OrgLocationsService : IOrgLocationsService
+    /// <seealso cref="IAdUserAccountsService" />
+    public class AdUserAccountsService : IAdUserAccountsService
     {
         private readonly SelfManagementContext _context;
-        private readonly ILogger<OrgLocationsService> _logger;
+        private readonly ILogger<AdUserAccountsService> _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrgLocationsService"/> class.
+        /// Initializes a new instance of the <see cref="AdUserAccountsService"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="logger">The logger.</param>
-        public OrgLocationsService(SelfManagementContext context, ILogger<OrgLocationsService> logger)
+        public AdUserAccountsService(SelfManagementContext context, ILogger<AdUserAccountsService> logger)
         {
             _context = context;
             _logger = logger;
         }
 
         /// <summary>
-        /// Gets all OrgLocations.
+        /// Gets all AdUserAccounts.
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<OrgLocation>> Get()
+        public async Task<IEnumerable<AdUserAccount>> Get()
         {
-            var result = await _context.OrgLocations.Include(i => i.AdUserAccounts).AsNoTracking().ToListAsync();
+            var result = await _context.AdUserAccounts.Include(i => i.AdUserAccountProvisions).AsNoTracking().ToListAsync();
             _logger.LogInformation("Query Count: {count}", result.Count);
             return result;
         }
 
         /// <summary>
-        /// Gets a OrgLocation specified by the identifier.
+        /// Gets a AdUserAccount specified by the identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public async Task<OrgLocation?> Get(int id)
+        public async Task<AdUserAccount?> Get(int id)
         {
-            return await _context.OrgLocations.Include(i => i.AdUserAccounts).FirstOrDefaultAsync(o => o.Id == id);
+            return await _context.AdUserAccounts.Include(i => i.AdUserAccountProvisions).FirstOrDefaultAsync(o => o.Id == id);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        public async Task<OrgLocation> Post(OrgLocation entity)
+        public async Task<AdUserAccount> Post(AdUserAccount entity)
         {
             entity.CreatedOn = DateTime.Now;
             entity.ModifiedOn = null;
@@ -61,7 +61,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
             {
                 _logger.LogInformation("Creating resource.");
 
-                _context.OrgLocations.Add(entity);
+                _context.AdUserAccounts.Add(entity);
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Resource created with Id {id}.", entity.Id);
@@ -81,9 +81,9 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="entity">The entity.</param>
-        public async Task Put(int id, OrgLocation entity)
+        public async Task Put(int id, AdUserAccount entity)
         {
-            var existing = await _context.OrgLocations.FirstAsync(o => o.Id == id);
+            var existing = await _context.AdUserAccounts.FirstAsync(o => o.Id == id);
 
             entity.ModifiedOn = DateTime.Now;
 
@@ -111,13 +111,13 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
         /// <param name="id">The identifier.</param>
         public async Task Delete(int id)
         {
-            var entity = await _context.OrgLocations.FirstAsync(o => o.Id == id);
+            var entity = await _context.AdUserAccounts.FirstAsync(o => o.Id == id);
 
             try
             {
                 _logger.LogInformation("Deleting resource.");
 
-                _context.OrgLocations.Remove(entity);
+                _context.AdUserAccounts.Remove(entity);
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Resource deleted with Id {id}.", id);

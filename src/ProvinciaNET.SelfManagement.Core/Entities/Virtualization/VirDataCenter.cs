@@ -2,14 +2,14 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace ProvinciaNET.SelfManagement.Core.Entities
+namespace ProvinciaNET.SelfManagement.Core.Entities.Virtualization
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <seealso cref="ProvinciaNET.SelfManagement.Core.Entities.BaseEntity" />
     [Table("VirDataCenters", Schema = "dbo")]
-    public partial class VirDataCenter : BaseEntity 
+    public partial class VirDataCenter : BaseEntity
     {
         /// <summary>
         /// Gets or sets the name.
@@ -31,6 +31,6 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         [JsonIgnore]
         public virtual ICollection<VirCluster>? Clusters { get; set; }
 
-        #endregion
+        #endregion Child Properties
     }
 }

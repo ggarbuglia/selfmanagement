@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace ProvinciaNET.SelfManagement.Core.Entities
+namespace ProvinciaNET.SelfManagement.Core.Entities.Organization
 {
     /// <summary>
     /// OrgLocation Class
@@ -67,7 +67,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         [ConcurrencyCheck, Column(TypeName = "varchar(100)"), MaxLength(100), Required, JsonPropertyOrder(6)]
         public string AdGroupAccountName { get; set; } = string.Empty;
 
-        #endregion
+        #endregion Properties
 
         #region Child Properties
 
@@ -80,6 +80,6 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         [JsonIgnore]
         public virtual ICollection<AdUserAccount>? AdUserAccounts { get; }
 
-        #endregion
+        #endregion Child Properties
     }
 }

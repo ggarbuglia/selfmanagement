@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace ProvinciaNET.SelfManagement.Core.Entities
+namespace ProvinciaNET.SelfManagement.Core.Entities.Organization
 {
     /// <summary>
     /// OrgMembership Class
@@ -40,7 +40,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         [ConcurrencyCheck, JsonPropertyOrder(3)]
         public bool Show { get; set; } = true;
 
-        #endregion
+        #endregion Properties
 
         #region Parent Properties
 
@@ -60,7 +60,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// </value>
         public virtual OrgStructure? Structure { get; set; }
 
-        #endregion
+        #endregion Parent Properties
 
         #region Child Properties
 
@@ -73,6 +73,6 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         [JsonIgnore]
         public virtual ICollection<AdUserAccount>? AdUserAccounts { get; }
 
-        #endregion
+        #endregion Child Properties
     }
 }

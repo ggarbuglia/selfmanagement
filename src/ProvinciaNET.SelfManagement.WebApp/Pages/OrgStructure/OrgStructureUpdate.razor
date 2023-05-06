@@ -94,10 +94,10 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
         orgSections = await OrgSectionService.GetAsync();
         orgMailDatabaseGroups = await OrgMailDatabaseGroupService.GetAsync();
         resource = await OrgStructureService.GetAsync(Id);
-        await base.OnInitializedAsync();
     }
 
     async Task FormSubmit()

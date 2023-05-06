@@ -1,4 +1,4 @@
-﻿using ProvinciaNET.SelfManagement.Core.Entities;
+﻿using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
 
 namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Fakes
 {

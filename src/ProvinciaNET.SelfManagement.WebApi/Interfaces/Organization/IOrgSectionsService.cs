@@ -1,6 +1,6 @@
-﻿using ProvinciaNET.SelfManagement.Core.Entities;
+﻿using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 
-namespace ProvinciaNET.SelfManagement.WebApi.Interfaces
+namespace ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization
 {
     /// <summary>
     /// OrgSections Service Interface

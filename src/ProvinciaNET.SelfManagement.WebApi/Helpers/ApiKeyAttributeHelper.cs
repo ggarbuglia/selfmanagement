@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
@@ -19,10 +19,10 @@ namespace ProvinciaNET.SelfManagement.WebApi.Helpers
         /// <param name="context">The <see cref="T:Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext" />.</param>
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var configuration   = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
-            var internalApiKey  = $"{configuration.GetValue<string>("OpenApi:ApiKey")}{DateTime.Now:yyyyMMdd}";
+            var configuration = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
+            var internalApiKey = $"{configuration.GetValue<string>("OpenApi:ApiKey")}{DateTime.Now:yyyyMMdd}";
             var submittedApiKey = context.HttpContext.Request.Headers["x-api-key"];
-            
+
             if (!IsApiKeyValid(internalApiKey, submittedApiKey))
                 context.Result = new UnauthorizedResult();
         }

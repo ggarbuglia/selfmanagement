@@ -1,5 +1,4 @@
-﻿using ProvinciaNET.SelfManagement.Core.Entities;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
 
 namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Fakes
 {

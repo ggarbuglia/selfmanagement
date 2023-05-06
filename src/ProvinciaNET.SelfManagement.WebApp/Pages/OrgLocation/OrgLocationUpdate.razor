@@ -106,8 +106,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        resource = await OrgLocationService.GetAsync(Id);
         await base.OnInitializedAsync();
+        resource = await OrgLocationService.GetAsync(Id);
     }
 
     async Task FormSubmit()

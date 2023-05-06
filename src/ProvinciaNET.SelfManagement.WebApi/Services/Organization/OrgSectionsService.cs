@@ -1,38 +1,39 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProvinciaNET.SelfManagement.Core.Entities;
+using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 using ProvinciaNET.SelfManagement.Infraestructure.Data;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces;
+using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
 
-namespace ProvinciaNET.SelfManagement.WebApi.Services
+namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
 {
     /// <summary>
-    /// OrgMemberships Service
+    /// OrgSections Service
     /// </summary>
-    /// <seealso cref="ProvinciaNET.SelfManagement.WebApi.Interfaces.IOrgMembershipsService" />
-    public class OrgMembershipsService : IOrgMembershipsService
+    /// <seealso cref="IOrgSectionsService" />
+    public class OrgSectionsService : IOrgSectionsService
     {
         private readonly SelfManagementContext _context;
-        private readonly ILogger<OrgMembershipsService> _logger;
+        private readonly ILogger<OrgSectionsService> _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrgMembershipsService"/> class.
+        /// Initializes a new instance of the <see cref="OrgSectionsService"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="logger">The logger.</param>
-        public OrgMembershipsService(SelfManagementContext context, ILogger<OrgMembershipsService> logger)
+        public OrgSectionsService(SelfManagementContext context, ILogger<OrgSectionsService> logger)
         {
             _context = context;
             _logger = logger;
         }
 
         /// <summary>
-        /// Gets all OrgMemberships.
+        /// Gets all OrgSections.
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<OrgMembership>> Get()
+        public async Task<IEnumerable<OrgSection>> Get()
         {
-            var result = await _context.OrgMemberships
-                .Include(i => i.Structure)
+            var result = await _context.OrgSections
+                .Include(i => i.CostCenter)
+                .Include(i => i.Direction)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -41,14 +42,15 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
         }
 
         /// <summary>
-        /// Gets a OrgMembership specified by the identifier.
+        /// Gets a OrgSection specified by the identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public async Task<OrgMembership?> Get(int id)
+        public async Task<OrgSection?> Get(int id)
         {
-            return await _context.OrgMemberships
-                .Include(i => i.Structure)
+            return await _context.OrgSections
+                .Include(i => i.CostCenter)
+                .Include(i => i.Direction)
                 .FirstOrDefaultAsync(o => o.Id == id);
         }
 
@@ -57,7 +59,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        public async Task<OrgMembership> Post(OrgMembership entity)
+        public async Task<OrgSection> Post(OrgSection entity)
         {
             entity.CreatedOn = DateTime.Now;
             entity.ModifiedOn = null;
@@ -67,7 +69,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
             {
                 _logger.LogInformation("Creating resource.");
 
-                _context.OrgMemberships.Add(entity);
+                _context.OrgSections.Add(entity);
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Resource created with Id {id}.", entity.Id);
@@ -87,9 +89,9 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="entity">The entity.</param>
-        public async Task Put(int id, OrgMembership entity)
+        public async Task Put(int id, OrgSection entity)
         {
-            var existing = await _context.OrgMemberships.FirstAsync(o => o.Id == id);
+            var existing = await _context.OrgSections.FirstAsync(o => o.Id == id);
 
             entity.ModifiedOn = DateTime.Now;
 
@@ -117,13 +119,13 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
         /// <param name="id">The identifier.</param>
         public async Task Delete(int id)
         {
-            var entity = await _context.OrgMemberships.FirstAsync(o => o.Id == id);
+            var entity = await _context.OrgSections.FirstAsync(o => o.Id == id);
 
             try
             {
                 _logger.LogInformation("Deleting resource.");
 
-                _context.OrgMemberships.Remove(entity);
+                _context.OrgSections.Remove(entity);
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Resource deleted with Id {id}.", id);

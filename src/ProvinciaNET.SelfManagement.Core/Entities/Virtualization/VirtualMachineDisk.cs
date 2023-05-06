@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace ProvinciaNET.SelfManagement.Core.Entities
+namespace ProvinciaNET.SelfManagement.Core.Entities.Virtualization
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Table("VirtualMachineDisks", Schema = "dbo")]
     public partial class VirtualMachineDisk
@@ -45,7 +45,6 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         [Required, JsonPropertyOrder(3)]
         public int DiskSizeGB { get; set; } = 0;
 
-
         #region Parent Properties
 
         /// <summary>
@@ -56,6 +55,6 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         /// </value>
         public virtual VirtualMachine VirtualMachine { get; set; } = new();
 
-        #endregion
+        #endregion Parent Properties
     }
 }

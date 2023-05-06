@@ -1,61 +1,61 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Attributes;
-using ProvinciaNET.SelfManagement.Core.Entities;
+using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces;
+using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
 using System.Net.Mime;
 
-namespace ProvinciaNET.SelfManagement.WebApi.Controllers
+namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
 {
     /// <summary>
-    /// OrgMailDatabaseGroups Controller
+    /// OrgDirections Controller
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
+    /// <seealso cref="ControllerBase" />
     [Route("api/[controller]")]
     [ApiController, ApiKey]
-    public class OrgMailDatabaseGroupsController : ControllerBase
+    public class OrgDirectionsController : ControllerBase
     {
-        private readonly ILogger<OrgMailDatabaseGroupsController> _logger;
-        private readonly IOrgMailDatabaseGroupsService _service;
+        private readonly ILogger<OrgDirectionsController> _logger;
+        private readonly IOrgDirectionsService _service;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrgMailDatabaseGroupsController"/> class.
+        /// Initializes a new instance of the <see cref="OrgDirectionsController"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="service">The service.</param>
-        public OrgMailDatabaseGroupsController(ILogger<OrgMailDatabaseGroupsController> logger, IOrgMailDatabaseGroupsService service)
+        public OrgDirectionsController(ILogger<OrgDirectionsController> logger, IOrgDirectionsService service)
         {
             _logger = logger;
             _service = service;
         }
 
         /// <summary>
-        /// Gets the OrgMailDatabaseGroups.
+        /// Gets the OrgDirections.
         /// </summary>
         /// <returns></returns>
         [HttpGet, EnableQuery(PageSize = 1000)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrgMailDatabaseGroup))]
-        public async Task<ActionResult<IEnumerable<OrgMailDatabaseGroup>>> GetOrgMailDatabaseGroups()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrgDirection))]
+        public async Task<ActionResult<IEnumerable<OrgDirection>>> GetOrgDirections()
         {
             var entities = await _service.Get();
             return Ok(entities);
         }
 
         /// <summary>
-        /// Gets a OrgMailDatabaseGroup by ID.
+        /// Gets a OrgDirection by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpGet("{id}"), ODataIgnored]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrgMailDatabaseGroup))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrgDirection))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<OrgMailDatabaseGroup?>> GetOrgMailDatabaseGroup(int id)
+        public async Task<ActionResult<OrgDirection?>> GetOrgDirection(int id)
         {
             var entity = await _service.Get(id);
             if (entity == null)
             {
-                _logger.LogWarning("Entity 'OrgMailDatabaseGroup' with Id {id} not found.", id);
+                _logger.LogWarning("Entity 'OrgDirection' with Id {id} not found.", id);
                 return NotFound();
             }
 
@@ -63,19 +63,19 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
         }
 
         /// <summary>
-        /// Create a OrgMailDatabaseGroup entity resource.
+        /// Create a OrgDirection entity resource.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
         [HttpPost, ODataIgnored]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(OrgMailDatabaseGroup), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(OrgDirection), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<OrgMailDatabaseGroup>> PostOrgMailDatabaseGroup(OrgMailDatabaseGroup entity)
+        public async Task<ActionResult<OrgDirection>> PostOrgDirection(OrgDirection entity)
         {
             if (_service.Get(entity.Id).Result != null)
             {
-                _logger.LogWarning("Entity 'OrgMailDatabaseGroup' with Id {id} already exists.", entity.Id);
+                _logger.LogWarning("Entity 'OrgDirection' with Id {id} already exists.", entity.Id);
                 return BadRequest();
             }
 
@@ -88,11 +88,11 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
                 return Problem($"Error while creating resource: {ex.Message}");
             }
 
-            return CreatedAtAction("GetOrgMailDatabaseGroup", new { id = entity.Id }, entity);
+            return CreatedAtAction("GetOrgDirection", new { id = entity.Id }, entity);
         }
 
         /// <summary>
-        /// Update a OrgMailDatabaseGroup entity resource.
+        /// Update a OrgDirection entity resource.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="entity">The entity.</param>
@@ -102,7 +102,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> PutOrgMailDatabaseGroup(int id, OrgMailDatabaseGroup entity)
+        public async Task<IActionResult> PutOrgDirection(int id, OrgDirection entity)
         {
             if (id != entity.Id)
             {
@@ -113,7 +113,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
             var existing = await _service.Get(id);
             if (existing == null)
             {
-                _logger.LogWarning("Entity 'OrgMailDatabaseGroup' with Id {id} not found.", id);
+                _logger.LogWarning("Entity 'OrgDirection' with Id {id} not found.", id);
                 return NotFound();
             }
 
@@ -130,19 +130,19 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
         }
 
         /// <summary>
-        /// Delete a OrgMailDatabaseGroup entity resource.
+        /// Delete a OrgDirection entity resource.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpDelete("{id}"), ODataIgnored]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> DeleteOrgMailDatabaseGroup(int id)
+        public async Task<IActionResult> DeleteOrgDirection(int id)
         {
             var entity = await _service.Get(id);
             if (entity == null)
             {
-                _logger.LogWarning("Entity 'OrgMailDatabaseGroup' with Id {id} not found.", id);
+                _logger.LogWarning("Entity 'OrgDirection' with Id {id} not found.", id);
                 return NotFound();
             }
 

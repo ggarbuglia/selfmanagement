@@ -1,61 +1,60 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Attributes;
-using ProvinciaNET.SelfManagement.Core.Entities;
-using ProvinciaNET.SelfManagement.WebApi.Helpers;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces;
+using ProvinciaNET.SelfManagement.Core.Entities.Organization;
+using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
 using System.Net.Mime;
 
-namespace ProvinciaNET.SelfManagement.WebApi.Controllers
+namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
 {
     /// <summary>
-    /// AdUserAccountProvisions Controller
+    /// OrgMemberships Controller
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
+    /// <seealso cref="ControllerBase" />
     [Route("api/[controller]")]
-    [ApiController, ApiKey]
-    public class AdUserAccountProvisionsController : ControllerBase
+    [ApiController]
+    public class OrgMembershipsController : ControllerBase
     {
-        private readonly ILogger<AdUserAccountProvisionsController> _logger;
-        private readonly IAdUserAccountProvisionsService _service;
+        private readonly ILogger<OrgMembershipsController> _logger;
+        private readonly IOrgMembershipsService _service;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AdUserAccountProvisionsController"/> class.
+        /// Initializes a new instance of the <see cref="OrgMembershipsController"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="service">The service.</param>
-        public AdUserAccountProvisionsController(ILogger<AdUserAccountProvisionsController> logger, IAdUserAccountProvisionsService service)
+        public OrgMembershipsController(ILogger<OrgMembershipsController> logger, IOrgMembershipsService service)
         {
             _logger = logger;
             _service = service;
         }
 
         /// <summary>
-        /// Gets the AdUserAccountProvisions.
+        /// Gets the OrgMemberships.
         /// </summary>
         /// <returns></returns>
         [HttpGet, EnableQuery(PageSize = 1000)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AdUserAccountProvision))]
-        public async Task<ActionResult<IEnumerable<AdUserAccountProvision>>> GetAdUserAccountProvisions()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrgMembership))]
+        public async Task<ActionResult<IEnumerable<OrgMembership>>> GetOrgMemberships()
         {
             var entities = await _service.Get();
             return Ok(entities);
         }
 
         /// <summary>
-        /// Gets a AdUserAccountProvision by ID.
+        /// Gets a OrgMembership by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpGet("{id}"), ODataIgnored]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AdUserAccountProvision))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrgMembership))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AdUserAccountProvision?>> GetAdUserAccountProvision(int id)
+        public async Task<ActionResult<OrgMembership?>> GetOrgMembership(int id)
         {
             var entity = await _service.Get(id);
             if (entity == null)
             {
-                _logger.LogWarning("Entity 'AdUserAccountProvision' with Id {id} not found.", id);
+                _logger.LogWarning("Entity 'OrgMembership' with Id {id} not found.", id);
                 return NotFound();
             }
 
@@ -63,19 +62,19 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
         }
 
         /// <summary>
-        /// Create a AdUserAccountProvision entity resource.
+        /// Create a OrgMembership entity resource.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
         [HttpPost, ODataIgnored]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(AdUserAccountProvision), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(OrgMembership), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<AdUserAccountProvision>> PostAdUserAccountProvision(AdUserAccountProvision entity)
+        public async Task<ActionResult<OrgMembership>> PostOrgMembership(OrgMembership entity)
         {
             if (_service.Get(entity.Id).Result != null)
             {
-                _logger.LogWarning("Entity 'AdUserAccountProvision' with Id {id} already exists.", entity.Id);
+                _logger.LogWarning("Entity 'OrgMembership' with Id {id} already exists.", entity.Id);
                 return BadRequest();
             }
 
@@ -88,11 +87,11 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
                 return Problem($"Error while creating resource: {ex.Message}");
             }
 
-            return CreatedAtAction("GetAdUserAccountProvision", new { id = entity.Id }, entity);
+            return CreatedAtAction("GetOrgMembership", new { id = entity.Id }, entity);
         }
 
         /// <summary>
-        /// Update a AdUserAccountProvision entity resource.
+        /// Update a OrgMembership entity resource.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="entity">The entity.</param>
@@ -102,7 +101,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> PutAdUserAccountProvision(int id, AdUserAccountProvision entity)
+        public async Task<IActionResult> PutOrgMembership(int id, OrgMembership entity)
         {
             if (id != entity.Id)
             {
@@ -113,7 +112,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
             var existing = await _service.Get(id);
             if (existing == null)
             {
-                _logger.LogWarning("Entity 'AdUserAccountProvision' with Id {id} not found.", id);
+                _logger.LogWarning("Entity 'OrgMembership' with Id {id} not found.", id);
                 return NotFound();
             }
 
@@ -130,19 +129,19 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
         }
 
         /// <summary>
-        /// Delete a AdUserAccountProvision entity resource.
+        /// Delete a OrgMembership entity resource.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpDelete("{id}"), ODataIgnored]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> DeleteAdUserAccountProvision(int id)
+        public async Task<IActionResult> DeleteOrgMembership(int id)
         {
             var entity = await _service.Get(id);
             if (entity == null)
             {
-                _logger.LogWarning("Entity 'AdUserAccountProvision' with Id {id} not found.", id);
+                _logger.LogWarning("Entity 'OrgMembership' with Id {id} not found.", id);
                 return NotFound();
             }
 

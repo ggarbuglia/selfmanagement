@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using ProvinciaNET.SelfManagement.Core.Entities;
+using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 using Radzen;
 using System.Text;
 using System.Text.Encodings.Web;

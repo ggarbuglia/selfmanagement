@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProvinciaNET.SelfManagement.Core.Entities;
+using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 using ProvinciaNET.SelfManagement.Infraestructure.Data;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces;
+using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
 
-namespace ProvinciaNET.SelfManagement.WebApi.Services
+namespace ProvinciaNET.SelfManagement.WebApi.Services.Organization
 {
     /// <summary>
     /// OrgDirections Service
     /// </summary>
-    /// <seealso cref="ProvinciaNET.SelfManagement.WebApi.Interfaces.IOrgDirectionsService" />
+    /// <seealso cref="IOrgDirectionsService" />
     public class OrgDirectionsService : IOrgDirectionsService
     {
         private readonly SelfManagementContext _context;

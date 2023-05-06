@@ -1,6 +1,6 @@
 ﻿using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
-using ProvinciaNET.SelfManagement.Core.Entities;
+using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 
 namespace ProvinciaNET.SelfManagement.WebApi.Helpers
 {
@@ -13,7 +13,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Helpers
         /// Gets the EDM model.
         /// </summary>
         /// <returns></returns>
-        public static IEdmModel GetModel() 
+        public static IEdmModel GetModel()
         {
             var builder = new ODataConventionModelBuilder();
 

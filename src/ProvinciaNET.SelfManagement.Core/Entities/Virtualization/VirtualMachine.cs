@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace ProvinciaNET.SelfManagement.Core.Entities
+namespace ProvinciaNET.SelfManagement.Core.Entities.Virtualization
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <seealso cref="ProvinciaNET.SelfManagement.Core.Entities.BaseEntity" />
     [Table("VirtualMachines", Schema = "dbo")]
@@ -157,7 +157,7 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         [JsonPropertyOrder(20)]
         public virtual VirOperatingSystemType OperatingSystemType { get; set; } = new();
 
-        #endregion
+        #endregion Parent Properties
 
         #region Child Properties
 
@@ -179,6 +179,6 @@ namespace ProvinciaNET.SelfManagement.Core.Entities
         [JsonPropertyOrder(15)]
         public virtual ICollection<VirCategoryTag>? CategoryTags { get; }
 
-        #endregion
+        #endregion Child Properties
     }
 }

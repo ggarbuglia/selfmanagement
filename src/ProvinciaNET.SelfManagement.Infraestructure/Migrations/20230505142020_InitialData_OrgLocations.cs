@@ -46,8 +46,8 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
 
                 migrationBuilder.InsertData(
                     schema: "dbo",
-                    table:table, 
-                    columns: columns, 
+                    table: table,
+                    columns: columns,
                     values: new object[] { nm, ad, pc, ct, ac, dn, true, username, now, null, null }
                     );
             }
@@ -56,7 +56,6 @@ namespace ProvinciaNET.SelfManagement.Infraestructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
         }
     }
 }

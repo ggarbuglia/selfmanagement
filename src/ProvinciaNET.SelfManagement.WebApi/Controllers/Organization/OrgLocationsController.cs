@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Attributes;
-using ProvinciaNET.SelfManagement.Core.Entities;
+using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces;
+using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
 using System.Net.Mime;
 
-namespace ProvinciaNET.SelfManagement.WebApi.Controllers
+namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
 {
     /// <summary>
     /// OrgLocations Controller
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
+    /// <seealso cref="ControllerBase" />
     [Route("api/[controller]")]
     [ApiController, ApiKey]
     public class OrgLocationsController : ControllerBase

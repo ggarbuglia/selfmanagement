@@ -70,8 +70,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        resource = new OrgDirection();
         await base.OnInitializedAsync();
+        resource = new OrgDirection();
         await LoadData(top: pagesize, skip: 0);
     }
 

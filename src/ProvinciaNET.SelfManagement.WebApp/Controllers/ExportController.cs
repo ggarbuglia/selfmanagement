@@ -44,7 +44,6 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
         /// </summary>
         protected readonly IOrgStructureService _orgStructureService;
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ExportController"/> class.
         /// </summary>

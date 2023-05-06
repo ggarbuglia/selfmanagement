@@ -1,61 +1,61 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Attributes;
-using ProvinciaNET.SelfManagement.Core.Entities;
+using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces;
+using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
 using System.Net.Mime;
 
-namespace ProvinciaNET.SelfManagement.WebApi.Controllers
+namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
 {
     /// <summary>
-    /// AdUserAccounts Controller
+    /// OrgCostCenters Controller
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
+    /// <seealso cref="ControllerBase" />
     [Route("api/[controller]")]
     [ApiController, ApiKey]
-    public class AdUserAccountsController : ControllerBase
+    public class OrgCostCentersController : ControllerBase
     {
-        private readonly ILogger<AdUserAccountsController> _logger;
-        private readonly IAdUserAccountsService _service;
+        private readonly ILogger<OrgCostCentersController> _logger;
+        private readonly IOrgCostCentersService _service;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AdUserAccountsController"/> class.
+        /// Initializes a new instance of the <see cref="OrgCostCentersController"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="service">The service.</param>
-        public AdUserAccountsController(ILogger<AdUserAccountsController> logger, IAdUserAccountsService service)
+        public OrgCostCentersController(ILogger<OrgCostCentersController> logger, IOrgCostCentersService service)
         {
             _logger = logger;
             _service = service;
         }
 
         /// <summary>
-        /// Gets the AdUserAccounts.
+        /// Gets the OrgCostCenters.
         /// </summary>
         /// <returns></returns>
         [HttpGet, EnableQuery(PageSize = 1000)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AdUserAccount))]
-        public async Task<ActionResult<IEnumerable<AdUserAccount>>> GetAdUserAccounts()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrgCostCenter))]
+        public async Task<ActionResult<IEnumerable<OrgCostCenter>>> GetOrgCostCenters()
         {
             var entities = await _service.Get();
             return Ok(entities);
         }
 
         /// <summary>
-        /// Gets a AdUserAccount by ID.
+        /// Gets a OrgCostCenter by ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpGet("{id}"), ODataIgnored]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AdUserAccount))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrgCostCenter))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AdUserAccount?>> GetAdUserAccount(int id)
+        public async Task<ActionResult<OrgCostCenter?>> GetOrgCostCenter(int id)
         {
             var entity = await _service.Get(id);
             if (entity == null)
             {
-                _logger.LogWarning("Entity 'AdUserAccount' with Id {id} not found.", id);
+                _logger.LogWarning("Entity 'OrgCostCenter' with Id {id} not found.", id);
                 return NotFound();
             }
 
@@ -63,19 +63,19 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
         }
 
         /// <summary>
-        /// Create a AdUserAccount entity resource.
+        /// Create a OrgCostCenter entity resource.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
         [HttpPost, ODataIgnored]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(AdUserAccount), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(OrgCostCenter), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<AdUserAccount>> PostAdUserAccount(AdUserAccount entity)
+        public async Task<ActionResult<OrgCostCenter>> PostOrgCostCenter(OrgCostCenter entity)
         {
             if (_service.Get(entity.Id).Result != null)
             {
-                _logger.LogWarning("Entity 'AdUserAccount' with Id {id} already exists.", entity.Id);
+                _logger.LogWarning("Entity 'OrgCostCenter' with Id {id} already exists.", entity.Id);
                 return BadRequest();
             }
 
@@ -88,11 +88,11 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
                 return Problem($"Error while creating resource: {ex.Message}");
             }
 
-            return CreatedAtAction("GetAdUserAccount", new { id = entity.Id }, entity);
+            return CreatedAtAction("GetOrgCostCenter", new { id = entity.Id }, entity);
         }
 
         /// <summary>
-        /// Update a AdUserAccount entity resource.
+        /// Update a OrgCostCenter entity resource.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="entity">The entity.</param>
@@ -102,7 +102,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> PutAdUserAccount(int id, AdUserAccount entity)
+        public async Task<IActionResult> PutOrgCostCenter(int id, OrgCostCenter entity)
         {
             if (id != entity.Id)
             {
@@ -113,7 +113,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
             var existing = await _service.Get(id);
             if (existing == null)
             {
-                _logger.LogWarning("Entity 'AdUserAccount' with Id {id} not found.", id);
+                _logger.LogWarning("Entity 'OrgCostCenter' with Id {id} not found.", id);
                 return NotFound();
             }
 
@@ -130,19 +130,19 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers
         }
 
         /// <summary>
-        /// Delete a AdUserAccount entity resource.
+        /// Delete a OrgCostCenter entity resource.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpDelete("{id}"), ODataIgnored]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> DeleteAdUserAccount(int id)
+        public async Task<IActionResult> DeleteOrgCostCenter(int id)
         {
             var entity = await _service.Get(id);
             if (entity == null)
             {
-                _logger.LogWarning("Entity 'AdUserAccount' with Id {id} not found.", id);
+                _logger.LogWarning("Entity 'OrgCostCenter' with Id {id} not found.", id);
                 return NotFound();
             }
 

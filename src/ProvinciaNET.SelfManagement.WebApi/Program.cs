@@ -8,8 +8,8 @@ using NLog;
 using NLog.Web;
 using ProvinciaNET.SelfManagement.Infraestructure.Data;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces;
-using ProvinciaNET.SelfManagement.WebApi.Services;
+using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using ProvinciaNET.SelfManagement.WebApi.Services.Organization;
 using System.Reflection;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
@@ -68,7 +68,8 @@ try
             }
         });
 
-        options.AddSecurityDefinition(name: "ApiKey", securityScheme: new OpenApiSecurityScheme { 
+        options.AddSecurityDefinition(name: "ApiKey", securityScheme: new OpenApiSecurityScheme
+        {
             Name = "x-api-key",
             Description = "Enter the API Authorizacion Key",
             Type = SecuritySchemeType.ApiKey,
@@ -77,11 +78,11 @@ try
         });
 
         options.AddSecurityRequirement(new OpenApiSecurityRequirement {
-            { 
-                new OpenApiSecurityScheme 
+            {
+                new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
-                    Reference = new OpenApiReference { 
+                    Reference = new OpenApiReference {
                         Id = "ApiKey",
                         Type = ReferenceType.SecurityScheme
                     }

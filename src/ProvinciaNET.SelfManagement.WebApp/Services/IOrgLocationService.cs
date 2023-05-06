@@ -1,4 +1,4 @@
-﻿using ProvinciaNET.SelfManagement.Core.Entities;
+﻿using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 
 namespace ProvinciaNET.SelfManagement.WebApp.Services
 {

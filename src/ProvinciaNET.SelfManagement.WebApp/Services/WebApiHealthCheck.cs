@@ -32,9 +32,9 @@ namespace ProvinciaNET.SelfManagement.WebApp.Services
         {
             try
             {
-                var response = await _httpClient.GetAsync($"/health");
+                var response = await _httpClient.GetAsync($"/health", cancellationToken);
                 response.EnsureSuccessStatusCode();
-                var result = await response.Content.ReadFromJsonAsync<HealthCheckUIResult>();
+                var result = await response.Content.ReadFromJsonAsync<HealthCheckUIResult>(cancellationToken: cancellationToken);
 
                 var healthCheckResult = HealthCheckResult.Healthy();
 

@@ -1,11 +1,11 @@
 ﻿using ProvinciaNET.SelfManagement.WebApi.Controllers.Organization;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using ProvinciaNET.SelfManagement.WebApi.Services;
 
 namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Runbooks
 {
     public class AdUserAccountProvisionsControllerTests
     {
-        private readonly IAdUserAccountProvisionsService _service;
+        private readonly ICrudServiceBase<AdUserAccountProvision> _service;
         private readonly AdUserAccountProvisionsController _controller;
 
         public AdUserAccountProvisionsControllerTests()

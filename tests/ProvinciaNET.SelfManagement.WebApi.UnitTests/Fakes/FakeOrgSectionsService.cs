@@ -1,8 +1,8 @@
-﻿using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+﻿using ProvinciaNET.SelfManagement.WebApi.Services;
 
 namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Fakes
 {
-    internal class FakeOrgSectionsService : IOrgSectionsService
+    internal class FakeOrgSectionsService : ICrudServiceBase<OrgSection>
     {
         private readonly List<OrgSection> _items;
 

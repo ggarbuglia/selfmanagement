@@ -1,10 +1,10 @@
-﻿namespace ProvinciaNET.SelfManagement.WebApi.Interfaces
+﻿namespace ProvinciaNET.SelfManagement.WebApi.Services
 {
     /// <summary>
-    /// CrudBase Service Interface
+    /// CRUD Service Base Interface
     /// </summary>
     /// <typeparam name="T">Class to implement.</typeparam>
-    public interface ICrudBaseService<T> where T : class
+    public interface ICrudServiceBase<T> where T : class
     {
         /// <summary>
         /// Gets all instances.

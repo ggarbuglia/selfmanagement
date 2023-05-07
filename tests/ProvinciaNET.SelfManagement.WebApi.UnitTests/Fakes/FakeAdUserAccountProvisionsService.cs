@@ -1,8 +1,8 @@
-﻿using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+﻿using ProvinciaNET.SelfManagement.WebApi.Services;
 
 namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Fakes
 {
-    internal class FakeAdUserAccountProvisionsService : IAdUserAccountProvisionsService
+    internal class FakeAdUserAccountProvisionsService : ICrudServiceBase<AdUserAccountProvision>
     {
         private readonly List<AdUserAccountProvision> _items;
 

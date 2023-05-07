@@ -1,8 +1,8 @@
-﻿using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+﻿using ProvinciaNET.SelfManagement.WebApi.Services;
 
 namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Fakes
 {
-    internal class FakeOrgCostCentersService : IOrgCostCentersService
+    internal class FakeOrgCostCentersService : ICrudServiceBase<OrgCostCenter>
     {
         private readonly List<OrgCostCenter> _items;
 

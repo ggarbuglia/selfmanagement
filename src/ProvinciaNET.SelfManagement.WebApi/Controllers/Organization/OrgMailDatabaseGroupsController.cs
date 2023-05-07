@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Attributes;
 using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using ProvinciaNET.SelfManagement.WebApi.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
@@ -19,14 +19,14 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
     public class OrgMailDatabaseGroupsController : ControllerBase
     {
         private readonly ILogger<OrgMailDatabaseGroupsController> _logger;
-        private readonly IOrgMailDatabaseGroupsService _service;
+        private readonly ICrudServiceBase<OrgMailDatabaseGroup> _service;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OrgMailDatabaseGroupsController"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="service">The service.</param>
-        public OrgMailDatabaseGroupsController(ILogger<OrgMailDatabaseGroupsController> logger, IOrgMailDatabaseGroupsService service)
+        public OrgMailDatabaseGroupsController(ILogger<OrgMailDatabaseGroupsController> logger, ICrudServiceBase<OrgMailDatabaseGroup> service)
         {
             _logger = logger;
             _service = service;

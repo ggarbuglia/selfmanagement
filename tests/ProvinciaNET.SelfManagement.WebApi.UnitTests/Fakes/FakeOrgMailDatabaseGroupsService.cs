@@ -1,8 +1,8 @@
-﻿using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+﻿using ProvinciaNET.SelfManagement.WebApi.Services;
 
 namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Fakes
 {
-    internal class FakeOrgMailDatabaseGroupsService : IOrgMailDatabaseGroupsService
+    internal class FakeOrgMailDatabaseGroupsService : ICrudServiceBase<OrgMailDatabaseGroup>
     {
         private readonly List<OrgMailDatabaseGroup> _items;
 

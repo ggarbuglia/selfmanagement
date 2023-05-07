@@ -1,11 +1,11 @@
 ﻿using ProvinciaNET.SelfManagement.WebApi.Controllers.Organization;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using ProvinciaNET.SelfManagement.WebApi.Services;
 
 namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Runbooks
 {
     public class OrgStructuresControllerTests
     {
-        private readonly IOrgStructuresService _service;
+        private readonly ICrudServiceBase<OrgStructure> _service;
         private readonly OrgStructuresController _controller;
 
         public OrgStructuresControllerTests()

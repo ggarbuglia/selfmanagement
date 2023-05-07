@@ -3,9 +3,9 @@
 @attribute [Authorize]
 @inject IHttpContextAccessor HttpContextAccessor
 @inject DialogService DialogService
-@inject IOrgSectionService OrgSectionService
-@inject IOrgDirectionService OrgDirectionService
-@inject IOrgCostCenterService OrgCostCenterService
+@inject OrgSectionService OrgSectionService
+@inject OrgDirectionService OrgDirectionService
+@inject OrgCostCenterService OrgCostCenterService
 @inject IStringLocalizer<LocalizationResource> L
 
 <PageTitle>@L["Add"] @L["Section"]</PageTitle>

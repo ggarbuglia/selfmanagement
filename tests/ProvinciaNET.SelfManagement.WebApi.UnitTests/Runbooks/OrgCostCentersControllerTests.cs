@@ -1,11 +1,11 @@
 ﻿using ProvinciaNET.SelfManagement.WebApi.Controllers.Organization;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using ProvinciaNET.SelfManagement.WebApi.Services;
 
 namespace ProvinciaNET.SelfManagement.WebApi.UnitTests.Runbooks
 {
     public class OrgCostCentersControllerTests
     {
-        private readonly IOrgCostCentersService _service;
+        private readonly ICrudServiceBase<OrgCostCenter> _service;
         private readonly OrgCostCentersController _controller;
 
         public OrgCostCentersControllerTests()

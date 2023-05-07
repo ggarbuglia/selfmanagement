@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Attributes;
 using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using ProvinciaNET.SelfManagement.WebApi.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
@@ -19,14 +19,14 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
     public class OrgLocationsController : ControllerBase
     {
         private readonly ILogger<OrgLocationsController> _logger;
-        private readonly IOrgLocationsService _service;
+        private readonly ICrudServiceBase<OrgLocation> _service;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OrgLocationsController"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="service">The service.</param>
-        public OrgLocationsController(ILogger<OrgLocationsController> logger, IOrgLocationsService service)
+        public OrgLocationsController(ILogger<OrgLocationsController> logger, ICrudServiceBase<OrgLocation> service)
         {
             _logger = logger;
             _service = service;

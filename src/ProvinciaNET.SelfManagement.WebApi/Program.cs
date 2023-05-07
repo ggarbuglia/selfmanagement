@@ -7,10 +7,11 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
+using ProvinciaNET.SelfManagement.Core.Entities.Organization;
+using ProvinciaNET.SelfManagement.Core.Entities.Virtualization;
 using ProvinciaNET.SelfManagement.Infraestructure.Data;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces.Virtualization;
+using ProvinciaNET.SelfManagement.WebApi.Services;
 using ProvinciaNET.SelfManagement.WebApi.Services.Organization;
 using ProvinciaNET.SelfManagement.WebApi.Services.Virtualization;
 using System.Reflection;
@@ -99,8 +100,7 @@ try
         options.TagActionsBy(desc =>
         {
             if (desc.GroupName != null) return new[] { desc.GroupName };
-            var descriptor = desc.ActionDescriptor! as ControllerActionDescriptor;
-            if (descriptor != null) return new[] { descriptor.ControllerName };
+            if (desc.ActionDescriptor is ControllerActionDescriptor descriptor) return new[] { descriptor.ControllerName };
             throw new InvalidOperationException("Unable to determine tag for endpoint.");
         });
 
@@ -125,25 +125,25 @@ try
         .AddSqlServer(cnn!, "SELECT 1", "sqlserver", HealthStatus.Unhealthy)
         .AddDbContextCheck<SelfManagementContext>("efcontext", HealthStatus.Unhealthy);
 
-    // Add Scoped Services
-    builder.Services.AddScoped<IAdUserAccountProvisionsService, AdUserAccountProvisionsService>();
-    builder.Services.AddScoped<IAdUserAccountsService, AdUserAccountsService>();
-    builder.Services.AddScoped<IOrgCostCentersService, OrgCostCentersService>();
-    builder.Services.AddScoped<IOrgDirectionsService, OrgDirectionsService>();
-    builder.Services.AddScoped<IOrgLocationsService, OrgLocationsService>();
-    builder.Services.AddScoped<IOrgMailDatabaseGroupsService, OrgMailDatabaseGroupsService>();
-    builder.Services.AddScoped<IOrgMembershipsService, OrgMembershipsService>();
-    builder.Services.AddScoped<IOrgSectionsService, OrgSectionsService>();
-    builder.Services.AddScoped<IOrgStructuresService, OrgStructuresService>();
+    // Add Transient Services
+    builder.Services.AddTransient<ICrudServiceBase<AdUserAccountProvision>, AdUserAccountProvisionsService>();
+    builder.Services.AddTransient<ICrudServiceBase<AdUserAccount>, AdUserAccountsService>();
+    builder.Services.AddTransient<ICrudServiceBase<OrgCostCenter>, OrgCostCentersService>();
+    builder.Services.AddTransient<ICrudServiceBase<OrgDirection>, OrgDirectionsService>();
+    builder.Services.AddTransient<ICrudServiceBase<OrgLocation>, OrgLocationsService>();
+    builder.Services.AddTransient<ICrudServiceBase<OrgMailDatabaseGroup>, OrgMailDatabaseGroupsService>();
+    builder.Services.AddTransient<ICrudServiceBase<OrgMembership>, OrgMembershipsService>();
+    builder.Services.AddTransient<ICrudServiceBase<OrgSection>, OrgSectionsService>();
+    builder.Services.AddTransient<ICrudServiceBase<OrgStructure>, OrgStructuresService>();
 
-    builder.Services.AddScoped<IVirCategoryTagsService, VirCategoryTagsService>();
-    builder.Services.AddScoped<IVirClustersService, VirClustersService>();
-    builder.Services.AddScoped<IVirDataCentersService, VirDataCentersService>();
-    builder.Services.AddScoped<IVirDataStoresService, VirDataStoresService>();
-    builder.Services.AddScoped<IVirNetworksService, VirNetworksService>();
-    builder.Services.AddScoped<IVirOperatingSystemTypesService, VirOperatingSystemTypesService>();
-    builder.Services.AddScoped<IVirResourcesService, VirResourcesService>();
-    builder.Services.AddScoped<IVirtualMachinesService, VirtualMachinesService>();
+    builder.Services.AddTransient<ICrudServiceBase<VirCategoryTag>, VirCategoryTagsService>();
+    builder.Services.AddTransient<ICrudServiceBase<VirCluster>, VirClustersService>();
+    builder.Services.AddTransient<ICrudServiceBase<VirDataCenter>, VirDataCentersService>();
+    builder.Services.AddTransient<ICrudServiceBase<VirDataStore>, VirDataStoresService>();
+    builder.Services.AddTransient<ICrudServiceBase<VirNetwork>, VirNetworksService>();
+    builder.Services.AddTransient<ICrudServiceBase<VirOperatingSystemType>, VirOperatingSystemTypesService>();
+    builder.Services.AddTransient<ICrudServiceBase<VirResource>, VirResourcesService>();
+    builder.Services.AddTransient<ICrudServiceBase<VirtualMachine>, VirtualMachinesService>();
 
     var app = builder.Build();
 

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Attributes;
 using ProvinciaNET.SelfManagement.Core.Entities.Virtualization;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces.Virtualization;
+using ProvinciaNET.SelfManagement.WebApi.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
@@ -19,14 +19,14 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Virtualization
     public class VirResourcesController : ControllerBase
     {
         private readonly ILogger<VirResourcesController> _logger;
-        private readonly IVirResourcesService _service;
+        private readonly ICrudServiceBase<VirResource> _service;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VirResourcesController"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="service">The service.</param>
-        public VirResourcesController(ILogger<VirResourcesController> logger, IVirResourcesService service)
+        public VirResourcesController(ILogger<VirResourcesController> logger, ICrudServiceBase<VirResource> service)
         {
             _logger = logger;
             _service = service;

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Attributes;
 using ProvinciaNET.SelfManagement.Core.Entities.Virtualization;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces.Virtualization;
+using ProvinciaNET.SelfManagement.WebApi.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
@@ -19,14 +19,14 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Virtualization
     public class VirCategoryTagsController : ControllerBase
     {
         private readonly ILogger<VirCategoryTagsController> _logger;
-        private readonly IVirCategoryTagsService _service;
+        private readonly ICrudServiceBase<VirCategoryTag> _service;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VirCategoryTagsController"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="service">The service.</param>
-        public VirCategoryTagsController(ILogger<VirCategoryTagsController> logger, IVirCategoryTagsService service)
+        public VirCategoryTagsController(ILogger<VirCategoryTagsController> logger, ICrudServiceBase<VirCategoryTag> service)
         {
             _logger = logger;
             _service = service;

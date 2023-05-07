@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 using Radzen;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -8,26 +7,29 @@ using static System.Net.Mime.MediaTypeNames;
 namespace ProvinciaNET.SelfManagement.WebApp.Services
 {
     /// <summary>
-    /// OrgMailDatabaseGroup Service
+    /// WebApi Service Base
     /// </summary>
-    public partial class OrgMailDatabaseGroupService : IOrgMailDatabaseGroupService
+    /// <typeparam name="T"></typeparam>
+    public abstract class WebApiServiceBase<T> where T : class
     {
         private readonly HttpClient _httpClient;
         private readonly NavigationManager _navigationManager;
+        private readonly string _typeName;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrgMailDatabaseGroupService"/> class.
+        /// Initializes a new instance of the <see cref="WebApiServiceBase{T}"/> class.
         /// </summary>
         /// <param name="httpClientFactory">The HTTP client factory.</param>
         /// <param name="navigationManager">The navigation manager.</param>
-        public OrgMailDatabaseGroupService(IHttpClientFactory httpClientFactory, NavigationManager navigationManager)
+        public WebApiServiceBase(IHttpClientFactory httpClientFactory, NavigationManager navigationManager)
         {
             _httpClient = httpClientFactory.CreateClient("SelfManagementWebApi");
             _navigationManager = navigationManager;
+            _typeName = typeof(T).Name;
         }
 
         /// <summary>
-        /// Gets all OrgMailDatabaseGroups with the specified filter.
+        /// Gets all resources with the specified filter.
         /// </summary>
         /// <param name="filter">The filter.</param>
         /// <param name="top">The top.</param>
@@ -36,74 +38,74 @@ namespace ProvinciaNET.SelfManagement.WebApp.Services
         /// <param name="expand">The expand.</param>
         /// <param name="select">The select.</param>
         /// <param name="count">The count.</param>
-        /// <returns>A collection of <see cref="OrgMailDatabaseGroup"/></returns>
-        public async Task<ODataServiceResult<OrgMailDatabaseGroup>> GetOdataAsync(string? filter = default, int? top = default, int? skip = default, string? orderby = default, string? expand = default, string? select = default, bool? count = default)
+        /// <returns>A collection of <see typeparamref="T"/></returns>
+        public async Task<ODataServiceResult<T>> GetOdataAsync(string? filter = default, int? top = default, int? skip = default, string? orderby = default, string? expand = default, string? select = default, bool? count = default)
         {
-            var uri = new Uri($"{_httpClient.BaseAddress}odata/OrgMailDatabaseGroups");
+            var uri = new Uri($"{_httpClient.BaseAddress}odata/{_typeName}s");
             uri = uri.GetODataUri(filter: filter, top: top, skip: skip, orderby: orderby, expand: expand, select: select, count: count);
 
             var response = await _httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, uri));
             response.EnsureSuccessStatusCode();
-            return await response.ReadAsync<ODataServiceResult<OrgMailDatabaseGroup>>();
+            return await response.ReadAsync<ODataServiceResult<T>>();
         }
 
         /// <summary>
-        /// Gets all OrgMailDatabaseGroups.
+        /// Gets all Tresources.
         /// </summary>
-        /// <returns></returns>
-        public async Task<IEnumerable<OrgMailDatabaseGroup>> GetAsync()
+        /// <returns>A collection of <see typeparamref="T"/></returns>
+        public async Task<IEnumerable<T>> GetAsync()
         {
-            var response = await _httpClient.GetAsync($"/api/OrgMailDatabaseGroups");
+            var response = await _httpClient.GetAsync($"/api/{_typeName}s");
             response.EnsureSuccessStatusCode();
-            return await response.ReadAsync<IEnumerable<OrgMailDatabaseGroup>>();
+            return await response.ReadAsync<IEnumerable<T>>();
         }
 
         /// <summary>
-        /// Gets a OrgMailDatabaseGroup with the specified identifier.
+        /// Gets a resource with the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>An instance of <see cref="OrgMailDatabaseGroup"/></returns>
-        public async Task<OrgMailDatabaseGroup> GetAsync(int id)
+        /// <returns>An instance of <see typeparamref="T"/></returns>
+        public async Task<T> GetAsync(int id)
         {
-            var response = await _httpClient.GetAsync($"/api/OrgMailDatabaseGroups/{id}");
+            var response = await _httpClient.GetAsync($"/api/{_typeName}s/{id}");
             response.EnsureSuccessStatusCode();
-            return await response.ReadAsync<OrgMailDatabaseGroup>();
+            return await response.ReadAsync<T>();
         }
 
         /// <summary>
-        /// Creates a OrgMailDatabaseGroup resource.
+        /// Creates a resource.
         /// </summary>
         /// <param name="resource">The resource.</param>
-        /// <returns>An instance of <see cref="OrgMailDatabaseGroup"/></returns>
-        public async Task<OrgMailDatabaseGroup> CreateAsync(OrgMailDatabaseGroup resource)
+        /// <returns>An instance of <see typeparamref="T"/></returns>
+        public async Task<T> CreateAsync(T resource)
         {
             var payload = new StringContent(ODataJsonSerializer.Serialize(resource), Encoding.UTF8, Application.Json);
-            var response = await _httpClient.PostAsync("/api/OrgMailDatabaseGroups", payload);
+            var response = await _httpClient.PostAsync($"/api/{_typeName}s", payload);
             response.EnsureSuccessStatusCode();
-            return await response.ReadAsync<OrgMailDatabaseGroup>();
+            return await response.ReadAsync<T>();
         }
 
         /// <summary>
-        /// Updates a OrgMailDatabaseGroup resource.
+        /// Updates a resource.
         /// </summary>
         /// <param name="id">The resource identifier.</param>
         /// <param name="resource">The resource.</param>
         /// <returns></returns>
-        public async Task UpdateAsync(int id, OrgMailDatabaseGroup resource)
+        public async Task UpdateAsync(int id, T resource)
         {
             var payload = new StringContent(ODataJsonSerializer.Serialize(resource), Encoding.UTF8, Application.Json);
-            var response = await _httpClient.PutAsync($"/api/OrgMailDatabaseGroups/{id}", payload);
+            var response = await _httpClient.PutAsync($"/api/{_typeName}s/{id}", payload);
             response.EnsureSuccessStatusCode();
         }
 
         /// <summary>
-        /// Deletes a OrgMailDatabaseGroup resource.
+        /// Deletes a resource.
         /// </summary>
         /// <param name="id">The resource identifier.</param>
         /// <returns></returns>
         public async Task DeleteAsync(int id)
         {
-            var response = await _httpClient.DeleteAsync($"/api/OrgMailDatabaseGroups/{id}");
+            var response = await _httpClient.DeleteAsync($"/api/{_typeName}s/{id}");
             response.EnsureSuccessStatusCode();
         }
 
@@ -114,8 +116,8 @@ namespace ProvinciaNET.SelfManagement.WebApp.Services
         /// <param name="filename">The filename.</param>
         public void ExportToFile(string fileType, string filename)
         {
-            filename = (!string.IsNullOrEmpty(filename) ? UrlEncoder.Default.Encode(filename) : "Export");
-            _navigationManager.NavigateTo($"/export/OrgMailDatabaseGroups/{fileType}(fileName='{filename}')", true);
+            filename = !string.IsNullOrEmpty(filename) ? UrlEncoder.Default.Encode(filename) : "Export";
+            _navigationManager.NavigateTo($"/export/{_typeName}s/{fileType}(fileName='{filename}')", true);
         }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.Net.Http.Headers;
 using NLog;
 using NLog.Web;
 using ProvinciaNET.SelfManagement.WebApp.Services;
+using ProvinciaNET.SelfManagement.WebApp.Services.Organization;
 using Radzen;
 using System.DirectoryServices.Protocols;
 using System.Net;
@@ -99,13 +100,13 @@ try
     builder.Services.AddScoped<ContextMenuService>();
 
     // Add SelfManagement Scoped Services
-    builder.Services.AddScoped<IOrgCostCenterService, OrgCostCenterService>();
-    builder.Services.AddScoped<IOrgDirectionService, OrgDirectionService>();
-    builder.Services.AddScoped<IOrgLocationService, OrgLocationService>();
-    builder.Services.AddScoped<IOrgMailDatabaseGroupService, OrgMailDatabaseGroupService>();
-    builder.Services.AddScoped<IOrgMembershipService, OrgMembershipService>();
-    builder.Services.AddScoped<IOrgSectionService, OrgSectionService>();
-    builder.Services.AddScoped<IOrgStructureService, OrgStructureService>();
+    builder.Services.AddScoped<OrgCostCenterService>();
+    builder.Services.AddScoped<OrgDirectionService>();
+    builder.Services.AddScoped<OrgLocationService>();
+    builder.Services.AddScoped<OrgMailDatabaseGroupService>();
+    builder.Services.AddScoped<OrgMembershipService>();
+    builder.Services.AddScoped<OrgSectionService>();
+    builder.Services.AddScoped<OrgStructureService>();
 
     var app = builder.Build();
 

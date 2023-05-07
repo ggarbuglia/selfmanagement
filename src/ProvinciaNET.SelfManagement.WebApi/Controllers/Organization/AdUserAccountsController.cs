@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Attributes;
 using ProvinciaNET.SelfManagement.Core.Entities.Organization;
 using ProvinciaNET.SelfManagement.WebApi.Helpers;
-using ProvinciaNET.SelfManagement.WebApi.Interfaces.Organization;
+using ProvinciaNET.SelfManagement.WebApi.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
@@ -19,14 +19,14 @@ namespace ProvinciaNET.SelfManagement.WebApi.Controllers.Organization
     public class AdUserAccountsController : ControllerBase
     {
         private readonly ILogger<AdUserAccountsController> _logger;
-        private readonly IAdUserAccountsService _service;
+        private readonly ICrudServiceBase<AdUserAccount> _service;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AdUserAccountsController"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="service">The service.</param>
-        public AdUserAccountsController(ILogger<AdUserAccountsController> logger, IAdUserAccountsService service)
+        public AdUserAccountsController(ILogger<AdUserAccountsController> logger, ICrudServiceBase<AdUserAccount> service)
         {
             _logger = logger;
             _service = service;

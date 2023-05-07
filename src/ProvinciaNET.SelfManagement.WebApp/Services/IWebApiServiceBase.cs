@@ -4,7 +4,7 @@
     /// WebApiService Interface
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IWebApiService<T> where T : class
+    public interface IWebApiServiceBase<T> where T : class
     {
         /// <summary>
         /// Gets the odata asynchronous.

@@ -33,7 +33,6 @@ Adicionalmente encontramos los proyectos de test unitario y funcional:
 ## Extensiones
 
 - CodeMaid
-- CodegenCS
 - GhostDoc
 - Markdown Editor
 - ResXManager

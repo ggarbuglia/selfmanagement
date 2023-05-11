@@ -29,3 +29,11 @@ Adicionalmente encontramos los proyectos de test unitario y funcional:
 - DocumentFormat OpenXml
 - xUnit
 - Playwright (NUnit)
+
+## Extensiones
+
+- CodeMaid
+- CodegenCS
+- GhostDoc
+- Markdown Editor
+- ResXManager

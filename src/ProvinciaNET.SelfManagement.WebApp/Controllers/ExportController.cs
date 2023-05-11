@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using ProvinciaNET.SelfManagement.WebApp.Services.Organization;
+using ProvinciaNET.SelfManagement.WebApp.Services.Virtualization;
 
 namespace ProvinciaNET.SelfManagement.WebApp.Controllers
 {
@@ -25,7 +26,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
         }
 
         /// <summary>
-        /// Exports the org cost centers to CSV.
+        /// Exports the OrgCostCenter to CSV.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
@@ -37,7 +38,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
         }
 
         /// <summary>
-        /// Exports the org cost centers to XLSX.
+        /// Exports the OrgCostCenter to XLSX.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
@@ -49,7 +50,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
         }
 
         /// <summary>
-        /// Exports the org directions to CSV.
+        /// Exports the OrgDirection to CSV.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
@@ -61,7 +62,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
         }
 
         /// <summary>
-        /// Exports the org directions to XLSX.
+        /// Exports the OrgDirection to XLSX.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
@@ -73,31 +74,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
         }
 
         /// <summary>
-        /// Exports the org sections to CSV.
-        /// </summary>
-        /// <param name="fileName">Name of the file.</param>
-        /// <returns></returns>
-        [HttpGet("/export/OrgSections/csv(fileName='{fileName}')")]
-        public async Task<FileStreamResult> ExportOrgSectionsToCsv(string? fileName = null)
-        {
-            var service = new OrgSectionService(_httpClientFactory, _navigationManager);
-            return ExportToCsv(await service.GetAsync(), fileName);
-        }
-
-        /// <summary>
-        /// Exports the org sections to XLSX.
-        /// </summary>
-        /// <param name="fileName">Name of the file.</param>
-        /// <returns></returns>
-        [HttpGet("/export/OrgSections/xlsx(fileName='{fileName}')")]
-        public async Task<FileStreamResult> ExportOrgSectionsToXlsx(string? fileName = null)
-        {
-            var service = new OrgSectionService(_httpClientFactory, _navigationManager);
-            return ExportToXlsx(await service.GetAsync(), fileName);
-        }
-
-        /// <summary>
-        /// Exports the org sections to CSV.
+        /// Exports the OrgLocation to CSV.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
@@ -109,7 +86,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
         }
 
         /// <summary>
-        /// Exports the org sections to XLSX.
+        /// Exports the OrgLocation to XLSX.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
@@ -121,7 +98,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
         }
 
         /// <summary>
-        /// Exports the org sections to CSV.
+        /// Exports the OrgMailDatabaseGroup to CSV.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
@@ -133,7 +110,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
         }
 
         /// <summary>
-        /// Exports the org sections to XLSX.
+        /// Exports the OrgMailDatabaseGroup to XLSX.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
@@ -145,7 +122,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
         }
 
         /// <summary>
-        /// Exports the org sections to CSV.
+        /// Exports the OrgMembership to CSV.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
@@ -157,7 +134,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
         }
 
         /// <summary>
-        /// Exports the org sections to XLSX.
+        /// Exports the OrgMembership to XLSX.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
@@ -169,7 +146,31 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
         }
 
         /// <summary>
-        /// Exports the org sections to CSV.
+        /// Exports the OrgSection to CSV.
+        /// </summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns></returns>
+        [HttpGet("/export/OrgSections/csv(fileName='{fileName}')")]
+        public async Task<FileStreamResult> ExportOrgSectionsToCsv(string? fileName = null)
+        {
+            var service = new OrgSectionService(_httpClientFactory, _navigationManager);
+            return ExportToCsv(await service.GetAsync(), fileName);
+        }
+
+        /// <summary>
+        /// Exports the OrgSection to XLSX.
+        /// </summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns></returns>
+        [HttpGet("/export/OrgSections/xlsx(fileName='{fileName}')")]
+        public async Task<FileStreamResult> ExportOrgSectionsToXlsx(string? fileName = null)
+        {
+            var service = new OrgSectionService(_httpClientFactory, _navigationManager);
+            return ExportToXlsx(await service.GetAsync(), fileName);
+        }
+
+        /// <summary>
+        /// Exports the OrgStructure to CSV.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
@@ -181,7 +182,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
         }
 
         /// <summary>
-        /// Exports the org sections to XLSX.
+        /// Exports the OrgStructure to XLSX.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
@@ -191,5 +192,6 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
             var service = new OrgStructureService(_httpClientFactory, _navigationManager);
             return ExportToXlsx(await service.GetAsync(), fileName);
         }
+
     }
 }

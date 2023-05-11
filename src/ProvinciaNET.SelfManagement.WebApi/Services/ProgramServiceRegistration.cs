@@ -146,7 +146,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
         public static IServiceCollection RegisterDbContextServices(this IServiceCollection services, IConfiguration config)
         {
             var cnn = config.GetConnectionString("DefaultConnection");
-            services.AddDbContext<SelfManagementContext>(options => { options.UseSqlServer(cnn); });
+            services.AddDbContextPool<SelfManagementContext>(options => { options.UseSqlServer(cnn); });
 
             return services;
         }

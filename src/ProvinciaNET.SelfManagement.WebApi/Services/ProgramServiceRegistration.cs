@@ -16,7 +16,7 @@ using System.Reflection;
 namespace ProvinciaNET.SelfManagement.WebApi.Services
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static class ProgramServiceRegistration
     {
@@ -26,7 +26,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
         /// <param name="services">The services.</param>
         /// <param name="config">The configuration.</param>
         /// <returns></returns>
-        public static IServiceCollection RegisterCorsServices(this IServiceCollection services, IConfiguration config) 
+        public static IServiceCollection RegisterCorsServices(this IServiceCollection services, IConfiguration config)
         {
             var origins = config.GetSection("CORS:AllowedOrigins").Get<string[]>();
             services.AddCors(options =>
@@ -54,7 +54,8 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
             {
                 options.Filters.Add<ApiKeyAttribute>();
             })
-                .AddOData(options => {
+                .AddOData(options =>
+                {
                     options.AddRouteComponents("odata", ODataHelper.GetModel());
                     options.EnableQueryFeatures(maxTopValue: 1000);
                 });
@@ -101,7 +102,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
                     Scheme = "ApiKeyScheme"
                 });
 
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement 
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
                         new OpenApiSecurityScheme
@@ -146,7 +147,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
         public static IServiceCollection RegisterDbContextServices(this IServiceCollection services, IConfiguration config)
         {
             var cnn = config.GetConnectionString("DefaultConnection");
-            services.AddDbContextPool<SelfManagementContext>(options => { options.UseSqlServer(cnn); });
+            services.AddDbContext<SelfManagementContext>(options => { options.UseSqlServer(cnn); });
 
             return services;
         }
@@ -201,7 +202,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
         /// </summary>
         /// <param name="app">The application.</param>
         /// <returns></returns>
-        public static WebApplication RegisterUsedApps(this WebApplication app) 
+        public static WebApplication RegisterUsedApps(this WebApplication app)
         {
             if (app.Environment.IsDevelopment())
             {
@@ -224,7 +225,7 @@ namespace ProvinciaNET.SelfManagement.WebApi.Services
         /// </summary>
         /// <param name="app">The application.</param>
         /// <returns></returns>
-        public static WebApplication RegisterMappedApps(this WebApplication app) 
+        public static WebApplication RegisterMappedApps(this WebApplication app)
         {
             app.MapControllers();
             app.MapHealthChecks("/health", new HealthCheckOptions

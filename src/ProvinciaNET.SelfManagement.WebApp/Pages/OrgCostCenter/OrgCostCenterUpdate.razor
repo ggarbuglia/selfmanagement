@@ -1,10 +1,7 @@
 ﻿@page "/orgcostcenter/update"
 
 @attribute [Authorize]
-@inject IHttpContextAccessor HttpContextAccessor
-@inject DialogService DialogService
-@inject OrgCostCenterService OrgCostCenterService
-@inject IStringLocalizer<LocalizationResource> L
+@inherits MasterTableUpdateBase<OrgCostCenterService, OrgCostCenter>
 
 <PageTitle>@L["Edit"] @L["CostCenter"]</PageTitle>
 <RadzenRow>
@@ -51,47 +48,4 @@
 </RadzenColumn>
 
 @code {
-    [Parameter]
-    public int Id { get; set; }
-
-    bool hasChanges = false;
-    bool canEdit = true;
-    bool errorVisible = false;
-    OrgCostCenter? resource;
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        resource = await OrgCostCenterService.GetAsync(Id);
-    }
-
-    async Task FormSubmit()
-    {
-        if (resource == null) return;
-
-        try
-        {
-            resource.ModifiedBy = $"{HttpContextAccessor.HttpContext?.User.Identity?.Name?.Split("\\").Last()}";
-            await OrgCostCenterService.UpdateAsync(Id, resource);
-            DialogService.Close(resource);
-        }
-        catch (Exception)
-        {
-            hasChanges = false;
-            canEdit = true;
-            errorVisible = true;
-        }
-    }
-
-    void CancelButtonClick(MouseEventArgs args)
-    {
-        DialogService.Close(null);
-    }
-
-    async Task ReloadButtonClick(MouseEventArgs args)
-    {
-        hasChanges = false;
-        canEdit = true;
-        resource = await OrgCostCenterService.GetAsync(Id);
-    }
 }

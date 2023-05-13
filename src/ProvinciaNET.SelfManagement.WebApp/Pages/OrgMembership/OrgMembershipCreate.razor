@@ -1,12 +1,9 @@
 ﻿@page "/orgmembership/create"
 
 @attribute [Authorize]
-@inject IHttpContextAccessor HttpContextAccessor
-@inject DialogService DialogService
-@inject OrgMembershipService OrgMembershipService
+@inherits MasterTableCreateBase<OrgMembershipService, OrgMembership>
 @inject OrgSectionService OrgSectionService
 @inject OrgStructureService OrgStructureService
-@inject IStringLocalizer<LocalizationResource> L
 
 <PageTitle>@L["Add"] @L["Membership"]</PageTitle>
 <RadzenColumn SizeMD=12>
@@ -74,9 +71,6 @@
 </RadzenColumn>
 
 @code {
-    bool canEdit = true;
-    bool errorVisible = false;
-    OrgMembership? resource;
     IEnumerable<OrgStructure>? orgStructures;
     IEnumerable<OrgSection>? orgSections;
     int sectionId;
@@ -84,31 +78,7 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-
         orgSections = await OrgSectionService.GetAsync();
         orgStructures = await OrgStructureService.GetAsync();
-        resource = new OrgMembership();
-    }
-
-    async Task FormSubmit()
-    {
-        if (resource == null) return;
-
-        try
-        {
-            resource.CreatedBy = $"{HttpContextAccessor.HttpContext?.User.Identity?.Name?.Split("\\").Last()}";
-            await OrgMembershipService.CreateAsync(resource);
-            DialogService.Close(resource);
-        }
-        catch (Exception)
-        {
-            canEdit = true;
-            errorVisible = true;
-        }
-    }
-
-    void CancelButtonClick(MouseEventArgs args)
-    {
-        DialogService.Close(null);
     }
 }

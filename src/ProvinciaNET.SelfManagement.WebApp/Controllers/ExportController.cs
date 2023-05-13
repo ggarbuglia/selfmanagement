@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using ProvinciaNET.SelfManagement.WebApp.Services.Organization;
-using ProvinciaNET.SelfManagement.WebApp.Services.Virtualization;
 
 namespace ProvinciaNET.SelfManagement.WebApp.Controllers
 {
@@ -192,6 +191,5 @@ namespace ProvinciaNET.SelfManagement.WebApp.Controllers
             var service = new OrgStructureService(_httpClientFactory, _navigationManager);
             return ExportToXlsx(await service.GetAsync(), fileName);
         }
-
     }
 }

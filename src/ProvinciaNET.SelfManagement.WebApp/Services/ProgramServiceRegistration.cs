@@ -115,7 +115,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Services
         /// </summary>
         /// <param name="services">The services.</param>
         /// <returns></returns>
-        public static IServiceCollection RegisterRadzenBlazorServices(this IServiceCollection services) 
+        public static IServiceCollection RegisterRadzenBlazorServices(this IServiceCollection services)
         {
             services.AddScoped<DialogService>();
             services.AddScoped<NotificationService>();
@@ -130,7 +130,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Services
         /// </summary>
         /// <param name="services">The services.</param>
         /// <returns></returns>
-        public static IServiceCollection RegisterSelfManagementServices(this IServiceCollection services) 
+        public static IServiceCollection RegisterSelfManagementServices(this IServiceCollection services)
         {
             services.AddScoped<OrgCostCenterService>();
             services.AddScoped<OrgDirectionService>();
@@ -148,7 +148,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Services
         /// </summary>
         /// <param name="app">The application.</param>
         /// <returns></returns>
-        public static WebApplication RegisterUsedApps(this WebApplication app) 
+        public static WebApplication RegisterUsedApps(this WebApplication app)
         {
             if (!app.Environment.IsDevelopment())
             {
@@ -177,7 +177,7 @@ namespace ProvinciaNET.SelfManagement.WebApp.Services
         /// </summary>
         /// <param name="app">The application.</param>
         /// <returns></returns>
-        public static WebApplication RegisterMappedApps(this WebApplication app) 
+        public static WebApplication RegisterMappedApps(this WebApplication app)
         {
             app.MapControllers();
             app.MapBlazorHub();

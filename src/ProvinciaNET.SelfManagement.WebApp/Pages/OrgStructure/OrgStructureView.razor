@@ -1,10 +1,7 @@
 ﻿@page "/orgstructures"
 
 @attribute [Authorize]
-@inject NotificationService NotificationService
-@inject DialogService DialogService
-@inject OrgStructureService OrgStructureService
-@inject IStringLocalizer<LocalizationResource> L
+@inherits MasterTableViewBase<OrgStructureService, OrgStructure, OrgStructureCreate, OrgStructureUpdate>
 
 <PageTitle>@L["Structures"]</PageTitle>
 <RadzenStack>
@@ -25,8 +22,9 @@
     <RadzenTextBox Placeholder="@L["Search"]" style="display: block; width: 100%" @oninput="@Search" />
     <RadzenRow>
         <RadzenColumn SizeMD=12>
-            <RadzenDataGrid @ref="grid0" Data="@resources" LoadData="@LoadData" TItem="OrgStructure" Density="Density.Compact" 
-                            IsLoading="@isLoading" Count="@count" AllowFiltering="true" FilterMode="FilterMode.Advanced" RowDoubleClick="@EditRow"
+            <RadzenDataGrid @ref="grid0" Data="@resources" LoadData="@LoadData" TItem="OrgStructure" Density="Density.Compact"
+                            IsLoading="@isLoading" Count="@count" RowDoubleClick="@EditRow"
+                            AllowFiltering="true" FilterMode="FilterMode.Advanced" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                             AllowPaging="true" AllowSorting="true" ShowPagingSummary="true" PageSize=@pagesize PageSizeOptions=@(new int[]{5, 10, 20, 30})>
                 <Columns>
                     <RadzenDataGridColumn TItem="OrgStructure" Property="Id" Title="Id" Width="70px" />
@@ -57,79 +55,26 @@
 </RadzenStack>
 
 @code {
-    bool isLoading = false;
-    int count = 0;
-    int pagesize = 10;
-    RadzenDataGrid<OrgStructure>? grid0;
-    IEnumerable<OrgStructure>? resources;
-    OrgStructure? resource = new();
-
-    async Task LoadData(string? filter = null, int? top = null, int? skip = null, string? orderby = null)
-    {
-        var result = await OrgStructureService.GetOdataAsync(filter: filter, top: top, skip: skip, expand: "Section,MailDatabaseGroup", orderby: orderby, count: true);
-        resources = result.Value.AsODataEnumerable();
-        count = result.Count;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        await LoadData(top: pagesize, skip: 0);
-    }
-
-    async Task LoadData(LoadDataArgs args)
-    {
-        isLoading = true;
-        await LoadData(filter: args.Filter, top: args.Top, skip: args.Skip, orderby: args.OrderBy);
-        isLoading = false;
-    }
-
-    async Task Search(ChangeEventArgs args)
-    {
-        if (args.Value == null) return;
-        var search = args.Value.ToString()!.ToLowerInvariant();
-
-        if (grid0 != null) await grid0.GoToPage(0);
-        isLoading = true;
-        await LoadData(filter: $"contains(tolower(Name),'{search}')", top: grid0!.PageSize, skip: 0);
-        isLoading = false;
-    }
-
-    async Task AddButtonClick(MouseEventArgs args)
-    {
-        await DialogService.OpenAsync<OrgStructureCreate>($"{L["Add"]} {L["Structure"]}", null);
-        if (grid0 != null) await grid0.Reload();
-    }
-
-    async Task EditRow(DataGridRowMouseEventArgs<OrgStructure> args)
-    {
-        await DialogService.OpenAsync<OrgStructureUpdate>($"{L["Edit"]} {L["Structure"]}", new Dictionary<string, object> { { "Id", args.Data.Id } });
-        if (grid0 != null) await grid0.Reload();
-    }
-
-    async Task GridDeleteButtonClick(MouseEventArgs args, OrgStructure resource)
+    protected override async Task GetData(string? filter = null, int? top = null, int? skip = null, string? orderby = null)
     {
         try
         {
-            if (await DialogService.Confirm(L["Delete Confirmation"]) == true)
-            {
-                await OrgStructureService.DeleteAsync(resource.Id);
-                if (grid0 != null) await grid0.Reload();
-            }
+            var result = await MainService!.GetOdataAsync(filter: filter, top: top, skip: skip, orderby: orderby, expand: "Section,MailDatabaseGroup", count: true);
+            resources = result.Value.AsODataEnumerable();
+            count = result.Count;
         }
         catch (Exception ex)
         {
+            resources = new List<OrgStructure>();
+            count = 0;
             NotificationService.Notify(new NotificationMessage
                 {
+                    Duration = 8000,
                     Severity = NotificationSeverity.Error,
                     Summary = $"Error",
-                    Detail = $"{L["Unable to delete"]} {@L["Structure"]}. {ex.Message}"
-                });
+                    Detail = $"{L["Unable to retrieve"]} {@L["OrgStructures"]}. {ex.Message}"
+                }
+            );
         }
-    }
-
-    void ExportClick(RadzenSplitButtonItem args)
-    {
-        OrgStructureService.ExportToFile(args.Value, "OrgStructures");
     }
 }

@@ -1,10 +1,7 @@
 ﻿@page "/orglocation/create"
 
 @attribute [Authorize]
-@inject IHttpContextAccessor HttpContextAccessor
-@inject DialogService DialogService
-@inject OrgLocationService OrgLocationService
-@inject IStringLocalizer<LocalizationResource> L
+@inherits MasterTableCreateBase<OrgLocationService, OrgLocation>
 
 <PageTitle>@L["Add"] @L["Location"]</PageTitle>
 <RadzenColumn SizeMD=12>
@@ -80,35 +77,4 @@
 </RadzenColumn>
 
 @code {
-    bool canEdit = true;
-    bool errorVisible = false;
-    OrgLocation? resource;
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        resource = new OrgLocation();
-    }
-
-    async Task FormSubmit()
-    {
-        if (resource == null) return;
-
-        try
-        {
-            resource.CreatedBy = $"{HttpContextAccessor.HttpContext?.User.Identity?.Name?.Split("\\").Last()}";
-            await OrgLocationService.CreateAsync(resource);
-            DialogService.Close(resource);
-        }
-        catch (Exception)
-        {
-            canEdit = true;
-            errorVisible = true;
-        }
-    }
-
-    void CancelButtonClick(MouseEventArgs args)
-    {
-        DialogService.Close(null);
-    }
 }

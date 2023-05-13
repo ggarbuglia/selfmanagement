@@ -1,10 +1,7 @@
 ﻿@page "/orgdirection/create"
 
 @attribute [Authorize]
-@inject IHttpContextAccessor HttpContextAccessor
-@inject DialogService DialogService
-@inject OrgDirectionService OrgDirectionService
-@inject IStringLocalizer<LocalizationResource> L
+@inherits MasterTableCreateBase<OrgDirectionService, OrgDirection>
 
 <PageTitle>@L["Add"] @L["Direction"]</PageTitle>
 <RadzenColumn SizeMD=12>
@@ -35,35 +32,4 @@
 </RadzenColumn>
 
 @code {
-    bool canEdit = true;
-    bool errorVisible = false;
-    OrgDirection? resource;
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        resource = new OrgDirection();
-    }
-
-    async Task FormSubmit()
-    {
-        if (resource == null) return;
-
-        try
-        {
-            resource.CreatedBy = $"{HttpContextAccessor.HttpContext?.User.Identity?.Name?.Split("\\").Last()}";
-            await OrgDirectionService.CreateAsync(resource);
-            DialogService.Close(resource);
-        }
-        catch (Exception)
-        {
-            canEdit = true;
-            errorVisible = true;
-        }
-    }
-
-    void CancelButtonClick(MouseEventArgs args)
-    {
-        DialogService.Close(null);
-    }
 }

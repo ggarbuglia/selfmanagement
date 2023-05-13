@@ -277,4 +277,7 @@
   <data name="OrgUnit is required" xml:space="preserve">
     <value>Unidad Org es requerido</value>
   </data>
+  <data name="Unable to retrieve" xml:space="preserve">
+    <value>Imposible traer</value>
+  </data>
 </root>

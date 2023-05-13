@@ -1,12 +1,9 @@
 ﻿@page "/orgmembership/update"
 
 @attribute [Authorize]
-@inject IHttpContextAccessor HttpContextAccessor
-@inject DialogService DialogService
-@inject OrgMembershipService OrgMembershipService
+@inherits MasterTableUpdateBase<OrgMembershipService, OrgMembership>
 @inject OrgSectionService OrgSectionService
 @inject OrgStructureService OrgStructureService
-@inject IStringLocalizer<LocalizationResource> L
 
 <PageTitle>@L["Edit"] @L["Membership"]</PageTitle>
 <RadzenRow>
@@ -90,13 +87,6 @@
 </RadzenColumn>
 
 @code {
-    [Parameter]
-    public int Id { get; set; }
-
-    bool hasChanges = false;
-    bool canEdit = true;
-    bool errorVisible = false;
-    OrgMembership? resource;
     IEnumerable<OrgStructure>? orgStructures;
     IEnumerable<OrgSection>? orgSections;
     int sectionId;
@@ -104,41 +94,8 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-
         orgSections = await OrgSectionService.GetAsync();
         orgStructures = await OrgStructureService.GetAsync();
-        resource = await OrgMembershipService.GetAsync(Id);
-
         sectionId = resource!.Structure!.SectionId;
-    }
-
-    async Task FormSubmit()
-    {
-        if (resource == null) return;
-
-        try
-        {
-            resource.ModifiedBy = $"{HttpContextAccessor.HttpContext?.User.Identity?.Name?.Split("\\").Last()}";
-            await OrgMembershipService.UpdateAsync(Id, resource);
-            DialogService.Close(resource);
-        }
-        catch (Exception)
-        {
-            hasChanges = false;
-            canEdit = true;
-            errorVisible = true;
-        }
-    }
-
-    void CancelButtonClick(MouseEventArgs args)
-    {
-        DialogService.Close(null);
-    }
-
-    async Task ReloadButtonClick(MouseEventArgs args)
-    {
-        hasChanges = false;
-        canEdit = true;
-        resource = await OrgMembershipService.GetAsync(Id);
     }
 }

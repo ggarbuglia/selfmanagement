@@ -1,10 +1,7 @@
 ﻿@page "/orglocations"
 
 @attribute [Authorize]
-@inject NotificationService NotificationService
-@inject DialogService DialogService
-@inject OrgLocationService OrgLocationService
-@inject IStringLocalizer<LocalizationResource> L
+@inherits MasterTableViewBase<OrgLocationService, OrgLocation, OrgLocationCreate, OrgLocationUpdate>
 
 <PageTitle>@L["Locations"]</PageTitle>
 <RadzenStack>
@@ -26,7 +23,8 @@
     <RadzenRow>
         <RadzenColumn SizeMD=12>
             <RadzenDataGrid @ref="grid0" Data="@resources" LoadData="@LoadData" TItem="OrgLocation" Density="Density.Compact"
-                            IsLoading="@isLoading" Count="@count" AllowFiltering="true" FilterMode="FilterMode.Advanced" RowDoubleClick="@EditRow"
+                            IsLoading="@isLoading" Count="@count" RowDoubleClick="@EditRow"
+                            AllowFiltering="true" FilterMode="FilterMode.Advanced" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                             AllowPaging="true" AllowSorting="true" ShowPagingSummary="true" PageSize=@pagesize PageSizeOptions=@(new int[]{5, 10, 20, 30})>
                 <Columns>
                     <RadzenDataGridColumn TItem="OrgLocation" Property="Id" Title="Id" Width="70px" />
@@ -59,79 +57,4 @@
 </RadzenStack>
 
 @code {
-    bool isLoading = false;
-    int count = 0;
-    int pagesize = 10;
-    RadzenDataGrid<OrgLocation>? grid0;
-    IEnumerable<OrgLocation>? resources;
-    OrgLocation? resource = new();
-
-    async Task LoadData(string? filter = null, int? top = null, int? skip = null, string? orderby = null)
-    {
-        var result = await OrgLocationService.GetOdataAsync(filter: filter, top: top, skip: skip, orderby: orderby, count: true);
-        resources = result.Value.AsODataEnumerable();
-        count = result.Count;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        await LoadData(top: pagesize, skip: 0);
-    }
-
-    async Task LoadData(LoadDataArgs args)
-    {
-        isLoading = true;
-        await LoadData(filter: args.Filter, top: args.Top, skip: args.Skip, orderby: args.OrderBy);
-        isLoading = false;
-    }
-
-    async Task Search(ChangeEventArgs args)
-    {
-        if (args.Value == null) return;
-        var search = args.Value.ToString()!.ToLowerInvariant();
-
-        if (grid0 != null) await grid0.GoToPage(0);
-        isLoading = true;
-        await LoadData(filter: $"contains(tolower(Name),'{search}')", top: grid0!.PageSize, skip: 0);
-        isLoading = false;
-    }
-
-    async Task AddButtonClick(MouseEventArgs args)
-    {
-        await DialogService.OpenAsync<OrgLocationCreate>($"{L["Add"]} {L["Location"]}", null);
-        if (grid0 != null) await grid0.Reload();
-    }
-
-    async Task EditRow(DataGridRowMouseEventArgs<OrgLocation> args)
-    {
-        await DialogService.OpenAsync<OrgLocationUpdate>($"{L["Edit"]} {L["Location"]}", new Dictionary<string, object> { { "Id", args.Data.Id } });
-        if (grid0 != null) await grid0.Reload();
-    }
-
-    async Task GridDeleteButtonClick(MouseEventArgs args, OrgLocation resource)
-    {
-        try
-        {
-            if (await DialogService.Confirm(L["Delete Confirmation"]) == true)
-            {
-                await OrgLocationService.DeleteAsync(resource.Id);
-                if (grid0 != null) await grid0.Reload();
-            }
-        }
-        catch (Exception ex)
-        {
-            NotificationService.Notify(new NotificationMessage
-                {
-                    Severity = NotificationSeverity.Error,
-                    Summary = $"Error",
-                    Detail = $"{L["Unable to delete"]} {@L["Location"]}. {ex.Message}"
-                });
-        }
-    }
-
-    void ExportClick(RadzenSplitButtonItem args)
-    {
-        OrgLocationService.ExportToFile(args.Value, "OrgLocations");
-    }
 }
